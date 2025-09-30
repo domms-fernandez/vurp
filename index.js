@@ -55,7 +55,6 @@ function loop() {
     sackboy.style.right = Math.floor(intersect.y);
     
   }
-
-  setTimeout(loop(), 17);
 }
 
+setInterval(loop(), 17);
