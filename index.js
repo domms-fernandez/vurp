@@ -51,6 +51,8 @@ function loop() {
       intersect = pointB;
     }
 
+    console.log(intersect);
+
     sackboy.style.left = Math.floor(intersect.x);
     sackboy.style.top = Math.floor(intersect.y);
     
