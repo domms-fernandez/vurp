@@ -20,10 +20,11 @@ const maxV = 0.5;
 function loop() {
   if (mousePos === false) return;
 
-  hHeight = box.style.height * 0.5
   hWidth = box.style.width * 0.5;
+  hHeight = box.style.height * 0.5;
+  let boxRect = box.getBoundingClientRect();
   
-  if (distance(box.style.left, box.style.top, mousePos.x, mousePos.y) < hWidth) {
+  if (distance(boxRect.left, boxRect.top, mousePos.x, mousePos.y) < hWidth) {
     //slowly stop moving
   } else {
     //move towards goal
@@ -31,8 +32,8 @@ function loop() {
     let pointB = {y: hHeight, x: 0};  //and the y value for the top and bottom lines.
     
     //mouse X and Y relative to the center point of the button, which is (0, 0)
-    let mouseX = mousePos.x - box.style.left;
-    let mouseY = mousePos.y - box.style.top;
+    let mouseX = mousePos.x - boxRect.left;
+    let mouseY = mousePos.y - boxRect.top;
 
     let slope = mouseY/mouseX;
 
@@ -44,7 +45,7 @@ function loop() {
     pointB.x = pointB.y / slope;
 
     let intersect;
-    if(distance(box.style.left, box.style.top, pointA.x, pointA.y) < distance(box.style.left, box.style.top, pointB.x, pointB.y)) {
+    if(distance(boxRect.left, boxRect.top, pointA.x, pointA.y) < distance(boxRect.left, boxRect.top, pointB.x, pointB.y)) {
       intersect = pointA;
     } else {
       intersect = pointB;
