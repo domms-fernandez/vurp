@@ -12,24 +12,23 @@ function restrict(max, min, num) {
 let sackboy = document.querySelector("img");
 let box = document.querySelector("div");
 let hWidth;
+let hHeight;
 let vX;
 let vY;
 const maxV = 0.5;
-let x;
-let y;
-
 
 function loop() {
-  if (!mousePos) return;
+  if (mousePos === false) return;
 
-  hWidth = box.clientWidth * 0.5;
+  hHeight = box.style.height * 0.5
+  hWidth = box.style.width * 0.5;
   
-  if (distance(x, y, mousePos.x, mousePos.y) < hWidth) {
+  if (distance(box.style.left, box.style.top, mousePos.x, mousePos.y) < hWidth) {
     //slowly stop moving
   } else {
     //move towards goal
     let pointA = {x: hWidth,  y: 0}; //the x value if it intercepts the side lines,
-    let pointB = {y: hWidth, x: 0};  //and the y value for the top and bottom lines.
+    let pointB = {y: hHeight, x: 0};  //and the y value for the top and bottom lines.
     
     //mouse X and Y relative to the center point of the button, which is (0, 0)
     let mouseX = mousePos.x - box.style.left;
@@ -37,8 +36,8 @@ function loop() {
 
     let slope = mouseY/mouseX;
 
-    if(mouseX < 0) {pointA.x *= -1;} //calculate intersection on the side of the button that is moving
-    if(mouseY < 0) {pointB.y *= -1;} //away from the mouse, so it doesn't clip across the screen
+    if(mouseX < 0) {pointA.x *= -1;} //calculate intersection on the side of
+    if(mouseY < 0) {pointB.y *= -1;} //the button that is facing the mouse
 
     //complete points of intersection
     pointA.y = slope * pointA.x;
