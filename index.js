@@ -57,4 +57,4 @@ function loop() {
   }
 }
 
-setInterval(loop(), 17);
+setInterval(loop, 17);
