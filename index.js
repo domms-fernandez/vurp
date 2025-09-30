@@ -53,8 +53,8 @@ function loop() {
 
     console.log(intersect);
 
-    sackboy.style.left = Math.floor(intersect.x);
-    sackboy.style.top = Math.floor(intersect.y);
+    sackboy.style.left = Math.floor(intersect.x + boxRect.left);
+    sackboy.style.top = Math.floor(intersect.y + boxRect.top);
     
   }
 }
