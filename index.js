@@ -20,11 +20,12 @@ const maxV = 0.5;
 function loop() {
   if (mousePos === false) return;
 
-  hWidth = box.style.width * 0.5;
-  hHeight = box.style.height * 0.5;
+  hWidth = box.clientWidth * 0.5;
+  hHeight = box.clientHeight * 0.5;
   let boxRect = box.getBoundingClientRect();
+  let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
   
-  if (distance(boxRect.left, boxRect.top, mousePos.x, mousePos.y) < hWidth) {
+  if (distance(boxCenter.x, boxCenter.y, mousePos.x, mousePos.y) < hWidth + hHeight) {
     //slowly stop moving
   } else {
     //move towards goal
@@ -32,20 +33,20 @@ function loop() {
     let pointB = {y: hHeight, x: 0};  //and the y value for the top and bottom lines.
     
     //mouse X and Y relative to the center point of the button, which is (0, 0)
-    let mouseX = mousePos.x - boxRect.left;
-    let mouseY = mousePos.y - boxRect.top;
+    let relativeMouseX = mousePos.x - boxCenter.x;
+    let relativeMouseY = mousePos.y - boxCenter.y;
 
-    let slope = mouseY/mouseX;
+    let slope = relativeMouseY/relativeMouseX;
 
-    if(mouseX < 0) {pointA.x *= -1;} //calculate intersection on the side of
-    if(mouseY < 0) {pointB.y *= -1;} //the button that is facing the mouse
+    if(relativeMouseX < 0) {pointA.x *= -1;} //calculate intersection on the side of
+    if(relativeMouseY < 0) {pointB.y *= -1;} //the button that is facing the mouse
 
     //complete points of intersection
     pointA.y = slope * pointA.x;
     pointB.x = pointB.y / slope;
 
     let intersect;
-    if(distance(boxRect.left, boxRect.top, pointA.x, pointA.y) < distance(boxRect.left, boxRect.top, pointB.x, pointB.y)) {
+    if(distance(boxCenter.x, boxCenter.y, pointA.x, pointA.y) < distance(boxCenter.x, boxCenter.y, pointB.x, pointB.y)) {
       intersect = pointA;
     } else {
       intersect = pointB;
@@ -53,8 +54,8 @@ function loop() {
 
     console.log(intersect);
 
-    sackboy.style.left = Math.floor(intersect.x + boxRect.left);
-    sackboy.style.top = Math.floor(intersect.y + boxRect.top);
+    sackboy.style.left = intersect.x + boxCenter.x;
+    sackboy.style.top = intersect.y + boxCenter.y;
     
   }
 }
