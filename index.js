@@ -52,7 +52,7 @@ function loop() {
     }
 
     sackboy.style.left = Math.floor(intersect.x);
-    sackboy.style.right = Math.floor(intersect.y);
+    sackboy.style.top = Math.floor(intersect.y);
     
   }
 }
