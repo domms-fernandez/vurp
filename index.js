@@ -9,23 +9,51 @@ function restrict(max, min, num) {
   return Math.max(Math.min(max, num), min);
 }
 
+let sackboy = document.querySelector("img");
 let box = document.querySelector("div");
-let hWidth = 100;
-let hHeight = 100;
+let hWidth;
 let vX;
 let vY;
-const maxVX = 0.5;
-const maxVY = 0.5;
+const maxV = 0.5;
 let x;
 let y;
 
 
 function loop() {
   if (!mousePos) return;
-  if (distance(x, y, mousePos.x, mousePos.y) < (hWidth + hHeight) * 0.5) {
+
+  hWidth = box.clientWidth * 0.5;
+  
+  if (distance(x, y, mousePos.x, mousePos.y) < hWidth) {
     //slowly stop moving
   } else {
     //move towards goal
+    let pointA = {x: hWidth,  y: 0}; //the x value if it intercepts the side lines,
+    let pointB = {y: hWidth, x: 0};  //and the y value for the top and bottom lines.
+    
+    //mouse X and Y relative to the center point of the button, which is (0, 0)
+    let mouseX = mousePos.x - box.style.left;
+    let mouseY = mousePos.y - box.style.top;
+
+    let slope = mouseY/mouseX;
+
+    if(mouseX < 0) {pointA.x *= -1;} //calculate intersection on the side of the button that is moving
+    if(mouseY < 0) {pointB.y *= -1;} //away from the mouse, so it doesn't clip across the screen
+
+    //complete points of intersection
+    pointA.y = slope * pointA.x;
+    pointB.x = pointB.y / slope;
+
+    let intersect;
+    if(distance(box.style.left, box.style.top, pointA.x, pointA.y) < distance(box.style.left, box.style.top, pointB.x, pointB.y)) {
+      intersect = pointA;
+    } else {
+      intersect = pointB;
+    }
+
+    sackboy.style.left = Math.floor(intersect.x);
+    sackboy.style.right = Math.floor(intersect.y);
+    
   }
 
   setTimeout(loop(), 17);
