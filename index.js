@@ -1,4 +1,4 @@
-let mousePos = false;
+let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
 
 function distance(x1, y1, x2, y2) {
@@ -20,14 +20,14 @@ let vY;
 const maxV = 0.5;
 
 function loop() {
-  if (mousePos === false) return;
+  if (!mousePos) return;
 
   hWidth = box.clientWidth * 0.5;
   hHeight = box.clientHeight * 0.5;
   let boxRect = box.getBoundingClientRect();
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
   
-  if (distance(boxCenter.x, boxCenter.y, mousePos.x, mousePos.y) < hWidth + hHeight) {
+  if (distance(boxCenter.x, boxCenter.y, mousePos.clientX, mousePos.clientY) < hWidth + hHeight) {
     sackboy.style.left = 400;
     sackboy.style.top = 400;
   } else {
@@ -36,8 +36,8 @@ function loop() {
     let pointB = {y: hHeight, x: 0};  //and the y value for the top and bottom lines.
     
     //mouse X and Y relative to the center point of the button, which is (0, 0)
-    let relativeMouseX = mousePos.x - boxCenter.x;
-    let relativeMouseY = mousePos.y - boxCenter.y;
+    let relativeMouseX = mousePos.clientX - boxCenter.x;
+    let relativeMouseY = mousePos.clientY - boxCenter.y;
 
     let slope = relativeMouseY/relativeMouseX;
 
