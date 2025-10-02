@@ -28,7 +28,8 @@ function loop() {
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
   
   if (distance(boxCenter.x, boxCenter.y, mousePos.x, mousePos.y) < hWidth + hHeight) {
-    //slowly stop moving
+    sackboy.style.left = 400;
+    sackboy.style.top = 400;
   } else {
     //move towards goal
     let pointA = {x: hWidth,  y: 0}; //the x value if it intercepts the side lines,
@@ -61,9 +62,8 @@ function loop() {
 
     console.log(intersect);
 
-    sackboy.style.left = intersect.x + boxCenter.x;
-    sackboy.style.top = intersect.y + boxCenter.y;
-    
+    sackboy.style.left = 300;
+    sackboy.style.top = 300;
   }
 }
 
