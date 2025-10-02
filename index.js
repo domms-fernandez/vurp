@@ -10,6 +10,8 @@ function restrict(max, min, num) {
 }
 
 let sackboy = document.querySelector("img");
+let sackboyA = document.getElementById("a");
+let sackboyB = document.getElementById("b");
 let box = document.querySelector("div");
 let hWidth;
 let hHeight;
@@ -44,6 +46,11 @@ function loop() {
     //complete points of intersection
     pointA.y = slope * pointA.x;
     pointB.x = pointB.y / slope;
+
+    sackboyA.style.left = pointA.x + boxCenter.x;
+    sackboyA.style.top = pointA.y + boxCenter.y;
+    sackboyB.style.left = pointB.x + boxCenter.x;
+    sackboyB.style.top = pointB.y + boxCenter.y;
 
     let intersect;
     if(distance(boxCenter.x, boxCenter.y, pointA.x, pointA.y) < distance(boxCenter.x, boxCenter.y, pointB.x, pointB.y)) {
