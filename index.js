@@ -9,20 +9,14 @@ function restrict(max, min, num) {
   return Math.max(Math.min(max, num), min);
 }
 
-let sackboy = document.querySelector("img");
-let sackboyA = document.getElementById("a");
-let sackboyB = document.getElementById("b");
 let box = document.querySelector("div");
 let hWidth;
 let hHeight;
 let vX = 0;
 let vY = 0;
-let maxV;
 
 function loop() {
   if (!mousePos) return;
-
-  maxV = box.clientHeight * 0.017 * 0.05;
 
   hWidth = box.clientWidth * 0.5;
   hHeight = box.clientHeight * 0.5;
@@ -30,8 +24,8 @@ function loop() {
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
   
   if (distance(boxCenter.x, boxCenter.y, mousePos.clientX, mousePos.clientY) < hWidth + hHeight) {
-    sackboy.style.left = 400;
-    sackboy.style.top = 400;
+    //slowly stop;
+    
   } else {
     //move towards goal
     let pointA = {x: hWidth,  y: 0}; //the x value if it intercepts the side lines,
@@ -42,7 +36,7 @@ function loop() {
     let relativeMouseY = mousePos.clientY - boxCenter.y;
 
     let slope = relativeMouseY/relativeMouseX;
-
+    
     if(relativeMouseX < 0) {pointA.x *= -1;} //calculate intersection on the side of
     if(relativeMouseY < 0) {pointB.y *= -1;} //the button that is facing the mouse
 
@@ -50,22 +44,17 @@ function loop() {
     pointA.y = slope * pointA.x;
     pointB.x = pointB.y / slope;
 
-    sackboyA.style.left = pointA.x + boxCenter.x + "px";
-    sackboyA.style.top = pointA.y + boxCenter.y + "px";
-    sackboyB.style.left = pointB.x + boxCenter.x + "px";
-    sackboyB.style.top = pointB.y + boxCenter.y + "px";
-
     let intersect;
     if((pointA.x**2 + pointA.y**2) < (pointB.x**2 + pointB.y**2)) {
       intersect = pointA;
     } else {
       intersect = pointB;
     }
-    intersect.x += boxCenter.x;
-    intersect.y += boxCenter.y;
 
-    sackboy.style.left = intersect.x - 5 + "px";
-    sackboy.style.top = intersect.y - 5 + "px";
+    let maxV = box.clientHeight * 0.017;
+    box.style.left = boxRect.left + restrict(maxV, -maxV, 0.017 * intersect.x) + "px";
+    box.style.top = boxRect.top + (0.017 * intersect.y) + "px";
+    
   }
 }
 
