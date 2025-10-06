@@ -1,3 +1,5 @@
+const FRAMERATE = 0.017;
+const MOVEMENTSPEED = 2;
 let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
 
@@ -54,20 +56,14 @@ function loop() {
     }
 
     //step 2: move towards goal
-    //we want to move twice height/sec, so every frame 1/30th height max.
-    //slowly add 1/60th of 1/30th of height to vX or vY, restrict to max (1/30th of height).
+    //goalVX/Y is intersection * FRAMERATE
+    //actual vX/Y slowly changes to match goalVX/Y
 
-    let maxV = box.clientHeight * 0.034;
-    if(intersect.x < 0) {
-      vX = restrict(0, -maxV, vX - (0.017 * maxV));
-    } else {
-      vX = restrict(maxV, 0, vX + (0.017 * maxV));
-    }
-    if(intersect.y < 0) {
-      vY = restrict(0, -maxV, vX - (0.017 * maxV));
-    } else {
-      vY = restrict(maxV, 0, vX + (0.017 * maxV));
-    }
+    let goalVX = intersection.x * FRAMERATE * MOVEMENTSPEED;
+    let goalVY = intersection.y * FRAMERATE * MOVEMENTSPEED;
+
+    vX += FRAMERATE * MOVEMENTSPEED * goalVX;
+    vY += FRAMERATE * MOVEMENTSPEED * goalVY;
     
     box.style.left = boxRect.left + vX + "px";
     box.style.top = boxRect.top + vY + "px";
