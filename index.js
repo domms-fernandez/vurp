@@ -23,12 +23,14 @@ function loop() {
   let boxRect = box.getBoundingClientRect();
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
   
-  if (distance(boxCenter.x, boxCenter.y, mousePos.clientX, mousePos.clientY) < hWidth + hHeight) {
-    //slowly stop;
+  if (distance(boxCenter.x, boxCenter.y, mousePos.clientX, mousePos.clientY) < box.clientHeight) {
+    //slowly stop
+    //slowly remove 1/30th of height from speed until 0
     
   } else {
     //move towards goal
-    let pointA = {x: hWidth,  y: 0}; //the x value if it intercepts the side lines,
+    //step 1: goal point
+    let pointA = {x: hHeight,  y: 0}; //the x value if it intercepts the side lines,
     let pointB = {y: hHeight, x: 0};  //and the y value for the top and bottom lines.
     
     //mouse X and Y relative to the center point of the button, which is (0, 0)
@@ -51,9 +53,24 @@ function loop() {
       intersect = pointB;
     }
 
-    let maxV = box.clientHeight * 0.017;
-    box.style.left = boxRect.left + restrict(maxV, -maxV, 0.017 * intersect.x) + "px";
-    box.style.top = boxRect.top + (0.017 * intersect.y) + "px";
+    //step 2: move towards goal
+    //we want to move twice height/sec, so every frame 1/30th height max.
+    //slowly add 1/60th of 1/30th of height to vX or vY, restrict to max (1/30th of height).
+
+    let maxV = box.clientHeight * 0.034;
+    if(intersect.x < 0) {
+      vX = restrict(0, -maxV, vX - (0.017 * maxV));
+    } else {
+      vX = restrict(maxV, 0, vX + (0.017 * maxV));
+    }
+    if(intersect.y < 0) {
+      vY = restrict(0, -maxV, vX - (0.017 * maxV));
+    } else {
+      vY = restrict(maxV, 0, vX + (0.017 * maxV));
+    }
+    
+    box.style.left = boxRect.left + vX + "px";
+    box.style.top = boxRect.top + vY + "px";
     
   }
 }
