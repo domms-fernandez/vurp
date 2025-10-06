@@ -15,12 +15,14 @@ let sackboyB = document.getElementById("b");
 let box = document.querySelector("div");
 let hWidth;
 let hHeight;
-let vX;
-let vY;
-const maxV = 0.5;
+let vX = 0;
+let vY = 0;
+let maxV;
 
 function loop() {
   if (!mousePos) return;
+
+  maxV = box.clientHeight * 0.017 * 0.05;
 
   hWidth = box.clientWidth * 0.5;
   hHeight = box.clientHeight * 0.5;
