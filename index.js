@@ -63,7 +63,7 @@ function loop() {
     let goalVY = intersect.y * FRAMERATE * MOVEMENTSPEED;
 
     vX = restrict(goalVX, -goalVX, vX + FRAMERATE * MOVEMENTSPEED * goalVX);
-    vY = restrict(goalVY, -goalVY, vy + FRAMERATE * MOVEMENTSPEED * goalVY);
+    vY = restrict(goalVY, -goalVY, vY + FRAMERATE * MOVEMENTSPEED * goalVY);
     
     box.style.left = boxRect.left + vX + "px";
     box.style.top = boxRect.top + vY + "px";
