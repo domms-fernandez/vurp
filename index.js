@@ -56,14 +56,14 @@ function loop() {
     }
 
     //step 2: move towards goal
-    //goalVX/Y is intersection * FRAMERATE
+    //goalVX/Y is intersect * FRAMERATE
     //actual vX/Y slowly changes to match goalVX/Y
 
-    let goalVX = intersection.x * FRAMERATE * MOVEMENTSPEED;
-    let goalVY = intersection.y * FRAMERATE * MOVEMENTSPEED;
+    let goalVX = intersect.x * FRAMERATE * MOVEMENTSPEED;
+    let goalVY = intersect.y * FRAMERATE * MOVEMENTSPEED;
 
-    vX += FRAMERATE * MOVEMENTSPEED * goalVX;
-    vY += FRAMERATE * MOVEMENTSPEED * goalVY;
+    vX = restrict(goalVX, -goalVX, vX + FRAMERATE * MOVEMENTSPEED * goalVX);
+    vY = restrict(goalVY, -goalVY, vy + FRAMERATE * MOVEMENTSPEED * goalVY);
     
     box.style.left = boxRect.left + vX + "px";
     box.style.top = boxRect.top + vY + "px";
