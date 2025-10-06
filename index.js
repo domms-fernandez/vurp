@@ -54,16 +54,16 @@ function loop() {
     sackboyB.style.top = pointB.y + boxCenter.y + "px";
 
     let intersect;
-    if(distance(boxCenter.x, boxCenter.y, pointA.x, pointA.y) < distance(boxCenter.x, boxCenter.y, pointB.x, pointB.y)) {
-      intersect = pointB;
-    } else {
+    if((pointA.x**2 + pointA.y**2) < (pointB.x**2 + pointB.y**2)) {
       intersect = pointA;
+    } else {
+      intersect = pointB;
     }
     intersect.x += boxCenter.x;
     intersect.y += boxCenter.y;
 
-    sackboy.style.left = intersect.x  + "px";
-    sackboy.style.top = intersect.y  + "px";
+    sackboy.style.left = intersect.x - 5 + "px";
+    sackboy.style.top = intersect.y - 5 + "px";
   }
 }
 
