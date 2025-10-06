@@ -1,5 +1,4 @@
 let mousePos;
-document.addEventListener("mousemove", (e) => {mousePos = e;});
 
 function distance(x1, y1, x2, y2) {
   return Math.sqrt((x2 - x1)**2 + (y2 - y1)**2);
@@ -67,4 +66,5 @@ function loop() {
   }
 }
 
-setInterval(loop, 17);
+document.addEventListener("mousemove", (e) => {mousePos = e; loop();});
+//setInterval(loop, 17);
