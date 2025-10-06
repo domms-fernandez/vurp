@@ -12,8 +12,19 @@ body {
 }
 
 img {
+  width: 5px;
+  height: 5px;
+}
+
+#c {
+  width: 10px;
+  height: 10px;
+}
+
+div {
   width: 5%;
   height: 5%;
   left: 50%;
   top: 50%;
+  background-color: #AAAAAA;
 }
