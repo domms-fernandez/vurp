@@ -1,43 +1,36 @@
-const FRAMERATE = 0.017;
-const MOVEMENT_SPEED = 10;
-const ACCELERATION_MULT = FRAMERATE * 0.1;
+const FRAMERATE = 0.017; //one divided by FPS
+const MOVEMENT_SPEED = 10; //how many multiples of its own height the body box will move
+
 let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
 
-function distance(x1, y1, x2, y2) {
-  return Math.sqrt((x2 - x1)**2 + (y2 - y1)**2);
-}
-
-function restrict(max, min, num) {
-  return Math.max(Math.min(max, num), min);
-}
-
-let box = document.querySelector("div");
-let hWidth;
-let hHeight;
 let vX = 0;
 let vY = 0;
 
 function loop() {
   if (!mousePos) return;
 
-  hWidth = box.clientWidth * 0.5;
-  hHeight = box.clientHeight * 0.5;
+  let box = document.querySelector("div");
+  
+  let hWidth = box.clientWidth * 0.5;
+  let hHeight = box.clientHeight * 0.5;
+  
   let boxRect = box.getBoundingClientRect();
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
-  let acceleration = box.clientHeight * ACCELERATION_MULT;
   
-  if (distance(boxCenter.x, boxCenter.y, mousePos.clientX, mousePos.clientY) < box.clientHeight) {
+  const ACCELERATION = box.clientHeight * FRAMERATE;
+  
+  if ((boxCenter.x - mousePos.clientX)**2 + (boxCenter.y - mousePos.clientY)**2 < box.clientHeight**2) {
     //slowly stop
     if(vX < 0) {
-      vX = Math.max(0, vX + acceleration);
+      vX = Math.max(0, vX + ACCELERATION);
     } else {
-      vX = Math.min(0, vX - acceleration);
+      vX = Math.min(0, vX - ACCELERATION);
     }
     if(vY < 0) {
-      vY = Math.max(0, vY + acceleration);
+      vY = Math.max(0, vY + ACCELERATION);
     } else {
-      vY = Math.min(0, vY - acceleration);
+      vY = Math.min(0, vY - ACCELERATION);
     }
     
   } else {
@@ -59,6 +52,7 @@ function loop() {
     pointA.y = slope * pointA.x;
     pointB.x = pointB.y / slope;
 
+    //choose which one is closest
     let intersect;
     if((pointA.x**2 + pointA.y**2) < (pointB.x**2 + pointB.y**2)) {
       intersect = pointA;
@@ -69,25 +63,25 @@ function loop() {
     //step 2: move towards goal
     //goalVX/Y is intersect * FRAMERATE * MOVEMENT_SPEED
     //actual vX/Y slowly changes by ACCELERATION to match goalVX/Y
-
     let goalVX = intersect.x * FRAMERATE * MOVEMENT_SPEED;
     let goalVY = intersect.y * FRAMERATE * MOVEMENT_SPEED;
 
     if(intersect.x < 0) {
-      vX = Math.max(goalVX, vX - acceleration);
+      vX = Math.max(goalVX, vX - ACCELERATION);
     } else {
-      vX = Math.min(goalVX, vX + acceleration);
+      vX = Math.min(goalVX, vX + ACCELERATION);
     }
     if(intersect.y < 0) {
-      vY = Math.max(goalVY, vY - acceleration);
+      vY = Math.max(goalVY, vY - ACCELERATION);
     } else {
-      vY = Math.min(goalVY, vY + acceleration);
+      vY = Math.min(goalVY, vY + ACCELERATION);
     }
-    
-    box.style.left = boxRect.left + vX + "px";
-    box.style.top = boxRect.top + vY + "px";
-    
   }
+
+  //after everything, add velocity
+  box.style.left = boxRect.left + vX + "px";
+  box.style.top = boxRect.top + vY + "px";
+  
 }
 
-setInterval(loop, 17);
+setInterval(loop, FRAMERATE * 1000);
