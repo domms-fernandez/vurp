@@ -19,7 +19,7 @@ function loop() {
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
   
   const ACCELERATION = box.clientHeight * 0.1 * FRAMERATE;
-  const DECELERATION = ACCELERATION * 0.5;
+  const DECELERATION = ACCELERATION;
   
   if ((boxCenter.x - mousePos.clientX)**2 + (boxCenter.y - mousePos.clientY)**2 < box.clientHeight**2) {
     //slowly stop
