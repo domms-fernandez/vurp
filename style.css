@@ -12,6 +12,7 @@ body, div {
 img {
   height: 100%;
   width: auto;
+  image-rendering: pixelated;
 }
 
 #body {
