@@ -18,19 +18,20 @@ function loop() {
   let boxRect = box.getBoundingClientRect();
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
   
-  const ACCELERATION = box.clientHeight * FRAMERATE;
+  const ACCELERATION = box.clientHeight * 0.1 * FRAMERATE;
+  const DECELERATION = ACCELERATION * 0.5;
   
   if ((boxCenter.x - mousePos.clientX)**2 + (boxCenter.y - mousePos.clientY)**2 < box.clientHeight**2) {
     //slowly stop
     if(vX < 0) {
-      vX = Math.max(0, vX + ACCELERATION);
+      vX = Math.min(0, vX + DECELERATION);
     } else {
-      vX = Math.min(0, vX - ACCELERATION);
+      vX = Math.max(0, vX - DECELERATION);
     }
     if(vY < 0) {
-      vY = Math.max(0, vY + ACCELERATION);
+      vY = Math.min(0, vY + DECELERATION);
     } else {
-      vY = Math.min(0, vY - ACCELERATION);
+      vY = Math.max(0, vY - DECELERATION);
     }
     
   } else {
