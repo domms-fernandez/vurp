@@ -1,30 +1,30 @@
 * {
   user-select: none;
   position: absolute;
-  width: 100%;
-  height: 100%;
   margin: 0;
   padding: 0;
 }
     
-body {
+body, div {
   overflow: hidden;
 }
 
 img {
-  width: 5px;
-  height: 5px;
+  height: 100%;
+  width: auto;
 }
 
-#c {
-  width: 10px;
-  height: 10px;
+#body {
+  width: 18px;
+  height: 15px;
 }
 
-div {
-  width: 5%;
-  height: 5%;
-  left: 50%;
-  top: 50%;
-  background-color: #AAAAAA;
+#body-east {
+  width: 18px;
+  height: 14px;
+}
+
+#head {
+  width: 28px;
+  height: 25px;
 }
