@@ -1,6 +1,6 @@
 const FRAMERATE = 0.017;
-const MOVEMENT_SPEED = 4;
-const ACCELERATION_MULT = FRAMERATE * 0.5;
+const MOVEMENT_SPEED = 6;
+const ACCELERATION_MULT = FRAMERATE * 0.05;
 let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
 
