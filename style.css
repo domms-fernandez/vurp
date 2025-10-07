@@ -17,15 +17,15 @@ img {
 
 #body {
   width: 18px;
-  height: 15px;
+  aspect-ratio: 18/15;
 }
 
 #body-east {
   width: 18px;
-  height: 14px;
+  aspect-ratio: 18/14;
 }
 
 #head {
   width: 28px;
-  height: 25px;
+  aspect-ratio: 28/25;
 }
