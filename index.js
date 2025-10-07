@@ -29,7 +29,16 @@ function loop() {
   
   if (distance(boxCenter.x, boxCenter.y, mousePos.clientX, mousePos.clientY) < box.clientHeight) {
     //slowly stop
-    //slowly remove 1/30th of height from speed until 0
+    if(vX < 0) {
+      vX = Math.max(0, vX - acceleration);
+    } else {
+      vX = Math.min(0, vX + acceleration);
+    }
+    if(vY < 0) {
+      vY = Math.max(0, vY - acceleration);
+    } else {
+      vY = Math.min(0, vY + acceleration);
+    }
     
   } else {
     //move towards goal
