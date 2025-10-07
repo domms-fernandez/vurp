@@ -1,5 +1,6 @@
 const FRAMERATE = 0.017;
-const MOVEMENTSPEED = 2;
+const MOVEMENT_SPEED = 4;
+const ACCELERATION_MULT = FRAMERATE * 0.5;
 let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
 
@@ -24,6 +25,7 @@ function loop() {
   hHeight = box.clientHeight * 0.5;
   let boxRect = box.getBoundingClientRect();
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
+  let acceleration = box.clientHeight * ACCELERATION_MULT;
   
   if (distance(boxCenter.x, boxCenter.y, mousePos.clientX, mousePos.clientY) < box.clientHeight) {
     //slowly stop
@@ -56,14 +58,22 @@ function loop() {
     }
 
     //step 2: move towards goal
-    //goalVX/Y is intersect * FRAMERATE
-    //actual vX/Y slowly changes to match goalVX/Y
+    //goalVX/Y is intersect * FRAMERATE * MOVEMENT_SPEED
+    //actual vX/Y slowly changes by ACCELERATION to match goalVX/Y
 
-    let goalVX = intersect.x * FRAMERATE * MOVEMENTSPEED;
-    let goalVY = intersect.y * FRAMERATE * MOVEMENTSPEED;
+    let goalVX = intersect.x * FRAMERATE * MOVEMENT_SPEED;
+    let goalVY = intersect.y * FRAMERATE * MOVEMENT_SPEED;
 
-    vX = restrict(goalVX, -goalVX, vX + FRAMERATE * MOVEMENTSPEED * goalVX);
-    vY = restrict(goalVY, -goalVY, vY + FRAMERATE * MOVEMENTSPEED * goalVY);
+    if(intersect.x < 0) {
+      vX = Math.max(goalVX, vX - acceleration);
+    } else {
+      vX = Math.min(goalVX, vX + acceleration);
+    }
+    if(intersect.y < 0) {
+      vY = Math.max(goalVY, vY - acceleration);
+    } else {
+      vY = Math.min(goalVY, vY + acceleration);
+    }
     
     box.style.left = boxRect.left + vX + "px";
     box.style.top = boxRect.top + vY + "px";
