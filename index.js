@@ -45,26 +45,33 @@ let box = document.getElementById("body");
 function spriteAnimator(spritemap, element, verticallyAnimated) {
   this.spritemap = spritemap;
   this.element = element;
+  this.verticallyAnimated = verticallyAnimated;
   this.mirrored = false;
   this.selection = 0;
   this.animTime = 0;
 }
 
 spriteAnimator.prototype.update = function() {
-  if (this.animTime > this.spritemap[this.selection].duration) this.animTime -= this.spritemap[this.selection].duration;
+  if (this.animTime >= this.spritemap[this.selection].duration) this.animTime -= this.spritemap[this.selection].duration;
 
   //we need to find what frame we're on, based on spritemap's frames and duration vs animTime
-  //then we need to find the offset in multiples of width
-
+  //sptmp.frames / sptmp.duration = frame changes/sec
+  //floor fps * animTime = what frame we're on
+  
+  let offset = Math.floor((this.spritemap.frames / this.spritemap.duration) * this.animTime);
+  
+  //then we need to find the offset in multiples of width, account for mirrored if !verticallyAnimated
   
   if(this.verticallyAnimated) {
-      this.element.firstElementChild.style.top = offset + "px";
+    offset *= this.element.clientHeight;
+    this.element.firstElementChild.style.top = offset + "px";
   } else {
-      this.element.firstElementChild.style.left = offset + "px";
+    offset *= this.element.clientWidth;
+    this.element.firstElementChild.style.left = offset + "px";
   }
 };
 
-function 
+let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, box, false);
 
 let vX = 0;
 let vY = 0;
@@ -145,6 +152,9 @@ function loop() {
   //after everything, add velocity
   box.style.left = boxRect.left + vX + "px";
   box.style.top = boxRect.top + vY + "px";
+
+  bodyAnimator.animTime += FRAMERATE;
+  bodyAnimator.update();
   
 }
 
