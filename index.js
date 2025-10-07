@@ -1,16 +1,35 @@
 const FRAMERATE = 0.017; //one divided by FPS
 const MOVEMENT_SPEED = 10; //how many multiples of its own height the body box will move
 
+const ISAAC_WALK_SPRITEMAP = {
+  frames: 10,
+  width: 18,
+  height: 15
+};
+
+const ISAAC_WALK_EAST_SPRITEMAP = {
+  frames: 10,
+  width: 18,
+  height: 14
+};
+
+const ISAAC_HEAD_SPRITEMAP = {
+  frames: 3,
+  width: 28,
+  height: 25
+};
+
 let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
 
 let vX = 0;
 let vY = 0;
 
+let head = document.getElementById("head");
+let box = document.getElementById("body");
+
 function loop() {
   if (!mousePos) return;
-
-  let box = document.querySelector("div");
   
   let hWidth = box.clientWidth * 0.5;
   let hHeight = box.clientHeight * 0.5;
