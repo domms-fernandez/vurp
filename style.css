@@ -16,16 +16,16 @@ img {
 }
 
 #body {
-  width: 18px;
+  width: calc(10% * 18px);
   aspect-ratio: 18/15;
 }
 
 #body-east {
-  width: 18px;
+  width: calc(10% * 18px);
   aspect-ratio: 18/14;
 }
 
 #head {
-  width: 28px;
+  width: calc(10% * 28px);
   aspect-ratio: 28/25;
 }
