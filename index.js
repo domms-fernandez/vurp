@@ -1,32 +1,76 @@
-const FRAMERATE = 0.017; //one divided by FPS
 const MOVEMENT_SPEED = 10; //how many multiples of its own height the body box will move
+const FRAMERATE = 0.017; //one divided by FPS
 
-const ISAAC_WALK_SPRITEMAP = {
+const ISAAC_WALK_SPRITEMAP = [{
   frames: 10,
+  duration: 2,
+  start: 0,
   width: 18,
   height: 15
-};
+}];
 
-const ISAAC_WALK_EAST_SPRITEMAP = {
+const ISAAC_WALK_EAST_SPRITEMAP = [{
   frames: 10,
+  duration: 2,
+  start: 0,
   width: 18,
   height: 14
-};
+}];
 
-const ISAAC_HEAD_SPRITEMAP = {
-  frames: 3,
+const ISAAC_HEAD_SPRITEMAP = [{
+  frames: 1,
+  duration: 1,
+  start: 0,
   width: 28,
   height: 25
+},
+{
+  frames: 1,
+  duration: 1,
+  start: 1,
+  width: 28,
+  height: 25
+},
+{
+  frames: 1,
+  duration: 1,
+  start: 1,
+  width: 28,
+  height: 25
+}];
+
+let head = document.getElementById("head");
+let box = document.getElementById("body");
+
+function spriteAnimator(spritemap, element, verticallyAnimated) {
+  this.spritemap = spritemap;
+  this.element = element;
+  this.mirrored = false;
+  this.selection = 0;
+  this.animTime = 0;
+}
+
+spriteAnimator.prototype.update = function() {
+  if (this.animTime > this.spritemap[this.selection].duration) this.animTime -= this.spritemap[this.selection].duration;
+
+  //we need to find what frame we're on, based on spritemap's frames and duration vs animTime
+  //then we need to find the offset in multiples of width
+
+  
+  if(this.verticallyAnimated) {
+      this.element.firstElementChild.style.top = offset + "px";
+  } else {
+      this.element.firstElementChild.style.left = offset + "px";
+  }
 };
 
-let mousePos;
-document.addEventListener("mousemove", (e) => {mousePos = e;});
+function 
 
 let vX = 0;
 let vY = 0;
 
-let head = document.getElementById("head");
-let box = document.getElementById("body");
+let mousePos;
+document.addEventListener("mousemove", (e) => {mousePos = e;});
 
 function loop() {
   if (!mousePos) return;
