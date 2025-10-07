@@ -30,14 +30,14 @@ function loop() {
   if (distance(boxCenter.x, boxCenter.y, mousePos.clientX, mousePos.clientY) < box.clientHeight) {
     //slowly stop
     if(vX < 0) {
-      vX = Math.max(0, vX - acceleration);
+      vX = Math.max(0, vX + acceleration);
     } else {
-      vX = Math.min(0, vX + acceleration);
+      vX = Math.min(0, vX - acceleration);
     }
     if(vY < 0) {
-      vY = Math.max(0, vY - acceleration);
+      vY = Math.max(0, vY + acceleration);
     } else {
-      vY = Math.min(0, vY + acceleration);
+      vY = Math.min(0, vY - acceleration);
     }
     
   } else {
