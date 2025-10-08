@@ -99,7 +99,8 @@ function spriteAnimator(spritemap, element, verticallyAnimated) {
 }
 
 spriteAnimator.prototype.update = function() {
-  if (this.animTime >= this.spritemap[this.selection].duration) this.animTime -= this.spritemap[this.selection].duration;
+  while (this.animTime >= this.spritemap[this.selection].duration) this.animTime -= this.spritemap[this.selection].duration;
+  while (this.animTime < 0) this.animTime += this.spritemap[this.selection].duration;
 
   //we need to find what frame we're on, based on spritemap's frames and duration vs animTime
   //sptmp.frames / sptmp.duration = frame changes/sec
@@ -217,6 +218,30 @@ function loop() {
     }
   }
 
+  //horizontal dominated
+  if(intersect.x**2 > intersect.y**2) {
+    bodyAnimator.selection = 2;
+    bodyAnimator.animTime = 0;
+    bodyEastAnimator.selection = 1;
+    bodyEastAnimator.animTime += FRAMERATE;
+    if (intersect.x > 0) {headAnimator.selection = 1;}
+    else {headAnimator.selection = 3;}
+  }
+  //vertical dominated
+  else {
+    bodyEastAnimator.selection = 0;
+    bodyEastAnimator.animTime = 0;
+    bodyAnimator.selection = 1;
+    if (intersect.y > 0) {
+      headAnimator.selection = 0;
+      bodyAnimator.animTime -= FRAMERATE;
+    }
+    else {
+      headAnimator.selection = 2;
+      bodyAnimator.animTime += FRAMERATE;
+    }
+  }
+
   //after everything, add velocity
   box.style.left = boxRect.left + vX + "px";
   box.style.top = boxRect.top + vY + "px";
@@ -229,12 +254,9 @@ function loop() {
   //isaac idle body width = 18px
   head.style.left = boxRect.left + vX + -15 + "px";
 
-  bodyAnimator.animTime += FRAMERATE;
   bodyAnimator.update();
-  headAnimator.animTime += FRAMERATE;
-  headAnimator.update();
-  bodyEastAnimator.animTime += FRAMERATE;
   bodyEastAnimator.update();
+  headAnimator.update();
   
 }
 
