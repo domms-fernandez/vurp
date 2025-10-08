@@ -99,10 +99,9 @@ spriteAnimator.prototype.update = function() {
   let offset = this.spritemap[this.selection].start + 
     Math.floor((this.spritemap[this.selection].frames / this.spritemap[this.selection].duration) * this.animTime);
   
-  //then we need to find the offset in multiples of width, account for mirrored if !verticallyAnimated
-  
+  //then we need to find the offset in multiples of width/height, mirror if verticallyAnimated
   if(this.verticallyAnimated) {
-    offset *= this.element.clientHeight;
+    offset = offset * -1 * this.element.clientHeight;
     this.element.firstElementChild.style.top = offset + "px";
     if(this.mirrored) {this.element.firstElementChild.style.transform = "scaleX(-1)";}
     else {this.element.firstElementChild.style.transform = "scaleX(1)";}
@@ -203,7 +202,7 @@ function loop() {
   head.style.top = boxRect.top + -60 + "px";
   //isaac head width = 28px
   //isaac idle body width = 18px
-  head.style.left = boxRect.left + -5 + "px";
+  head.style.left = boxRect.left + -15 + "px";
 
   bodyAnimator.animTime += FRAMERATE;
   bodyAnimator.update();
