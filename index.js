@@ -216,29 +216,30 @@ function loop() {
     } else {
       vY = Math.min(goalVY, vY + ACCELERATION);
     }
-  }
 
-  //horizontal dominated
-  if(intersect.x**2 > intersect.y**2) {
-    bodyAnimator.selection = 2;
-    bodyAnimator.animTime = 0;
-    bodyEastAnimator.selection = 1;
-    bodyEastAnimator.animTime += FRAMERATE;
-    if (intersect.x > 0) {headAnimator.selection = 1;}
-    else {headAnimator.selection = 3;}
-  }
-  //vertical dominated
-  else {
-    bodyEastAnimator.selection = 0;
-    bodyEastAnimator.animTime = 0;
-    bodyAnimator.selection = 1;
-    if (intersect.y > 0) {
-      headAnimator.selection = 0;
-      bodyAnimator.animTime -= FRAMERATE;
+    //animate!
+    //horizontal dominated
+    if(intersect.x**2 > intersect.y**2) {
+      bodyAnimator.selection = 2;
+      bodyAnimator.animTime = 0;
+      bodyEastAnimator.selection = 1;
+      bodyEastAnimator.animTime += FRAMERATE;
+      if (intersect.x > 0) {headAnimator.selection = 1;}
+      else {headAnimator.selection = 3;}
     }
+    //vertical dominated
     else {
-      headAnimator.selection = 2;
-      bodyAnimator.animTime += FRAMERATE;
+      bodyEastAnimator.selection = 0;
+      bodyEastAnimator.animTime = 0;
+      bodyAnimator.selection = 1;
+      if (intersect.y > 0) {
+        headAnimator.selection = 0;
+        bodyAnimator.animTime -= FRAMERATE;
+      }
+      else {
+        headAnimator.selection = 2;
+        bodyAnimator.animTime += FRAMERATE;
+      }
     }
   }
 
