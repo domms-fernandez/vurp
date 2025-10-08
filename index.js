@@ -58,7 +58,7 @@ spriteAnimator.prototype.update = function() {
   //sptmp.duration / sptmp.frames = frame changes/sec
   //floor fps * animTime = what frame we're on
 
-  let currentFrame = Math.floor((this.spritemap.duration / this.spritemap.frames) * this.animTime);
+  let currentFrame = this.spritemap[this.selection].start + Math.floor((this.spritemap[this.selection].duration / this.spritemap[this.selection].frames) * this.animTime);
   console.log(currentFrame);
   let offset = currentFrame;
   
