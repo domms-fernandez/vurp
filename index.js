@@ -40,7 +40,7 @@ const ISAAC_WALK_EAST_SPRITEMAP = [
 //walking
 {
   frames: 10,
-  duration: 2,
+  duration: 1,
   start: 0,
   width: 18,
   height: 14
@@ -156,9 +156,24 @@ function loop() {
     } else {
       vY = Math.max(0, vY - DECELERATION);
     }
+
+    headAnimator.selection = 0;
+    headAnimator.animTime = 0;
+    headAnimator.update();
+    
+    bodyAnimator.selection = 0;
+    bodyAnimator.animTime = 0;
+    bodyAnimator.update();
+    
+    bodyEastAnimator.selection = 0;
+    bodyEastAnimator.animTime = 0;
+    bodyEastAnimator.update();
+    
     
   } else {
     //move towards goal
+    bodyEastAnimator.mirrored = false;
+    
     //step 1: goal point
     let pointA = {x: hHeight,  y: 0}; //the x value if it intercepts the side lines,
     let pointB = {y: hHeight, x: 0};  //and the y value for the top and bottom lines.
@@ -169,7 +184,7 @@ function loop() {
 
     let slope = relativeMouseY/relativeMouseX;
     
-    if(relativeMouseX < 0) {pointA.x *= -1;} //calculate intersection on the side of
+    if(relativeMouseX < 0) {pointA.x *= -1; bodyEastAnimator.mirrored = true;} //calculate intersection on the side of
     if(relativeMouseY < 0) {pointB.y *= -1;} //the button that is facing the mouse
 
     //complete points of intersection
