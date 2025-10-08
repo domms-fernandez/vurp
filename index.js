@@ -218,7 +218,7 @@ function loop() {
 
     //animate!
     //horizontal dominated
-    if(intersect.x**2 > intersect.y**2) {
+    if(Math.abs(vX) > Math.abs(vY)) {
       bodyAnimator.selection = 2;
       bodyAnimator.animTime = 0;
       bodyEastAnimator.selection = 1;
@@ -231,7 +231,7 @@ function loop() {
       bodyEastAnimator.selection = 0;
       bodyEastAnimator.animTime = 0;
       bodyAnimator.selection = 1;
-      if (intersect.y > 0) {
+      if (vY > 0) {
         headAnimator.selection = 0;
         bodyAnimator.animTime += FRAMERATE;
       }
