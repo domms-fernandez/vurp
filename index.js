@@ -80,6 +80,15 @@ let head = document.getElementById("head");
 let box = document.getElementById("body");
 let bodyEast = document.getElementById("body-east");
 
+box.style.left = Math.floor(Math.random() * (window.innerWidth - box.clientWidth)) + "px";
+box.style.top = Math.floor(Math.random() * (window.innerHeight - box.clientHeight)) + "px";
+
+let boxRect = box.getBoundingClientRect();
+
+//snap isaac's head
+head.style.top = boxRect.top + -60 + "px";
+head.style.left = boxRect.left + -15 + "px";
+
 function spriteAnimator(spritemap, element, verticallyAnimated) {
   this.spritemap = spritemap;
   this.element = element;
@@ -114,6 +123,7 @@ spriteAnimator.prototype.update = function() {
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, box, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, bodyEast, true);
+bodyAnimator.selection = 1;
 bodyEastAnimator.selection = 1;
 
 let vX = 0;
@@ -128,7 +138,7 @@ function loop() {
   let hWidth = box.clientWidth * 0.5;
   let hHeight = box.clientHeight * 0.5;
   
-  let boxRect = box.getBoundingClientRect();
+  boxRect = box.getBoundingClientRect();
   let boxCenter = {x: boxRect.left + hWidth, y: boxRect.top + hHeight};
   
   const ACCELERATION = box.clientHeight * 0.2 * FRAMERATE;
