@@ -32,7 +32,7 @@ const ISAAC_WALK_EAST_SPRITEMAP = [
 //hidden
 {
   frames: 1,
-  duration: 2,
+  duration: 1,
   start: -1,
   width: 18,
   height: 14
@@ -115,6 +115,7 @@ spriteAnimator.prototype.update = function() {
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, box, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, bodyEast, true);
+bodyEastAnimator.selection = 1;
 
 let vX = 0;
 let vY = 0;
@@ -195,6 +196,14 @@ function loop() {
   //after everything, add velocity
   box.style.left = boxRect.left + vX + "px";
   box.style.top = boxRect.top + vY + "px";
+
+  //snap isaac's head
+  //isaac head hight = 25px
+  //isaac idle body height = 13px
+  head.style.top = boxRect.top + -60 + "px";
+  //isaac head width = 28px
+  //isaac idle body width = 18px
+  head.style.left = boxRect.left + -5 + "px";
 
   bodyAnimator.animTime += FRAMERATE;
   bodyAnimator.update();
