@@ -1,15 +1,44 @@
 const MOVEMENT_SPEED = 10; //how many multiples of its own height the body box will move
 const FRAMERATE = 0.017; //one divided by FPS
 
-const ISAAC_WALK_SPRITEMAP = [{
-  frames: 10,
-  duration: 2,
+const ISAAC_WALK_SPRITEMAP = [
+//idle
+{
+  frames: 1,
+  duration: 1,
   start: 0,
   width: 18,
   height: 15
-}];
+},
+//walking
+{
+  frames: 10,
+  duration: 1,
+  start: 0,
+  width: 18,
+  height: 15
+},
+//hidden, horizontal movement
+{
+  frames: 1,
+  duration: 1,
+  start: -1,
+  width: 18,
+  height: 15
+}
+];
 
-const ISAAC_WALK_EAST_SPRITEMAP = [{
+const ISAAC_WALK_EAST_SPRITEMAP = [
+//hidden
+{
+  frames: 1,
+  duration: 2,
+  start: -1,
+  width: 18,
+  height: 14
+},
+//walking
+{
   frames: 10,
   duration: 2,
   start: 0,
@@ -34,13 +63,22 @@ const ISAAC_HEAD_SPRITEMAP = [{
 {
   frames: 1,
   duration: 1,
-  start: 1,
+  start: 2,
   width: 28,
   height: 25
-}];
+},
+{
+  frames: 1,
+  duration: 1,
+  start: 3,
+  width: 28,
+  height: 25
+}
+];
 
 let head = document.getElementById("head");
 let box = document.getElementById("body");
+let bodyEast = document.getElementById("body-east");
 
 function spriteAnimator(spritemap, element, verticallyAnimated) {
   this.spritemap = spritemap;
@@ -66,14 +104,17 @@ spriteAnimator.prototype.update = function() {
   if(this.verticallyAnimated) {
     offset *= this.element.clientHeight;
     this.element.firstElementChild.style.top = offset + "px";
+    if(this.mirrored) {this.element.firstElementChild.style.transform = "scaleX(-1)";}
+    else {this.element.firstElementChild.style.transform = "scaleX(1)";}
   } else {
-    if(!this.mirrored) offset *= -1;
     offset *= this.element.clientWidth;
     this.element.firstElementChild.style.left = offset + "px";
   }
 };
 
+let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, box, false);
+let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, bodyEast, true);
 
 let vX = 0;
 let vY = 0;
@@ -157,6 +198,10 @@ function loop() {
 
   bodyAnimator.animTime += FRAMERATE;
   bodyAnimator.update();
+  headAnimator.animTime += FRAMERATE;
+  headAnimator.update();
+  bodyEastAnimator.animTime += FRAMERATE;
+  bodyEastAnimator.update();
   
 }
 
