@@ -209,10 +209,10 @@ function loop() {
   //snap isaac's head
   //isaac head hight = 25px
   //isaac idle body height = 13px
-  head.style.top = boxRect.top + -60 + "px";
+  head.style.top = boxRect.top + vY + -60 + "px";
   //isaac head width = 28px
   //isaac idle body width = 18px
-  head.style.left = boxRect.left + -15 + "px";
+  head.style.left = boxRect.left + vX + -15 + "px";
 
   bodyAnimator.animTime += FRAMERATE;
   bodyAnimator.update();
