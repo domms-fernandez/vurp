@@ -58,10 +58,8 @@ spriteAnimator.prototype.update = function() {
   //sptmp.frames / sptmp.duration = frame changes/sec
   //floor fps * animTime = what frame we're on
 
-  let currentFrame = this.spritemap[this.selection].start + 
+  let offset = this.spritemap[this.selection].start + 
     Math.floor((this.spritemap[this.selection].frames / this.spritemap[this.selection].duration) * this.animTime);
-  console.log(currentFrame);
-  let offset = currentFrame;
   
   //then we need to find the offset in multiples of width, account for mirrored if !verticallyAnimated
   
@@ -69,6 +67,7 @@ spriteAnimator.prototype.update = function() {
     offset *= this.element.clientHeight;
     this.element.firstElementChild.style.top = offset + "px";
   } else {
+    if(!this.mirrored) offset *= -1;
     offset *= this.element.clientWidth;
     this.element.firstElementChild.style.left = offset + "px";
   }
