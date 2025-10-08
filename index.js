@@ -105,12 +105,12 @@ spriteAnimator.prototype.update = function() {
   //sptmp.frames / sptmp.duration = frame changes/sec
   //floor fps * animTime = what frame we're on
 
-  let offset = this.spritemap[this.selection].start + 
-    Math.floor((this.spritemap[this.selection].frames / this.spritemap[this.selection].duration) * this.animTime);
+  let offset = (this.spritemap[this.selection].start + 
+    Math.floor((this.spritemap[this.selection].frames / this.spritemap[this.selection].duration) * this.animTime)) * -1;
   
   //then we need to find the offset in multiples of width/height, mirror if verticallyAnimated
   if(this.verticallyAnimated) {
-    offset = offset * -1 * this.element.clientHeight;
+    offset = offset * this.element.clientHeight;
     this.element.firstElementChild.style.top = offset + "px";
     if(this.mirrored) {this.element.firstElementChild.style.transform = "scaleX(-1)";}
     else {this.element.firstElementChild.style.transform = "scaleX(1)";}
@@ -122,7 +122,7 @@ spriteAnimator.prototype.update = function() {
 
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, box, false);
-let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, bodyEast, true);
+let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
 bodyAnimator.selection = 1;
 bodyEastAnimator.selection = 1;
 
