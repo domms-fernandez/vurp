@@ -265,4 +265,10 @@ function loop() {
   
 }
 
+function swallow() {
+  new Audio("/vurp/vurp.x-wav").play();
+}
+
+document.querySelectorAll("div").forEach((v) => {v.addEventListener("click", swallow);});
+
 setInterval(loop, FRAMERATE * 1000);
