@@ -15,6 +15,11 @@ img {
   image-rendering: pixelated;
 }
 
+.vertically-animated {
+  width: 100%;
+  height: auto;
+}
+
 #body {
   width: 54px;
   height: 45px;
