@@ -234,11 +234,11 @@ function loop() {
       bodyAnimator.selection = 1;
       if (intersect.y > 0) {
         headAnimator.selection = 0;
-        bodyAnimator.animTime -= FRAMERATE;
+        bodyAnimator.animTime += FRAMERATE;
       }
       else {
         headAnimator.selection = 2;
-        bodyAnimator.animTime += FRAMERATE;
+        bodyAnimator.animTime -= FRAMERATE;
       }
     }
   }
@@ -247,13 +247,19 @@ function loop() {
   box.style.left = boxRect.left + vX + "px";
   box.style.top = boxRect.top + vY + "px";
 
+  boxRect = box.getBoundingClientRect();
+
+  
+  bodyEast.style.top = boxRect.top + "px";
+  bodyEast.style.left = boxRect.left + "px";
+
   //snap isaac's head
   //isaac head hight = 25px
   //isaac idle body height = 13px
-  head.style.top = boxRect.top + vY + -60 + "px";
+  head.style.top = boxRect.top + -60 + "px";
   //isaac head width = 28px
   //isaac idle body width = 18px
-  head.style.left = boxRect.left + vX + -15 + "px";
+  head.style.left = boxRect.left + -15 + "px";
 
   bodyAnimator.update();
   bodyEastAnimator.update();
