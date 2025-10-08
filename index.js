@@ -124,6 +124,7 @@ spriteAnimator.prototype.update = function() {
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, box, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
+bodyEastAnimator.update();
 
 let vX = 0;
 let vY = 0;
