@@ -9,6 +9,14 @@ body, div {
   overflow: hidden;
 }
 
+div {
+  cursor: pointer;
+}
+
+.pill {
+  cursor: help;
+}
+
 img {
   height: 100%;
   width: auto;
