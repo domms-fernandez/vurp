@@ -55,10 +55,12 @@ spriteAnimator.prototype.update = function() {
   if (this.animTime >= this.spritemap[this.selection].duration) this.animTime -= this.spritemap[this.selection].duration;
 
   //we need to find what frame we're on, based on spritemap's frames and duration vs animTime
-  //sptmp.frames / sptmp.duration = frame changes/sec
+  //sptmp.duration / sptmp.frames = frame changes/sec
   //floor fps * animTime = what frame we're on
-  
-  let offset = Math.floor((this.spritemap.frames / this.spritemap.duration) * this.animTime);
+
+  let currentFrame = Math.floor((this.spritemap.duration / this.spritemap.frames) * this.animTime);
+  console.log(currentFrame);
+  let offset = currentFrame;
   
   //then we need to find the offset in multiples of width, account for mirrored if !verticallyAnimated
   
