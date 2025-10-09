@@ -268,7 +268,7 @@ function loop() {
 
 function swallow() {
   if (Math.floor(Math.random() * 20) == 0) {
-    head.firstElementChild.src = "/vurp/img/isaac-head-pill-sheet.png";
+    head.firstElementChild.src = "/vurp/img/isaac-head-pills-sheet.png";
     new Audio("/vurp/sfx/derp.x-wav").play();
   } else {
     new Audio("/vurp/sfx/vurp.wav").play();
