@@ -153,7 +153,12 @@ function loop() {
   
   //if mouse is outside of body diameter
   else {
-    //move
+    let relativeMouseX = mousePos.x - centerBodyX;
+    let relativeMouseY = mousePos.y - centerBodyY;
+
+    let radiusRatio = body.clientHeight / Math.sqrt(relativeMouseX**2 + relativeMouseY**2);
+    let goalVX = relativeMouseX * radiusRatio * ISAAC_SPEED;
+    let goalVY = relativeMouseY * radiusRatio * ISAAC_SPEED;
   }
 }
   
