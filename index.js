@@ -1,33 +1,27 @@
-const MOVEMENT_SPEED = 10; //how many multiples of its own height the body box will move/sec
+const ISAAC_SCALE = 3; //scale isaac's sprites by this much
+const ISAAC_SPEED = 10; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
 
-const ISAAC_HEAD_SPRITEMAP = [{
+const ISAAC_HEAD_SPRITEMAP = [
+{
   frames: 1,
   duration: 1,
-  start: 0,
-  width: 28,
-  height: 25
+  start: 0
 },
 {
   frames: 1,
   duration: 1,
-  start: 1,
-  width: 28,
-  height: 25
+  start: 1
 },
 {
   frames: 1,
   duration: 1,
-  start: 2,
-  width: 28,
-  height: 25
+  start: 2
 },
 {
   frames: 1,
   duration: 1,
-  start: 3,
-  width: 28,
-  height: 25
+  start: 3
 }
 ];
 
@@ -36,25 +30,19 @@ const ISAAC_WALK_SPRITEMAP = [
 {
   frames: 1,
   duration: 1,
-  start: 0,
-  width: 18,
-  height: 15
+  start: 0
 },
 //walking
 {
   frames: 10,
   duration: 1,
-  start: 0,
-  width: 18,
-  height: 15
+  start: 0
 },
 //hidden, horizontal movement
 {
   frames: 1,
   duration: 1,
-  start: -1,
-  width: 18,
-  height: 15
+  start: -1
 }
 ];
 
@@ -63,17 +51,13 @@ const ISAAC_WALK_EAST_SPRITEMAP = [
 {
   frames: 1,
   duration: 1,
-  start: -1,
-  width: 18,
-  height: 14
+  start: -1
 },
 //walking
 {
   frames: 10,
   duration: 1,
-  start: 0,
-  width: 18,
-  height: 14
+  start: 0
 }];
 
 
@@ -124,102 +108,23 @@ let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, t
 box.style.left = Math.floor(Math.random() * (window.innerWidth - box.clientWidth)) + "px";
 box.style.top = Math.floor(Math.random() * (window.innerHeight - box.clientHeight)) + "px";
 
-let boxRect = box.getBoundingClientRect();
+let boxRect = box.getBoundingClientRect(); //we use this later
 
 head.style.top = boxRect.top + -60 + "px";
 head.style.left = boxRect.left + -15 + "px";
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////MAIN LOOP///////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 let mousePos;
-document.addEventListener("mousemove", (e) => {mousePos = e;});
-
 let vX = 0; let vY = 0;
+
 
 function loop() {
   if (!mousePos) return;
   
-  let hWidth = box.clientWidth * 0.5;
-  let hHeight = box.clientHeight * 0.5;
-  boxRect = box.getBoundingClientRect();
-  let boxCenterX = boxRect.left + hWidth;
-  let boxCenterY = boxRect.top + hHeight;
-  
-  if ((boxCenterX - mousePos.clientX)**2 + (boxCenterY - mousePos.clientY)**2 < hHeight**2) {
-    //slowly stop
-    headAnimator.selection = 0;
-    headAnimator.animTime = 0;
-    headAnimator.update();
-    
-    bodyAnimator.selection = 0;
-    bodyAnimator.animTime = 0;
-    bodyAnimator.update();
-    
-    bodyEastAnimator.selection = 0;
-    bodyEastAnimator.animTime = 0;
-    bodyEastAnimator.update();
-    
-    
-  } else {
-    //move towards goal
-    bodyEastAnimator.mirrored = false;
-    
-    //back to square one...
-
-    
-    //animate!
-    //horizontal dominated
-    if(Math.abs(vX) > Math.abs(vY)) {
-      bodyAnimator.selection = 2;
-      bodyAnimator.animTime = 0;
-      bodyEastAnimator.selection = 1;
-      bodyEastAnimator.animTime += FRAMERATE;
-      if (intersect.x > 0) {headAnimator.selection = 1;}
-      else {headAnimator.selection = 3;}
-    }
-    //vertical dominated
-    else {
-      bodyEastAnimator.selection = 0;
-      bodyEastAnimator.animTime = 0;
-      bodyAnimator.selection = 1;
-      if (vY > 0) {
-        headAnimator.selection = 0;
-        bodyAnimator.animTime += FRAMERATE;
-      }
-      else {
-        headAnimator.selection = 2;
-        bodyAnimator.animTime -= FRAMERATE;
-      }
-    }
-  }
-
-  //after everything, add velocity
-  box.style.left = boxRect.left + vX + "px";
-  box.style.top = boxRect.top + vY + "px";
-
-  boxRect = box.getBoundingClientRect();
-
-  
-  bodyEast.style.top = boxRect.top + "px";
-  bodyEast.style.left = boxRect.left + "px";
-
-  //snap isaac's head
-  //isaac head hight = 25px
-  //isaac idle body height = 13px
-  head.style.top = boxRect.top + -60 + "px";
-  //isaac head width = 28px
-  //isaac idle body width = 18px
-  head.style.left = boxRect.left + -15 + "px";
-
-  bodyAnimator.update();
-  bodyEastAnimator.update();
-  headAnimator.update();
-  
 }
   
 
+//how does swallowing pills work?
 function swallow() {
   if (Math.floor(Math.random() * 20) == 0) {
     head.firstElementChild.src = "/vurp/img/isaac-head-pills-sheet.png";
@@ -230,5 +135,6 @@ function swallow() {
 }
 
 document.querySelectorAll("div").forEach((v) => {v.addEventListener("click", swallow);});
+document.addEventListener("mousemove", (e) => {mousePos = e;});
 
 setInterval(loop, FRAMERATE * 1000);
