@@ -126,12 +126,7 @@ function loop() {
 
 //how does swallowing pills work?
 function swallow() {
-  if (Math.floor(Math.random() * 20) == 0) {
-    head.firstElementChild.src = "/vurp/img/isaac-head-pills-sheet.png";
-    new Audio("/vurp/sfx/derp.wav").play();
-  } else {
-    new Audio("/vurp/sfx/vurp.x-wav").play();
-  }
+  //ice wallow cum
 }
 
 document.querySelectorAll("div").forEach((v) => {v.addEventListener("click", swallow);});
