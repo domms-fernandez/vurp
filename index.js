@@ -271,7 +271,7 @@ function swallow() {
     head.firstElementChild.src = "/vurp/img/isaac-head-pill-sheet.png";
     new Audio("/vurp/sfx/derp.x-wav").play();
   } else {
-    new Audio("/vurp/sfx/vurp.x-wav").play();
+    new Audio("/vurp/sfx/vurp.wav").play();
   }
 }
 
