@@ -1,6 +1,7 @@
 const ISAAC_SCALE = 3; //scale isaac's sprites by this much
 const ISAAC_SPEED = 10; //how many multiples of its own height the body box will move/sec
-const FRAMERATE = 0.017; //one divided by FPS
+
+const FRAMERATE = 1; //one divided by FPS
 
 const ISAAC_HEAD_SPRITEMAP = [
 {
@@ -74,8 +75,11 @@ function spriteAnimator(spritemap, element, verticallyAnimated) {
 }
 
 spriteAnimator.prototype.update = function() {
-  while (this.animTime >= this.spritemap[this.selection].duration) this.animTime -= this.spritemap[this.selection].duration;
-  while (this.animTime < 0) this.animTime += this.spritemap[this.selection].duration;
+  //scale animTime appropriately
+  while (this.animTime >= this.spritemap[this.selection].duration)
+    this.animTime -= this.spritemap[this.selection].duration;
+  while (this.animTime < 0)
+    this.animTime += this.spritemap[this.selection].duration;
 
   //we need to find what frame we're on, based on spritemap's frames and duration vs animTime
   //sptmp.frames / sptmp.duration = frame changes/sec
@@ -88,9 +92,11 @@ spriteAnimator.prototype.update = function() {
   if(this.verticallyAnimated) {
     offset = offset * this.element.clientHeight;
     this.element.firstElementChild.style.top = offset + "px";
+    
     if(this.mirrored) {this.element.firstElementChild.style.transform = "scaleX(-1)";}
     else {this.element.firstElementChild.style.transform = "scaleX(1)";}
-  } else {
+  }
+  else {
     offset *= this.element.clientWidth;
     this.element.firstElementChild.style.left = offset + "px";
   }
@@ -98,20 +104,20 @@ spriteAnimator.prototype.update = function() {
 
 
 let head = document.getElementById("head");
-let box = document.getElementById("body");
+let body = document.getElementById("body");
 let bodyEast = document.getElementById("body-east");
 
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
-let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, box, false);
+let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
 
-box.style.left = Math.floor(Math.random() * (window.innerWidth - box.clientWidth)) + "px";
-box.style.top = Math.floor(Math.random() * (window.innerHeight - box.clientHeight)) + "px";
+body.style.left = Math.floor(Math.random() * (window.innerWidth - body.clientWidth)) + "px";
+body.style.top = Math.floor(Math.random() * (window.innerHeight - body.clientHeight)) + "px";
 
-let boxRect = box.getBoundingClientRect(); //we use this later
+let bodyRect = body.getBoundingClientRect(); //we use this later
 
-head.style.top = boxRect.top + -60 + "px";
-head.style.left = boxRect.left + -15 + "px";
+head.style.top = bodyRect.top + -60 + "px";
+head.style.left = bodyRect.left + -15 + "px";
 
 
 let mousePos;
@@ -120,7 +126,20 @@ let vX = 0; let vY = 0;
 
 function loop() {
   if (!mousePos) return;
+
+  let halfBodyWidth = body.clientWidth * 0.5;
+  let halfBodyHeight = body.clientHeight * 0.5;
+  let centerBodyX = bodyRect.left + halfBodyWidth;
+  let centerBodyY = bodyRect.top + halfBodyHeight;
   
+  //if mouse is within body diameter
+  if((mousePos.x - centerBodyX)**2 + (mousePos.y - centerBodyY)**2 < halfBodyHeight**2) {
+    //stop
+  }
+  //if mouse is outside of body diameter
+  else {
+    //move
+  }
 }
   
 
