@@ -137,15 +137,12 @@ function loop() {
 
     headAnimator.selection = 0;
     headAnimator.animTime = 0;
-    headAnimator.update();
     
     bodyAnimator.selection = 0;
     bodyAnimator.animTime = 0;
-    bodyAnimator.update();
     
     bodyEastAnimator.selection = 0;
     bodyEastAnimator.animTime = 0;
-    bodyEastAnimator.update();
     
   }
   
@@ -191,14 +188,25 @@ function loop() {
 
   body.style.left = bodyRect.left + vX + "px";
   body.style.top = bodyRect.top + vY + "px";
+  bodyRect = body.getBoundingClientRect();
+
+  head.style.left = bodyRect.left;
+  head.style.top = bodyRect.top;
+
+  bodyEastAnimator.style.left = bodyRect.left;
+  bodyEastAnimator.style.top = bodyRect.top;
+  
+  headAnimator.update();
+  bodyAnimator.update();
+  bodyEastAnimator.update();
 }
   
 
 //how does swallowing pills work?
 function swallow() {
   //placeholder!
-  new Audio("/sfx/derp.wav").play();
-  head.firstElementChild.src = "/img/isaac-head-pills-sheet.png";
+  new Audio("/vurp/sfx/derp.wav").play();
+  head.firstElementChild.src = "/vurp/img/isaac-head-pills-sheet.png";
 }
 
 document.querySelectorAll("div").forEach((v) => {v.addEventListener("click", swallow);});
