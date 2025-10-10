@@ -1,4 +1,4 @@
-const ISAAC_SPEED = 1; //how many multiples of its own height the body box will move/sec
+const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
 
 const ISAAC_HEAD_SPRITEMAP = [
@@ -132,8 +132,8 @@ function loop() {
   
   //if mouse is within body diameter
   if((mousePos.x - centerBodyX)**2 + (mousePos.y - centerBodyY)**2 < halfBodyHeight**2) {
-    vX = Math.floor(vX * 95) * 0.01;
-    vY = Math.floor(vY * 95) * 0.01;
+    vX *= 0.95;
+    vY *= 0.95;
 
     headAnimator.selection = 0;
     headAnimator.animTime = 0;
@@ -190,11 +190,11 @@ function loop() {
   body.style.top = bodyRect.top + vY + "px";
   bodyRect = body.getBoundingClientRect();
 
-  head.style.left = bodyRect.left;
-  head.style.top = bodyRect.top;
-
-  bodyEast.style.left = bodyRect.left;
-  bodyEast.style.top = bodyRect.top;
+  head.style.left = bodyRect.left + -15 + "px";
+  head.style.top = bodyRect.top + -60 + "px";
+  
+  bodyEast.style.left = bodyRect.left + "px";
+  bodyEast.style.top = bodyRect.top + "px";
   
   headAnimator.update();
   bodyAnimator.update();
