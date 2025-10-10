@@ -1,4 +1,4 @@
-const ISAAC_SPEED = 10; //how many multiples of its own height the body box will move/sec
+const ISAAC_SPEED = 1; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
 
 const ISAAC_HEAD_SPRITEMAP = [
@@ -193,8 +193,8 @@ function loop() {
   head.style.left = bodyRect.left;
   head.style.top = bodyRect.top;
 
-  bodyEastAnimator.style.left = bodyRect.left;
-  bodyEastAnimator.style.top = bodyRect.top;
+  bodyEast.style.left = bodyRect.left;
+  bodyEast.style.top = bodyRect.top;
   
   headAnimator.update();
   bodyAnimator.update();
