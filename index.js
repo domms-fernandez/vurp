@@ -1,6 +1,4 @@
-const ISAAC_SCALE = 3; //scale isaac's sprites by this much
 const ISAAC_SPEED = 10; //how many multiples of its own height the body box will move/sec
-
 const FRAMERATE = 1; //one divided by FPS
 
 const ISAAC_HEAD_SPRITEMAP = [
@@ -134,8 +132,8 @@ function loop() {
   
   //if mouse is within body diameter
   if((mousePos.x - centerBodyX)**2 + (mousePos.y - centerBodyY)**2 < halfBodyHeight**2) {
-    vX = Math.floor(vX * 90) * 0.01;
-    vY = Math.floor(vY * 90) * 0.01;
+    vX = Math.floor(vX * 95) * 0.01;
+    vY = Math.floor(vY * 95) * 0.01;
 
     headAnimator.selection = 0;
     headAnimator.animTime = 0;
@@ -157,15 +155,50 @@ function loop() {
     let relativeMouseY = mousePos.y - centerBodyY;
 
     let radiusRatio = body.clientHeight / Math.sqrt(relativeMouseX**2 + relativeMouseY**2);
-    let goalVX = relativeMouseX * radiusRatio * ISAAC_SPEED;
-    let goalVY = relativeMouseY * radiusRatio * ISAAC_SPEED;
+    vX = relativeMouseX * radiusRatio * ISAAC_SPEED * FRAMERATE;
+    vY = relativeMouseY * radiusRatio * ISAAC_SPEED * FRAMERATE;
+
+    //horizontal dominated
+    if(Math.abs(vX) > Math.abs(vY)) {
+      bodyAnimator.selection = 2;
+      bodyAnimator.animTime = 0;
+      bodyEastAnimator.selection = 1;
+      bodyEastAnimator.animTime += FRAMERATE;
+      if (vX > 0) {
+        headAnimator.selection = 1;
+        bodyEastAnimator.mirrored = false;
+      }
+      else {
+        headAnimator.selection = 3;
+        bodyEastAnimator.mirrored = true;
+      }
+    }
+    //vertical dominated
+    else {
+      bodyEastAnimator.selection = 0;
+      bodyEastAnimator.animTime = 0;
+      bodyAnimator.selection = 1;
+      if (vY > 0) {
+        headAnimator.selection = 0;
+        bodyAnimator.animTime += FRAMERATE;
+      }
+      else {
+        headAnimator.selection = 2;
+        bodyAnimator.animTime -= FRAMERATE;
+      }
+    }
   }
+
+  body.style.left = bodyRect.left + vX + "px";
+  body.style.top = bodyRect.top + vY + "px";
 }
   
 
 //how does swallowing pills work?
 function swallow() {
-  //ice wallow cum
+  //placeholder!
+  new Audio("/sfx/derp.wav").play();
+  head.firstElementChild.src = "/img/isaac-head-pills-sheet.png";
 }
 
 document.querySelectorAll("div").forEach((v) => {v.addEventListener("click", swallow);});
