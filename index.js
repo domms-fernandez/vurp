@@ -1,5 +1,5 @@
 const ISAAC_SPEED = 10; //how many multiples of its own height the body box will move/sec
-const FRAMERATE = 1; //one divided by FPS
+const FRAMERATE = 0.017; //one divided by FPS
 
 const ISAAC_HEAD_SPRITEMAP = [
 {
