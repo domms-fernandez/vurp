@@ -34,7 +34,7 @@ const ISAAC_WALK_SPRITEMAP = [
 //walking
 {
   frames: 10,
-  duration: 1,
+  duration: 0.8,
   start: 0
 },
 //hidden, horizontal movement
@@ -55,7 +55,7 @@ const ISAAC_WALK_EAST_SPRITEMAP = [
 //walking
 {
   frames: 10,
-  duration: 1,
+  duration: 0.8,
   start: 0
 }];
 
@@ -68,7 +68,7 @@ function spriteAnimator(spritemap, element, verticallyAnimated) {
   this.mirrored = false;
   this.selection = 0;
   this.animTime = 0;
-  this.animSpeed = 0;
+  this.animSpeed = 1;
 
   this.update();
 }
@@ -155,8 +155,8 @@ function loop() {
     let relativeMouseY = mousePos.y - centerBodyY;
 
     let radiusRatio = body.clientHeight / Math.sqrt(relativeMouseX**2 + relativeMouseY**2);
-    vX = relativeMouseX * radiusRatio * ISAAC_SPEED * FRAMERATE;
-    vY = relativeMouseY * radiusRatio * ISAAC_SPEED * FRAMERATE;
+    vX = relativeMouseX * radiusRatio;
+    vY = relativeMouseY * radiusRatio;
 
     let absVX = Math.abs(vX);
     let absVY = Math.abs(vY);
@@ -193,6 +193,9 @@ function loop() {
       }
     }
   }
+
+  vX = vX * ISAAC_SPEED * FRAMERATE;
+  vY = vY * ISAAC_SPEED * FRAMERATE;
 
   body.style.left = bodyRect.left + vX + "px";
   body.style.top = bodyRect.top + vY + "px";
