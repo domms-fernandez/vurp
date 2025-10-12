@@ -163,7 +163,7 @@ function loop() {
     else vX = Math.min(goalVX, vX + ACCELERATION);
     
     if (goalVY < 0) vY = Math.max(goalVY, vY - ACCELERATION);
-    else vY = Math.min(goalvY, vY + ACCELERATION);
+    else vY = Math.min(goalVY, vY + ACCELERATION);
 
     let absVX = Math.abs(vX);
     let absVY = Math.abs(vY);
