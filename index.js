@@ -162,7 +162,7 @@ function loop() {
     if (goalVX < 0) vX = Math.max(goalVX, vX - ACCELERATION);
     else vX = Math.min(goalVX, vX + ACCELERATION);
     
-    if (goalVY < 0) vY = Math.max(goalvY, vY - ACCELERATION);
+    if (goalVY < 0) vY = Math.max(goalVY, vY - ACCELERATION);
     else vY = Math.min(goalvY, vY + ACCELERATION);
 
     let absVX = Math.abs(vX);
