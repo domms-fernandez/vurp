@@ -192,10 +192,10 @@ function loop() {
         bodyAnimator.animTime -= FRAMERATE;
       }
     }
-  }
 
-  vX = vX * ISAAC_SPEED * FRAMERATE;
-  vY = vY * ISAAC_SPEED * FRAMERATE;
+    vX = vX * ISAAC_SPEED * FRAMERATE;
+    vY = vY * ISAAC_SPEED * FRAMERATE;
+  }
 
   body.style.left = bodyRect.left + vX + "px";
   body.style.top = bodyRect.top + vY + "px";
