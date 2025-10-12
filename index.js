@@ -167,7 +167,7 @@ function loop() {
       bodyAnimator.animTime = 0;
       bodyEastAnimator.selection = 1;
       bodyEastAnimator.animTime += FRAMERATE;
-      bodyEastAnimator.animSpeed = absVX / halfBodyWidth;
+      bodyEastAnimator.animSpeed = absVX / body.clientWidth;
       if (vX > 0) {
         headAnimator.selection = 1;
         bodyEastAnimator.mirrored = false;
@@ -182,7 +182,7 @@ function loop() {
       bodyEastAnimator.selection = 0;
       bodyEastAnimator.animTime = 0;
       bodyAnimator.selection = 1;
-      bodyAnimator.animSpeed = absVY / halfBodyHeight;
+      bodyAnimator.animSpeed = absVY / body.clientHeight;
       if (vY > 0) {
         headAnimator.selection = 0;
         bodyAnimator.animTime += FRAMERATE;
