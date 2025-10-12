@@ -34,7 +34,7 @@ const ISAAC_WALK_SPRITEMAP = [
 //walking
 {
   frames: 10,
-  duration: 0.8,
+  duration: 1,
   start: 0
 },
 //hidden, horizontal movement
@@ -55,7 +55,7 @@ const ISAAC_WALK_EAST_SPRITEMAP = [
 //walking
 {
   frames: 10,
-  duration: 0.8,
+  duration: 1,
   start: 0
 }];
 
