@@ -1,5 +1,6 @@
 const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
+const ACCELERATION = ISAAC_SPEED * FRAMERATE;
 
 const ISAAC_HEAD_SPRITEMAP = [
 {
@@ -34,7 +35,7 @@ const ISAAC_WALK_SPRITEMAP = [
 //walking
 {
   frames: 10,
-  duration: 1,
+  duration: 0.8,
   start: 0
 },
 //hidden, horizontal movement
@@ -55,7 +56,7 @@ const ISAAC_WALK_EAST_SPRITEMAP = [
 //walking
 {
   frames: 10,
-  duration: 1,
+  duration: 0.8,
   start: 0
 }];
 
@@ -155,11 +156,18 @@ function loop() {
     let relativeMouseY = mousePos.y - centerBodyY;
 
     let radiusRatio = body.clientHeight / Math.sqrt(relativeMouseX**2 + relativeMouseY**2);
-    vX = relativeMouseX * radiusRatio;
-    vY = relativeMouseY * radiusRatio;
+    let goalVX = relativeMouseX * radiusRatio;
+    let goalVY = relativeMouseY * radiusRatio;
+
+    if (goalVX < 0) vX = Math.max(goalVX, vX - ACCELERATION);
+    else vX = Math.min(goalVX, vX + ACCELERATION);
+    
+    if (goalVY < 0) vY = Math.max(goalvY, vY - ACCELERATION);
+    else vY = Math.min(goalvY, vY + ACCELERATION);
 
     let absVX = Math.abs(vX);
     let absVY = Math.abs(vY);
+    let walkAnimSpeed = absVX + absVY;
     
     //horizontal dominated
     if(absVX > absVY) {
@@ -167,7 +175,7 @@ function loop() {
       bodyAnimator.animTime = 0;
       bodyEastAnimator.selection = 1;
       bodyEastAnimator.animTime += FRAMERATE;
-      bodyEastAnimator.animSpeed = absVX / body.clientWidth;
+      bodyEastAnimator.animSpeed = walkAnimSpeed/body.clientHeight;
       if (vX > 0) {
         headAnimator.selection = 1;
         bodyEastAnimator.mirrored = false;
@@ -182,7 +190,7 @@ function loop() {
       bodyEastAnimator.selection = 0;
       bodyEastAnimator.animTime = 0;
       bodyAnimator.selection = 1;
-      bodyAnimator.animSpeed = absVY / body.clientHeight;
+      bodyAnimator.animSpeed = walkAnimSpeed/body.clientHeight;
       if (vY > 0) {
         headAnimator.selection = 0;
         bodyAnimator.animTime += FRAMERATE;
@@ -193,8 +201,8 @@ function loop() {
       }
     }
 
-    vX = vX * ISAAC_SPEED * FRAMERATE;
-    vY = vY * ISAAC_SPEED * FRAMERATE;
+    vX *= ACCELERATION;
+    vY *= ACCELERATION;
   }
 
   body.style.left = bodyRect.left + vX + "px";
