@@ -132,8 +132,8 @@ function loop() {
   
   //if mouse is within body diameter
   if((mousePos.x - centerBodyX)**2 + (mousePos.y - centerBodyY)**2 < halfBodyHeight**2) {
-    vX *= 0.95;
-    vY *= 0.95;
+    vX *= 0.9;
+    vY *= 0.9;
 
     headAnimator.selection = 0;
     headAnimator.animTime = 0;
