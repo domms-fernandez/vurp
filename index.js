@@ -68,23 +68,26 @@ function spriteAnimator(spritemap, element, verticallyAnimated) {
   this.mirrored = false;
   this.selection = 0;
   this.animTime = 0;
+  this.animSpeed = 0;
 
   this.update();
 }
 
 spriteAnimator.prototype.update = function() {
+  let maxAnimLength = this.spritemap[this.selection].duration / this.animSpeed;
+  
   //scale animTime appropriately
-  while (this.animTime >= this.spritemap[this.selection].duration)
-    this.animTime -= this.spritemap[this.selection].duration;
+  while (this.animTime >= maxAnimLength)
+    this.animTime -= maxAnimLength;
   while (this.animTime < 0)
-    this.animTime += this.spritemap[this.selection].duration;
+    this.animTime += maxAnimLength;
 
   //we need to find what frame we're on, based on spritemap's frames and duration vs animTime
   //sptmp.frames / sptmp.duration = frame changes/sec
   //floor fps * animTime = what frame we're on
 
   let offset = (this.spritemap[this.selection].start + 
-    Math.floor((this.spritemap[this.selection].frames / this.spritemap[this.selection].duration) * this.animTime)) * -1;
+    Math.floor((this.spritemap[this.selection].frames / maxAnimLength) * this.animTime)) * -1;
   
   //then we need to find the offset in multiples of width/height, mirror if verticallyAnimated
   if(this.verticallyAnimated) {
@@ -155,12 +158,16 @@ function loop() {
     vX = relativeMouseX * radiusRatio * ISAAC_SPEED * FRAMERATE;
     vY = relativeMouseY * radiusRatio * ISAAC_SPEED * FRAMERATE;
 
+    let absVX = Math.abs(vX);
+    let absVY = Math.abs(vY);
+    
     //horizontal dominated
-    if(Math.abs(vX) > Math.abs(vY)) {
+    if(absVX > absVY) {
       bodyAnimator.selection = 2;
       bodyAnimator.animTime = 0;
       bodyEastAnimator.selection = 1;
       bodyEastAnimator.animTime += FRAMERATE;
+      bodyEastAnimator.animSpeed = absVX / halfBodyWidth;
       if (vX > 0) {
         headAnimator.selection = 1;
         bodyEastAnimator.mirrored = false;
@@ -175,6 +182,7 @@ function loop() {
       bodyEastAnimator.selection = 0;
       bodyEastAnimator.animTime = 0;
       bodyAnimator.selection = 1;
+      bodyAnimator.animSpeed = absVY / halfBodyHeight;
       if (vY > 0) {
         headAnimator.selection = 0;
         bodyAnimator.animTime += FRAMERATE;
