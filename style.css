@@ -30,9 +30,15 @@ img {
   height: 57px;
 }
 
-#isaac {
-  width: something;
-  height: something;
+#isaac-positioner {
+  overflow: visible;
+  width: 84px;
+  height: 105px;
+}
+
+#isaac-scaler {
+  width: 84px;
+  height: 105px;
 }
 
 #body {
@@ -71,6 +77,10 @@ img {
 
 .grabbing {
   animation: 0.3s linear 0s 1 forwards grab;
+}
+
+.putting {
+  animation: 0.1s linear 0s 2 alternate-reverse swallow;
 }
 
 .swallowing {
