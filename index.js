@@ -1,6 +1,5 @@
 const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
-const ACCELERATION = ISAAC_SPEED * FRAMERATE;
 
 const ISAAC_HEAD_SPRITEMAP = [
 {
@@ -159,11 +158,11 @@ function loop() {
     let goalVX = relativeMouseX * radiusRatio;
     let goalVY = relativeMouseY * radiusRatio;
 
-    if (goalVX < 0) vX = Math.max(goalVX, vX - ACCELERATION);
-    else vX = Math.min(goalVX, vX + ACCELERATION);
+    if (goalVX < 0) vX = Math.max(goalVX, vX - goalVX * 0.1);
+    else vX = Math.min(goalVX, vX + goalVX * 0.1);
     
-    if (goalVY < 0) vY = Math.max(goalVY, vY - ACCELERATION);
-    else vY = Math.min(goalVY, vY + ACCELERATION);
+    if (goalVY < 0) vY = Math.max(goalVY, vY - goalVY * 0.1);
+    else vY = Math.min(goalVY, vY + goalVY * 0.1);
 
     let absVX = Math.abs(vX);
     let absVY = Math.abs(vY);
@@ -200,13 +199,10 @@ function loop() {
         bodyAnimator.animTime -= FRAMERATE;
       }
     }
-
-    vX *= ACCELERATION;
-    vY *= ACCELERATION;
   }
 
-  body.style.left = bodyRect.left + vX + "px";
-  body.style.top = bodyRect.top + vY + "px";
+  body.style.left = bodyRect.left + vX * ISAAC_SPEED * FRAMERATE + "px";
+  body.style.top = bodyRect.top + vY * ISAAC_SPEED * FRAMERATE + "px";
   bodyRect = body.getBoundingClientRect();
 
   head.style.left = bodyRect.left + -15 + "px";
