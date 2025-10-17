@@ -1,6 +1,14 @@
 const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
 
+const ALL_PILLS_SPRITEMAP = [
+{
+  frames: 13,
+  duration: 6.7,
+  start: 0
+}
+];
+
 const ISAAC_HEAD_SPRITEMAP = [
 {
   frames: 1,
@@ -151,6 +159,8 @@ let headHold = document.getElementById("head-hold");
 let bodyHold = document.getElementById("body-hold");
 let bodyEastHold = document.getElementById("body-east-hold");
 
+let pill = document.getElementById("pill");
+
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
@@ -158,6 +168,8 @@ let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, t
 let headHoldAnimator = new spriteAnimator(ISAAC_HEAD_HOLD_SPRITEMAP, headHold, false);
 let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_HOLD_SPRITEMAP, bodyHold, false);
 let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEastHold, true);
+
+let pillAnimator = new spriteAnimator(ALL_PILLS_SPRITEMAP, pill, false);
 
 body.style.left = Math.floor(Math.random() * (window.innerWidth - body.clientWidth)) + "px";
 body.style.top = Math.floor(Math.random() * (window.innerHeight - body.clientHeight)) + "px";
@@ -176,6 +188,8 @@ let holdTime = 0;
 
 let pillX = Math.floor(Math.random() * window.innerWidth);
 let pillY = Math.floor(Math.random() * window.innerHeight);
+pill.style.left = pillX - pill.clientHeight * 0.5 + "px";
+pill.style.top = pillY - pill.clientHeight * 0.5 + "px";
 
 let vX = 0; let vY = 0;
 
@@ -359,7 +373,7 @@ function loop() {
   bodyEastHoldAnimator.update();
 
   //for now
-  if(!holding && (pillX - centerBodyX)**2 + (pillY - centerBodyY)**2 < halfBodyHeight**2) {
+  if(!holding && (pillX - centerBodyX)**2 + (pillY - centerBodyY)**2 < halfBodyHeight**2 + pill.clientHeight * 0.5) {
     holding = true;
   }
   if(holding && holdTime < 1) holdTime += FRAMERATE;
