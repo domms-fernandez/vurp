@@ -159,7 +159,7 @@ let headHold = document.getElementById("head-hold");
 let bodyHold = document.getElementById("body-hold");
 let bodyEastHold = document.getElementById("body-east-hold");
 
-let pill = document.getElementById("pill");
+let pill = document.getElementsByClassName("pill")[0];
 
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
@@ -384,6 +384,7 @@ function loop() {
 function swallow() {
   //placeholder!
   holding = false;
+  holdTime = 0;
   new Audio("/vurp/sfx/derp.wav").play();
   head.firstElementChild.src = "/vurp/img/isaac-head-pills-sheet.png";
 }
