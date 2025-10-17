@@ -158,10 +158,10 @@ function loop() {
     let goalVX = relativeMouseX * radiusRatio;
     let goalVY = relativeMouseY * radiusRatio;
 
-    if (goalVX < 0) vX = Math.max(goalVX, vX - goalVX * 0.1);
+    if (goalVX < 0) vX = Math.max(goalVX, vX + goalVX * 0.1);
     else vX = Math.min(goalVX, vX + goalVX * 0.1);
     
-    if (goalVY < 0) vY = Math.max(goalVY, vY - goalVY * 0.1);
+    if (goalVY < 0) vY = Math.max(goalVY, vY + goalVY * 0.1);
     else vY = Math.min(goalVY, vY + goalVY * 0.1);
 
     let absVX = Math.abs(vX);
