@@ -267,7 +267,7 @@ function loop() {
   bodyHold.style.top = bodyRect.top + -12 + "px";
   
   bodyEastHold.style.left = bodyRect.left + -12 + "px";
-  bodyEastHold.style.top = bodyRect.top + -9 + "px";
+  bodyEastHold.style.top = bodyRect.top + -12 + "px";
   
   headAnimator.update();
   bodyAnimator.update();
