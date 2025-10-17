@@ -65,8 +65,27 @@ img {
   height: 54px;
 }
 
+.spawning {
+  animation: 1s linear 0s 1 forwards spawn;
+}
+
 .grabbing {
   animation: 0.3s linear 0s 1 forwards grab;
+}
+
+.swallowing {
+  animation: 0.1s linear 0s 1 forwards swallow;
+}
+
+@keyframes swallow {
+  from {
+    transform: translateY(25%)
+               scale(200%, 50%);
+  }
+  to {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
 }
 
 @keyframes grab {
