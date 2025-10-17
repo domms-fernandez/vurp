@@ -32,41 +32,63 @@ img {
 
 #isaac-positioner {
   overflow: visible;
+  
   width: 84px;
   height: 105px;
 }
 
 #isaac-scaler {
+  top: 0px;
+  left: 0px;
+  
   width: 84px;
   height: 105px;
 }
 
+#head {
+  top: 0px;
+  left: 0px;
+  
+  width: 84px;
+  height: 75px;
+}
+
 #body {
+  left: 15px;
+  top: 60px;
+  
   width: 54px;
   height: 45px;
 }
 
 #body-east {
+  left: 15px;
+  top: 60px;
+  
   width: 54px;
   height: 42px;
 }
 
-#head {
-  width: 84px;
-  height: 75px;
-}
-
 #head-hold {
+  top: 0px;
+  left: 0px;
+  
   width: 84px;
   height: 75px;
 }
 
 #body-hold {
+  top: 48px;
+  left: 3px;
+  
   width: 78px;
   height: 57px;
 }
 
 #body-east-hold {
+  top: 48px;
+  left: 3px;
+  
   width: 78px;
   height: 54px;
 }
