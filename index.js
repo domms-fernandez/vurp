@@ -142,7 +142,7 @@ let head = document.getElementById("head");
 let body = document.getElementById("body");
 let bodyEast = document.getElementById("body-east");
 
-let headHold = document.getElementById("head");
+let headHold = document.getElementById("head-hold");
 let bodyHold = document.getElementById("body-hold");
 let bodyEastHold = document.getElementById("body-east-hold");
 
@@ -154,6 +154,7 @@ let headHoldAnimator = new spriteAnimator(ISAAC_HEAD_HOLD_SPRITEMAP, headHold, f
 let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_HOLD_SPRITEMAP, bodyHold, false);
 let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEastHold, true);
 
+//for now
 headHoldAnimator.selection = 1;
 bodyHoldAnimator.selection = 2;
 bodyHoldAnimator.selection = 1;
@@ -242,7 +243,8 @@ function loop() {
         bodyAnimator.animTime -= FRAMERATE;
       }
     }
-
+    
+    //for now
     headHoldAnimator.animTime += FRAMERATE;
     bodyHoldAnimator.animTime += FRAMERATE;
     bodyEastHoldAnimator.animTime += FRAMERATE;
