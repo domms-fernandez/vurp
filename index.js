@@ -208,7 +208,7 @@ function loop() {
     vY *= 0.9;
 
     //anim pipeline
-    if(holding && holdTime < 1) {
+    if(holdTime < 1) {
       headAnimator.selection = 4;
     
       bodyAnimator.selection = 2;
@@ -275,7 +275,7 @@ function loop() {
       bodyHoldAnimator.animTime = 0;
 
       //holding
-      if(holding && holdTime < 1) {
+      if(holdTime < 1) {
         headHoldAnimator.selection = 1; //show
         headAnimator.selection = 4; //hide
         bodyEastAnimator.selection = 0; //hide
@@ -315,7 +315,7 @@ function loop() {
       bodyEastHoldAnimator.animTime = 0;
 
       //holding
-      if(holding && holdTime < 1) {
+      if(holdTime < 1) {
         headAnimator.selection = 4; //hide
         headHoldAnimator.selection = 1; //show
         bodyAnimator.selection = 2; //hide
@@ -372,11 +372,15 @@ function loop() {
   bodyHoldAnimator.update();
   bodyEastHoldAnimator.update();
 
+  pillAnimator.animTime += FRAMERATE;
+  pillAnimator.update();
+
   //for now
   if(!holding && (pillX - centerBodyX)**2 + (pillY - centerBodyY)**2 < halfBodyHeight**2 + pill.clientHeight * 0.5) {
     holding = true;
+    holdTime = 0;
   }
-  if(holding && holdTime < 1) holdTime += FRAMERATE;
+  if(holdTime < 1) holdTime += FRAMERATE;
 }
   
 
@@ -384,7 +388,13 @@ function loop() {
 function swallow() {
   //placeholder!
   holding = false;
-  holdTime = 0;
+  holdTime = 0.8;
+
+  Math.floor(Math.random() * window.innerWidth);
+  pillY = Math.floor(Math.random() * window.innerHeight);
+  pill.style.left = pillX - pill.clientHeight * 0.5 + "px";
+  pill.style.top = pillY - pill.clientHeight * 0.5 + "px";
+  
   new Audio("/vurp/sfx/derp.wav").play();
   head.firstElementChild.src = "/vurp/img/isaac-head-pills-sheet.png";
 }
