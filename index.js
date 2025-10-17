@@ -267,7 +267,7 @@ function loop() {
         bodyEastAnimator.selection = 0; //hide
         bodyEastHoldAnimator.selection = 1; //walking
         bodyEastHoldAnimator.animTime += FRAMERATE;
-        if (vY > 0) bodyEastHoldAnimator.mirrored = false;
+        if (vX > 0) bodyEastHoldAnimator.mirrored = false;
         else bodyEastHoldAnimator.mirrored = true;
 
         bodyEastAnimator.animTime = bodyEastHoldAnimator.animTime;
@@ -275,11 +275,11 @@ function loop() {
         
       //not holding
       else {
-        headHoldAnimator.selection = 0;
+        headHoldAnimator.selection = 0; //hide
         bodyEastHoldAnimator.selection = 0; //hide
         bodyEastAnimator.selection = 1; //walking
         bodyEastAnimator.animTime += FRAMERATE;
-        if (vY > 0) {
+        if (vX > 0) {
           bodyEastAnimator.mirrored = false;
           headAnimator.selection = 1;
         }
@@ -288,7 +288,7 @@ function loop() {
           headAnimator.selection = 3;
         }
 
-        bodyEastAnimator.animTime = bodyEastHoldAnimator.animTime;
+        bodyEastHoldAnimator.animTime = bodyEastAnimator.animTime;
       }
     }
       
@@ -306,8 +306,8 @@ function loop() {
         headHoldAnimator.selection = 1; //show
         bodyAnimator.selection = 2; //hide
         bodyHoldAnimator.selection = 2; //walking
-        if (vY > 0) bodyAnimator.animTime += FRAMERATE;
-        else bodyAnimator.animTime -= FRAMERATE;
+        if (vY > 0) bodyHoldAnimator.animTime += FRAMERATE;
+        else bodyHoldAnimator.animTime -= FRAMERATE;
 
         bodyAnimator.animTime = bodyHoldAnimator.animTime;
       }
@@ -363,10 +363,7 @@ function loop() {
     holding = true;
     holdTime = 0;
   }
-  else {
-    holding = false;
-    holdTime += FRAMERATE;
-  }
+  else if(holdTime < 1) holdTime += FRAMERATE;
 }
   
 
