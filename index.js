@@ -58,6 +58,27 @@ const ISAAC_WALK_SPRITEMAP = [
 }
 ];
 
+const ISAAC_WALK_HOLD_SPRITEMAP = [
+//hidden, horizontal movement
+{
+  frames: 1,
+  duration: 1,
+  start: -1
+},
+//idle
+{
+  frames: 1,
+  duration: 1,
+  start: 0
+},
+//walking
+{
+  frames: 10,
+  duration: 0.8,
+  start: 0
+}
+];
+
 const ISAAC_WALK_EAST_SPRITEMAP = [
 //hidden
 {
@@ -120,6 +141,7 @@ spriteAnimator.prototype.update = function() {
 let head = document.getElementById("head");
 let body = document.getElementById("body");
 let bodyEast = document.getElementById("body-east");
+
 let headHold = document.getElementById("head");
 let bodyHold = document.getElementById("body-hold");
 let bodyEastHold = document.getElementById("body-east-hold");
@@ -127,9 +149,14 @@ let bodyEastHold = document.getElementById("body-east-hold");
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
-let headHoldAnimator = new spriteAnimator(ISAAC_HEAD_HOLD_SPRITEMAP, head, false);
-let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, bodyHold, false);
+
+let headHoldAnimator = new spriteAnimator(ISAAC_HEAD_HOLD_SPRITEMAP, headHold, false);
+let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_HOLD_SPRITEMAP, bodyHold, false);
 let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEastHold, true);
+
+headHoldAnimator.selection = 1;
+bodyHoldAnimator.selection = 2;
+bodyHoldAnimator.selection = 1;
 
 body.style.left = Math.floor(Math.random() * (window.innerWidth - body.clientWidth)) + "px";
 body.style.top = Math.floor(Math.random() * (window.innerHeight - body.clientHeight)) + "px";
@@ -215,6 +242,10 @@ function loop() {
         bodyAnimator.animTime -= FRAMERATE;
       }
     }
+
+    headHoldAnimator.animTime += FRAMERATE;
+    bodyHoldAnimator.animTime += FRAMERATE;
+    bodyEastHoldAnimator.animTime += FRAMERATE;
   }
 
   body.style.left = bodyRect.left + vX * ISAAC_SPEED * FRAMERATE + "px";
@@ -226,10 +257,23 @@ function loop() {
   
   bodyEast.style.left = bodyRect.left + "px";
   bodyEast.style.top = bodyRect.top + "px";
+
+  headHold.style.left = bodyRect.left + -15 + "px";
+  headHold.style.top = bodyRect.top + -60 + "px";
+
+  bodyHold.style.left = bodyRect.left + -12 + "px";
+  bodyHold.style.top = bodyRect.top + -12 + "px";
+  
+  bodyEastHold.style.left = bodyRect.left + -12 + "px";
+  bodyEastHold.style.top = bodyRect.top + -9 + "px";
   
   headAnimator.update();
   bodyAnimator.update();
   bodyEastAnimator.update();
+
+  headHoldAnimator.update();
+  bodyHoldAnimator.update();
+  bodyEastHoldAnimator.update();
 }
   
 
