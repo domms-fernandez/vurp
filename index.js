@@ -359,17 +359,17 @@ function loop() {
   bodyEastHoldAnimator.update();
 
   //for now
-  if(bodyRect.left > window.innerWidth * 0.5) {
+  if(!holding && (pillX - centerBodyX)**2 + (pillY - centerBodyY)**2 < halfBodyHeight**2) {
     holding = true;
-    holdTime = 0;
   }
-  else if(holdTime < 1) holdTime += FRAMERATE;
+  if(holding && holdTime < 1) holdTime += FRAMERATE;
 }
   
 
 //how does swallowing pills work?
 function swallow() {
   //placeholder!
+  holding = false;
   new Audio("/vurp/sfx/derp.wav").play();
   head.firstElementChild.src = "/vurp/img/isaac-head-pills-sheet.png";
 }
