@@ -284,7 +284,7 @@ function loop() {
           headAnimator.selection = 1;
         }
         else {
-          bodyEastHoldAnimator.mirrored = true;
+          bodyEastAnimator.mirrored = true;
           headAnimator.selection = 3;
         }
 
