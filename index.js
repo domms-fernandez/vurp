@@ -390,7 +390,7 @@ function swallow() {
   holding = false;
   holdTime = 0.8;
 
-  Math.floor(Math.random() * window.innerWidth);
+  pillX = Math.floor(Math.random() * window.innerWidth);
   pillY = Math.floor(Math.random() * window.innerHeight);
   pill.style.left = pillX - pill.clientHeight * 0.5 + "px";
   pill.style.top = pillY - pill.clientHeight * 0.5 + "px";
