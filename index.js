@@ -255,7 +255,7 @@ function loop() {
     //horizontal dominated
     if(absVX > absVY) {
       //hide
-      bodyAnimator.selection = 0;
+      bodyAnimator.selection = 2;
       bodyAnimator.animTime = 0;
       bodyHoldAnimator.selection = 0;
       bodyHoldAnimator.animTime = 0;
