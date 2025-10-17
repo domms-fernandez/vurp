@@ -166,7 +166,6 @@ function loop() {
 
     let absVX = Math.abs(vX);
     let absVY = Math.abs(vY);
-    let walkAnimSpeed = absVX + absVY;
     
     //horizontal dominated
     if(absVX > absVY) {
@@ -174,7 +173,6 @@ function loop() {
       bodyAnimator.animTime = 0;
       bodyEastAnimator.selection = 1;
       bodyEastAnimator.animTime += FRAMERATE;
-      bodyEastAnimator.animSpeed = walkAnimSpeed/body.clientHeight;
       if (vX > 0) {
         headAnimator.selection = 1;
         bodyEastAnimator.mirrored = false;
@@ -189,7 +187,6 @@ function loop() {
       bodyEastAnimator.selection = 0;
       bodyEastAnimator.animTime = 0;
       bodyAnimator.selection = 1;
-      bodyAnimator.animSpeed = walkAnimSpeed/body.clientHeight;
       if (vY > 0) {
         headAnimator.selection = 0;
         bodyAnimator.animTime += FRAMERATE;
