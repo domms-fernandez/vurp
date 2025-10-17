@@ -30,6 +30,11 @@ img {
   height: 57px;
 }
 
+#isaac {
+  width: something;
+  height: something;
+}
+
 #body {
   width: 54px;
   height: 45px;
@@ -58,4 +63,31 @@ img {
 #body-east-hold {
   width: 78px;
   height: 54px;
+}
+
+.grabbing {
+  animation: 0.3s linear 0s 1 forwards grab;
+}
+
+@keyframes grab {
+  0% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
+  25% {
+    transform: translateY(25%)
+               scale(200%, 50%);
+  }
+  50% {
+    transform: translateY(-50%)
+               scale(50%, 200%);
+  }
+  75% {
+    transform: translateY(12.5%)
+               scale(125%, 75%);
+  }
+  100% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
 }
