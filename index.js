@@ -107,10 +107,14 @@ spriteAnimator.prototype.update = function() {
 let head = document.getElementById("head");
 let body = document.getElementById("body");
 let bodyEast = document.getElementById("body-east");
+let bodyHold = document.getElementById("body-hold");
+let bodyEastHold = document.getElementById("body-east-hold");
 
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
+let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, bodyHold, false);
+let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEastHold, true);
 
 body.style.left = Math.floor(Math.random() * (window.innerWidth - body.clientWidth)) + "px";
 body.style.top = Math.floor(Math.random() * (window.innerHeight - body.clientHeight)) + "px";
