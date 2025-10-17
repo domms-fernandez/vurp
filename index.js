@@ -157,7 +157,7 @@ let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEas
 //for now
 headHoldAnimator.selection = 1;
 bodyHoldAnimator.selection = 2;
-bodyHoldAnimator.selection = 1;
+bodyEastHoldAnimator.selection = 1;
 
 body.style.left = Math.floor(Math.random() * (window.innerWidth - body.clientWidth)) + "px";
 body.style.top = Math.floor(Math.random() * (window.innerHeight - body.clientHeight)) + "px";
