@@ -1,3 +1,4 @@
+//consts
 const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
 
@@ -151,6 +152,10 @@ spriteAnimator.prototype.update = function() {
 };
 
 
+//get elements
+let isaacPositioner = document.getElementById("isaac-positioner");
+let isaacScaler = document.getElementById("isaac-scaler");
+
 let head = document.getElementById("head");
 let body = document.getElementById("body");
 let bodyEast = document.getElementById("body-east");
@@ -161,6 +166,7 @@ let bodyEastHold = document.getElementById("body-east-hold");
 
 let pill = document.getElementsByClassName("pill")[0];
 
+//create animators
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
@@ -171,39 +177,27 @@ let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEas
 
 let pillAnimator = new spriteAnimator(ALL_PILLS_SPRITEMAP, pill, false);
 
-body.style.left = Math.floor(Math.random() * (window.innerWidth - body.clientWidth)) + "px";
-body.style.top = Math.floor(Math.random() * (window.innerHeight - body.clientHeight)) + "px";
-
-let bodyRect = body.getBoundingClientRect(); //we use this later
-
-head.style.top = bodyRect.top + -60 + "px";
-head.style.left = bodyRect.left + -15 + "px";
-
-
+//global vars
 let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
+
+let vX = 0; let vY = 0;
 
 let holding = false;
 let holdTime = 0;
 
-let pillX = Math.floor(Math.random() * window.innerWidth);
-let pillY = Math.floor(Math.random() * window.innerHeight);
-pill.style.left = pillX - pill.clientHeight * 0.5 + "px";
-pill.style.top = pillY - pill.clientHeight * 0.5 + "px";
 
-let vX = 0; let vY = 0;
-
-
+//main loop
 function loop() {
   if (!mousePos) return;
-
-  let halfBodyWidth = body.clientWidth * 0.5;
-  let halfBodyHeight = body.clientHeight * 0.5;
-  let centerBodyX = bodyRect.left + halfBodyWidth;
-  let centerBodyY = bodyRect.top + halfBodyHeight;
+  
+  let isaacPosition = isaacPositioner.getBoundingClientRect();
+  const HALF_BODY_HEIGHT = 22.5;
+  const CENTER_BODY_X = 42 + isaacPosition.left;
+  const CENTER_BODY_Y = 82.5 + isaacPosition.top;
   
   //if mouse is within body diameter
-  if((mousePos.x - centerBodyX)**2 + (mousePos.y - centerBodyY)**2 < halfBodyHeight**2) {
+  if((mousePos.x - CENTER_BODY_X)**2 + (mousePos.y - CENTER_BODY_Y)**2 < HALF_BODY_HEIGHT**2) {
     vX *= 0.9;
     vY *= 0.9;
 
@@ -249,10 +243,10 @@ function loop() {
   //if mouse is outside of body diameter
   else {
     //figure out vX + vY
-    let relativeMouseX = mousePos.x - centerBodyX;
-    let relativeMouseY = mousePos.y - centerBodyY;
+    let relativeMouseX = mousePos.x - CENTER_BODY_X;
+    let relativeMouseY = mousePos.y - CENTER_BODY_Y;
 
-    let radiusRatio = body.clientHeight / Math.sqrt(relativeMouseX**2 + relativeMouseY**2);
+    let radiusRatio = 2 * HALF_BODY_HEIGHT / Math.sqrt(relativeMouseX**2 + relativeMouseY**2);
     let goalVX = relativeMouseX * radiusRatio;
     let goalVY = relativeMouseY * radiusRatio;
 
@@ -345,25 +339,11 @@ function loop() {
     }
   }
 
-  body.style.left = bodyRect.left + vX * ISAAC_SPEED * FRAMERATE + "px";
-  body.style.top = bodyRect.top + vY * ISAAC_SPEED * FRAMERATE + "px";
-  bodyRect = body.getBoundingClientRect();
+  //reposition
+  isaacPositioner.style.left = isaacPosition.left + vX * ISAAC_SPEED * FRAMERATE + "px";
+  isaacPositioner.style.top = isaacPosition.top + vY * ISAAC_SPEED * FRAMERATE + "px";
 
-  head.style.left = bodyRect.left + -15 + "px";
-  head.style.top = bodyRect.top + -60 + "px";
-  
-  bodyEast.style.left = bodyRect.left + "px";
-  bodyEast.style.top = bodyRect.top + "px";
-
-  headHold.style.left = bodyRect.left + -15 + "px";
-  headHold.style.top = bodyRect.top + -60 + "px";
-
-  bodyHold.style.left = bodyRect.left + -12 + "px";
-  bodyHold.style.top = bodyRect.top + -12 + "px";
-  
-  bodyEastHold.style.left = bodyRect.left + -12 + "px";
-  bodyEastHold.style.top = bodyRect.top + -12 + "px";
-  
+  //update animations
   headAnimator.update();
   bodyAnimator.update();
   bodyEastAnimator.update();
@@ -376,7 +356,7 @@ function loop() {
   pillAnimator.update();
 
   //for now
-  if(!holding && (pillX - centerBodyX)**2 + (pillY - centerBodyY)**2 < halfBodyHeight**2 + pill.clientHeight * 0.5) {
+  if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < HALF_BODY_HEIGHT**2 + pill.clientHeight * 0.5) {
     holding = true;
     holdTime = 0;
   }
