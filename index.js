@@ -21,6 +21,11 @@ const ISAAC_HEAD_SPRITEMAP = [
   frames: 1,
   duration: 1,
   start: 3
+},
+{
+  frames: 1,
+  duration: 1,
+  start: -1
 }
 ];
 
@@ -154,11 +159,6 @@ let headHoldAnimator = new spriteAnimator(ISAAC_HEAD_HOLD_SPRITEMAP, headHold, f
 let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_HOLD_SPRITEMAP, bodyHold, false);
 let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEastHold, true);
 
-//for now
-headHoldAnimator.selection = 1;
-bodyHoldAnimator.selection = 2;
-bodyEastHoldAnimator.selection = 1;
-
 body.style.left = Math.floor(Math.random() * (window.innerWidth - body.clientWidth)) + "px";
 body.style.top = Math.floor(Math.random() * (window.innerHeight - body.clientHeight)) + "px";
 
@@ -169,6 +169,14 @@ head.style.left = bodyRect.left + -15 + "px";
 
 
 let mousePos;
+document.addEventListener("mousemove", (e) => {mousePos = e;});
+
+let holding = false;
+let holdTime = 0;
+
+let pillX = Math.floor(Math.random() * window.innerWidth);
+let pillY = Math.floor(Math.random() * window.innerHeight);
+
 let vX = 0; let vY = 0;
 
 
@@ -185,19 +193,48 @@ function loop() {
     vX *= 0.9;
     vY *= 0.9;
 
-    headAnimator.selection = 0;
-    headAnimator.animTime = 0;
+    //anim pipeline
+    if(holding && holdTime < 1) {
+      headAnimator.selection = 4;
     
-    bodyAnimator.selection = 0;
-    bodyAnimator.animTime = 0;
+      bodyAnimator.selection = 2;
+      bodyAnimator.animTime = 0;
     
-    bodyEastAnimator.selection = 0;
-    bodyEastAnimator.animTime = 0;
+      bodyEastAnimator.selection = 0;
+      bodyEastAnimator.animTime = 0;
+      
+
+      headHoldAnimator.selection = 1;
+      
+      bodyHoldAnimator.selection = 1;
+      bodyHoldAnimator.animTime = 0;
     
+      bodyEastHoldAnimator.selection = 0;
+      bodyEastHoldAnimator.animTime = 0;
+    }
+    else {
+      headAnimator.selection = 0;
+    
+      bodyAnimator.selection = 0;
+      bodyAnimator.animTime = 0;
+    
+      bodyEastAnimator.selection = 0;
+      bodyEastAnimator.animTime = 0;
+      
+
+      headHoldAnimator.selection = 0;
+      
+      bodyHoldAnimator.selection = 0;
+      bodyHoldAnimator.animTime = 0;
+    
+      bodyEastHoldAnimator.selection = 0;
+      bodyEastHoldAnimator.animTime = 0;
+    }
   }
   
   //if mouse is outside of body diameter
   else {
+    //figure out vX + vY
     let relativeMouseX = mousePos.x - centerBodyX;
     let relativeMouseY = mousePos.y - centerBodyY;
 
@@ -211,43 +248,87 @@ function loop() {
     if (goalVY < 0) vY = Math.max(goalVY, vY + goalVY * 0.1);
     else vY = Math.min(goalVY, vY + goalVY * 0.1);
 
+    //anim pipeline
     let absVX = Math.abs(vX);
     let absVY = Math.abs(vY);
-    
+
     //horizontal dominated
     if(absVX > absVY) {
-      bodyAnimator.selection = 2;
+      //hide
+      bodyAnimator.selection = 0;
       bodyAnimator.animTime = 0;
-      bodyEastAnimator.selection = 1;
-      bodyEastAnimator.animTime += FRAMERATE;
-      if (vX > 0) {
-        headAnimator.selection = 1;
-        bodyEastAnimator.mirrored = false;
+      bodyHoldAnimator.selection = 0;
+      bodyHoldAnimator.animTime = 0;
+
+      //holding
+      if(holding && holdTime < 1) {
+        headHoldAnimator.selection = 1; //show
+        headAnimator.selection = 4; //hide
+        bodyEastAnimator.selection = 0; //hide
+        bodyEastHoldAnimator.selection = 1; //walking
+        bodyEastHoldAnimator.animTime += FRAMERATE;
+        if (vY > 0) bodyEastHoldAnimator.mirrored = false;
+        else bodyEastHoldAnimator.mirrored = true;
+
+        bodyEastAnimator.animTime = bodyEastHoldAnimator.animTime;
       }
+        
+      //not holding
       else {
-        headAnimator.selection = 3;
-        bodyEastAnimator.mirrored = true;
+        headHoldAnimator.selection = 0;
+        bodyEastHoldAnimator.selection = 0; //hide
+        bodyEastAnimator.selection = 1; //walking
+        bodyEastAnimator.animTime += FRAMERATE;
+        if (vY > 0) {
+          bodyEastAnimator.mirrored = false;
+          headAnimator.selection = 1;
+        }
+        else {
+          bodyEastHoldAnimator.mirrored = true;
+          headAnimator.selection = 3;
+        }
+
+        bodyEastAnimator.animTime = bodyEastHoldAnimator.animTime;
       }
     }
+      
     //vertical dominated
     else {
+      //hide
       bodyEastAnimator.selection = 0;
       bodyEastAnimator.animTime = 0;
-      bodyAnimator.selection = 1;
-      if (vY > 0) {
-        headAnimator.selection = 0;
-        bodyAnimator.animTime += FRAMERATE;
+      bodyEastHoldAnimator.selection = 0;
+      bodyEastHoldAnimator.animTime = 0;
+
+      //holding
+      if(holding && holdTime < 1) {
+        headAnimator.selection = 4; //hide
+        headHoldAnimator.selection = 1; //show
+        bodyAnimator.selection = 2; //hide
+        bodyHoldAnimator.selection = 2; //walking
+        if (vY > 0) bodyAnimator.animTime += FRAMERATE;
+        else bodyAnimator.animTime -= FRAMERATE;
+
+        bodyAnimator.animTime = bodyHoldAnimator.animTime;
       }
+
+      //not holding
       else {
-        headAnimator.selection = 2;
-        bodyAnimator.animTime -= FRAMERATE;
+        headHoldAnimator.selection = 0; //hide
+        bodyHoldAnimator.selection = 0; //hide
+        bodyAnimator.selection = 1; //walking
+        if (vY > 0) {
+          headAnimator.selection = 0;
+          bodyAnimator.animTime += FRAMERATE;
+        }
+        else {
+          headAnimator.selection = 2;
+          bodyAnimator.animTime -= FRAMERATE;
+        }
+        
+        bodyHoldAnimator.animTime = bodyAnimator.animTime;
       }
     }
-    
-    //for now
-    headHoldAnimator.animTime += FRAMERATE;
-    bodyHoldAnimator.animTime += FRAMERATE;
-    bodyEastHoldAnimator.animTime += FRAMERATE;
   }
 
   body.style.left = bodyRect.left + vX * ISAAC_SPEED * FRAMERATE + "px";
@@ -276,6 +357,16 @@ function loop() {
   headHoldAnimator.update();
   bodyHoldAnimator.update();
   bodyEastHoldAnimator.update();
+
+  //for now
+  if(bodyRect.left > window.innerWidth * 0.5) {
+    holding = true;
+    holdTime = 0;
+  }
+  else {
+    holding = false;
+    holdTime += FRAMERATE;
+  }
 }
   
 
@@ -287,6 +378,5 @@ function swallow() {
 }
 
 document.querySelectorAll("div").forEach((v) => {v.addEventListener("click", swallow);});
-document.addEventListener("mousemove", (e) => {mousePos = e;});
 
 setInterval(loop, FRAMERATE * 1000);
