@@ -24,6 +24,19 @@ const ISAAC_HEAD_SPRITEMAP = [
 }
 ];
 
+const ISAAC_HEAD_HOLD_SPRITEMAP = [
+{
+  frames: 1,
+  duration: 1,
+  start: -1
+},
+{
+  frames: 1,
+  duration: 1,
+  start: 0
+}
+];
+
 const ISAAC_WALK_SPRITEMAP = [
 //idle
 {
@@ -107,12 +120,14 @@ spriteAnimator.prototype.update = function() {
 let head = document.getElementById("head");
 let body = document.getElementById("body");
 let bodyEast = document.getElementById("body-east");
+let headHold = document.getElementById("head");
 let bodyHold = document.getElementById("body-hold");
 let bodyEastHold = document.getElementById("body-east-hold");
 
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
+let headHoldAnimator = new spriteAnimator(ISAAC_HEAD_HOLD_SPRITEMAP, head, false);
 let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, bodyHold, false);
 let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEastHold, true);
 
