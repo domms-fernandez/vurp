@@ -206,7 +206,7 @@ function loop() {
     holding = true;
     holdTime = 0;
     isaacScaler.classList.add("grabbing");
-    setTimeout(() => {isaacScaler.classList.add("putting");}, MAX_PILL_HOLD_TIME * 1000 - 100;);
+    setTimeout(() => {isaacScaler.classList.add("putting");}, MAX_PILL_HOLD_TIME * 1000 - 100);
   }
 
   //move + animate isaac
