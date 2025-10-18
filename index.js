@@ -228,6 +228,8 @@ function loop() {
 
     isaacPositioner.style.cursor = "pointer";
     isaacScaler.classList.add("grabbing");
+
+    new Audio("/sfx/pickup.mp3").play();
   }
 
   //move + animate isaac
