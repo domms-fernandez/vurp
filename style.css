@@ -9,10 +9,6 @@ body, div {
   overflow: hidden;
 }
 
-div {
-  cursor: pointer;
-}
-
 img {
   height: 100%;
   width: auto;
@@ -24,10 +20,16 @@ img {
   height: auto;
 }
 
-.pill {
+.pill-positioner {
   cursor: help;
+  overflow: visible;
   width: 57px;
   height: 57px;
+}
+
+.pill {
+  width: 100%;
+  height: 100%;
 }
 
 #isaac-positioner {
@@ -97,11 +99,11 @@ img {
   animation: 1s linear 0s 1 forwards spawn;
 }
 
-.grab-class {
+.grabbing {
   animation: 0.1s linear 0s 1 forwards grab;
 }
 
-.put-class {
+.putting {
   animation: 0.23s linear 0s 1 forwards put;
 }
 

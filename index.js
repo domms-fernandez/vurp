@@ -167,7 +167,11 @@ let headHold = document.getElementById("head-hold");
 let bodyHold = document.getElementById("body-hold");
 let bodyEastHold = document.getElementById("body-east-hold");
 
-let pill = document.getElementsByClassName("pill")[0];
+let pillPositioner = document.getElementsByClassName("pill-positioner")[0];
+let pill = pillPositioner.firstElementChild;
+
+let fakePillPositioner = document.getElementsByClassName("pill-positioner")[1];
+let fakePill = fakePillPositioner.firstElementChild;
 
 //create animators
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
@@ -179,6 +183,14 @@ let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_HOLD_SPRITEMAP, bodyHold, f
 let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEastHold, true);
 
 let pillAnimator = new spriteAnimator(ALL_PILLS_SPRITEMAP, pill, false);
+let fakePillAnimator = new spriteAnimator(ALL_PILLS_SPRITEMAP, fakePill, false);
+
+pillAnimator.animTime = PILL_SEED;
+pillAnimator.update();
+
+fakePillAnimator.animTime = PILL_SEED;
+fakePillAnimator.update();
+
 
 //global vars
 let mousePos;
@@ -201,33 +213,21 @@ function loop() {
   if (!mousePos) return;
   
   //define some more consts to make our lives easier
-  const ISAAC_POSITION = isaacPositioner.getBoundingClientRect();
+  let isaacPosition = isaacPositioner.getBoundingClientRect();
   const HALF_BODY_HEIGHT = 22.5;
-  const CENTER_BODY_X = 42 + ISAAC_POSITION.left;
-  const CENTER_BODY_Y = 82.5 + ISAAC_POSITION.top;
+  const CENTER_BODY_X = 42 + isaacPosition.left;
+  const CENTER_BODY_Y = 82.5 + isaacPosition.top;
 
   //grabbing pill
   if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 9.5)**2) {
     holding = true;
     holdTime = 0;
-    isaacScaler.className = "";
-    isaacScaler.classList.add("grab-class");
-    new Audio("pickup.mp3").play();
-  }
-  if(holdTime < MAX_PILL_HOLD_TIME) {
-    if(holding) {
-      pill.style.left = ISAAC_POSITION.left + 32.5 + "px";
-      pill.style.top = ISAAC_POSITION.top - 13 + "px";
-    }
-    holdTime += FRAMERATE;
-    if(holdTime >= MAX_PILL_HOLD_TIME) {
-      isaacScaler.className = "";
-      isaacScaler.classList.add("put-class");
-      if(holding) {
-        stashed = true;
-        pill.style.display = "none";
-      }
-    }
+    
+    pill.style.display = "none";
+    fakePill.style.display = "block";
+
+    isaacPositioner.style.cursor = "pointer";
+    isaacScaler.classList.add("grabbing");
   }
 
   //move + animate isaac
@@ -375,8 +375,9 @@ function loop() {
   }
 
   //reposition
-  isaacPositioner.style.left = ISAAC_POSITION.left + vX * ISAAC_SPEED * FRAMERATE + "px";
-  isaacPositioner.style.top = ISAAC_POSITION.top + vY * ISAAC_SPEED * FRAMERATE + "px";
+  isaacPositioner.style.left = isaacPosition.left + vX * ISAAC_SPEED * FRAMERATE + "px";
+  isaacPositioner.style.top = isaacPosition.top + vY * ISAAC_SPEED * FRAMERATE + "px";
+  isaacPosition = isaacPositioner.getBoundingClientRect();
 
   //update animations
   headAnimator.update();
@@ -387,39 +388,42 @@ function loop() {
   bodyHoldAnimator.update();
   bodyEastHoldAnimator.update();
 
-  pillAnimator.animTime += FRAMERATE;
-  pillAnimator.update();
+  fakePillPositioner.style.left = isaacPosition.left + 32.5 + "px";
+  fakePillPositioner.style.top = -19 + isaacPosition.top + "px";
+
+  if(holdTime < MAX_PILL_HOLD_TIME) {
+    holdTime += FRAMERATE;
+    if(holdTime >= MAX_PILL_HOLD_TIME) {
+      isaacScaler.classList.add("putting");
+      fakePill.style.display = "none";
+    }
+  }
 }
   
 
 //how does swallowing pills work?
 function swallow() {
   if(!stashed) return;
-  if(!Math.floor(Math.random() * 20)) {
-    new Audio(["/sfx/derp.wav", "/sfx/derp-alt.wav"][Math.floor(Math.random() * 2)]).play();
-    head.src = "/img/isaac-head-pills-sheet.png";
-    return;
-  }
   holding = false;
   stashed = false;
 
   //animate accordingly
-  isaacScaler.className = "";
-  isaacScaler.classList.add("grab-class");
+  isaacScaler.classList.add("grabbing");
   holdTime = 0.5 * MAX_PILL_HOLD_TIME;
 
   //logic
   pillX = 9.5 + Math.floor(Math.random() * (window.innerWidth - 13));
   pillY = 9.5 + Math.floor(Math.random() * (window.innerHeight - 13));
-  pill.style.left = pillX - 9.5 + "px";
-  pill.style.top = pillY - 9.5 + "px";
+  pillPositioner.style.left = pillX - 9.5 + "px";
+  pillPositioner.style.top = pillY - 9.5 + "px";
   pill.style.display = "block";
   
   new Audio("/vurp/sfx/vurp.wav").play();
 }
 
-isaacScaler.addEventListener("animationend", () => {
+isaacScaler.addEventListener("animationend", (e) => {
   isaacScaler.className = "";
+  if(holding && e.animationName == "put") stashed = true;
 });
 
 isaacPositioner.addEventListener("click", swallow);
