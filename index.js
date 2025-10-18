@@ -1,6 +1,7 @@
 //consts
 const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
+const MAX_PILL_HOLD_TIME = 1; //isaac holds pill up for this long
 
 const ALL_PILLS_SPRITEMAP = [
 {
@@ -184,7 +185,7 @@ document.addEventListener("mousemove", (e) => {mousePos = e;});
 let vX = 0; let vY = 0;
 
 let holding = false;
-let holdTime = 0;
+let holdTime = MAX_PILL_HOLD_TIME;
 
 let pillX = 0;
 let pillY = 0;
@@ -214,7 +215,7 @@ function loop() {
     vY *= 0.9;
 
     //anim pipeline
-    if(holdTime < 1) {
+    if(holdTime < MAX_PILL_HOLD_TIME) {
       headAnimator.selection = 4;
     
       bodyAnimator.selection = 2;
@@ -281,7 +282,7 @@ function loop() {
       bodyHoldAnimator.animTime = 0;
 
       //holding
-      if(holdTime < 1) {
+      if(holdTime < MAX_PILL_HOLD_TIME) {
         headHoldAnimator.selection = 1; //show
         headAnimator.selection = 4; //hide
         bodyEastAnimator.selection = 0; //hide
@@ -321,7 +322,7 @@ function loop() {
       bodyEastHoldAnimator.animTime = 0;
 
       //holding
-      if(holdTime < 1) {
+      if(holdTime < MAX_PILL_HOLD_TIME) {
         headAnimator.selection = 4; //hide
         headHoldAnimator.selection = 1; //show
         bodyAnimator.selection = 2; //hide
@@ -366,6 +367,8 @@ function loop() {
 
   pillAnimator.animTime += FRAMERATE;
   pillAnimator.update();
+
+  if(holdTime < MAX_PILL_HOLD_TIME) holdTime += FRAMERATE;
 }
   
 
@@ -373,11 +376,12 @@ function loop() {
 function swallow() {
   if(!holding) return;
   holding = false;
+  holdTime = MAX_PILL_HOLD_TIME - 0.2;
 
   //animate accordingly
-  isaacScaler.classlist.remove("grabbing");
-  isaacScaler.classlist.remove("putting");
-  isaacScaler.classlist.add("swallowing");
+  isaacScaler.classList.remove("grabbing");
+  isaacScaler.classList.remove("putting");
+  isaacScaler.classList.add("swallowing");
 
   //logic
   new Audio("/vurp/sfx/vurp.x-wav").play();
