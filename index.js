@@ -1,7 +1,7 @@
 //consts
 const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
-const MAX_PILL_HOLD_TIME = 0.36; //isaac holds pill up for this long
+const MAX_PILL_HOLD_TIME = 1; //isaac holds pill up for this long
 
 const ALL_PILLS_SPRITEMAP = [
 {
@@ -188,8 +188,8 @@ let holding = false;
 let holdTime = MAX_PILL_HOLD_TIME;
 let stashed = false;
 
-let pillX = 300;
-let pillY = 300;
+let pillX = 9.5 + Math.floor(Math.random() * (window.innerWidth - 13));
+let pillY = 9.5 + Math.floor(Math.random() * (window.innerHeight - 13));
 pill.style.left = pillX - 9.5 + "px";
 pill.style.top = pillY - 9.5 + "px";
 
@@ -208,9 +208,17 @@ function loop() {
   if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 9.5)**2) {
     holding = true;
     holdTime = 0;
-    isaacScaler.classList.add("grabbing");
+    isaacScaler.className = "";
+    isaacScaler.classList.add("grab-class");
   }
-  if(holdTime < MAX_PILL_HOLD_TIME) holdTime += FRAMERATE;
+  if(holdTime < MAX_PILL_HOLD_TIME) {
+    holdTime += FRAMERATE;
+    if(holdTime >= MAX_PILL_HOLD_TIME) {
+      isaacScaler.className = "";
+      isaacScaler.classList.add("put-class");
+      if(holding) stashed = true;
+    }
+  }
 
   //move + animate isaac
   //if mouse is within body diameter
@@ -383,15 +391,19 @@ function swallow() {
   //animate accordingly
   isaacScaler.className = "";
   isaacScaler.classList.add("grabbing");
+  holdTime = 0;
 
   //logic
+  pillX = 9.5 + Math.floor(Math.random() * (window.innerWidth - 13));
+  pillY = 9.5 + Math.floor(Math.random() * (window.innerHeight - 13));
+  pill.style.left = pillX - 9.5 + "px";
+  pill.style.top = pillY - 9.5 + "px";
+  
   new Audio("/vurp/sfx/vurp.wav").play();
 }
 
-isaacScaler.addEventListener("animationend", (e) => {
+isaacScaler.addEventListener("animationend", () => {
   isaacScaler.className = "";
-  if(e.animationName == "grab") setTimeout(() => {isaacScaler.classList.add("putting")}, 100);
-  else if(holding) stashed = true;
 });
 
 isaacPositioner.addEventListener("click", swallow);
