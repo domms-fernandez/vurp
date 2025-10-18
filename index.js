@@ -212,11 +212,18 @@ function loop() {
     isaacScaler.classList.add("grab-class");
   }
   if(holdTime < MAX_PILL_HOLD_TIME) {
+    if(holding) {
+      pill.style.left = ISAAC_POSITION.left + 32.5 + "px";
+      pill.style.top = ISAAC_POSITION.top - 13 + "px";
+    }
     holdTime += FRAMERATE;
     if(holdTime >= MAX_PILL_HOLD_TIME) {
       isaacScaler.className = "";
       isaacScaler.classList.add("put-class");
-      if(holding) stashed = true;
+      if(holding) {
+        stashed = true;
+        pill.style.display = "none";
+      }
     }
   }
 
@@ -390,14 +397,15 @@ function swallow() {
 
   //animate accordingly
   isaacScaler.className = "";
-  isaacScaler.classList.add("grabbing");
-  holdTime = 0;
+  isaacScaler.classList.add("grab-class");
+  holdTime = 0.5 * MAX_PILL_HOLD_TIME;
 
   //logic
   pillX = 9.5 + Math.floor(Math.random() * (window.innerWidth - 13));
   pillY = 9.5 + Math.floor(Math.random() * (window.innerHeight - 13));
   pill.style.left = pillX - 9.5 + "px";
   pill.style.top = pillY - 9.5 + "px";
+  pill.style.display = "block";
   
   new Audio("/vurp/sfx/vurp.wav").play();
 }
