@@ -202,10 +202,10 @@ let holding = false;
 let holdTime = MAX_PILL_HOLD_TIME;
 let stashed = false;
 
-let pillX = 9.5 + Math.floor(Math.random() * (window.innerWidth - 13));
-let pillY = 9.5 + Math.floor(Math.random() * (window.innerHeight - 13));
-pill.style.left = pillX - 9.5 + "px";
-pill.style.top = pillY - 9.5 + "px";
+let pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
+let pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
+pill.style.left = pillX - 28.5 + "px";
+pill.style.top = pillY - 28.5 + "px";
 
 
 //main loop
@@ -219,7 +219,7 @@ function loop() {
   const CENTER_BODY_Y = 82.5 + isaacPosition.top;
 
   //grabbing pill
-  if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 9.5)**2) {
+  if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 28.5)**2) {
     holding = true;
     holdTime = 0;
     
@@ -388,8 +388,8 @@ function loop() {
   bodyHoldAnimator.update();
   bodyEastHoldAnimator.update();
 
-  fakePillPositioner.style.left = isaacPosition.left + 32.5 + "px";
-  fakePillPositioner.style.top = -19 + isaacPosition.top + "px";
+  fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
+  fakePillPositioner.style.top = -57 + isaacPosition.top + "px";
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
     holdTime += FRAMERATE;
@@ -412,10 +412,10 @@ function swallow() {
   holdTime = 0.5 * MAX_PILL_HOLD_TIME;
 
   //logic
-  pillX = 9.5 + Math.floor(Math.random() * (window.innerWidth - 13));
-  pillY = 9.5 + Math.floor(Math.random() * (window.innerHeight - 13));
-  pillPositioner.style.left = pillX - 9.5 + "px";
-  pillPositioner.style.top = pillY - 9.5 + "px";
+  pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
+  pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
+  pill.style.left = pillX - 28.5 + "px";
+  pill.style.top = pillY - 28.5 + "px";
   pill.style.display = "block";
   
   new Audio("/vurp/sfx/vurp.wav").play();
