@@ -186,16 +186,28 @@ let vX = 0; let vY = 0;
 let holding = false;
 let holdTime = 0;
 
+let pillX = 0;
+let pillY = 0;
+
 
 //main loop
 function loop() {
   if (!mousePos) return;
   
-  let isaacPosition = isaacPositioner.getBoundingClientRect();
+  //define some more consts to make our lives easier
+  const ISAAC_POSITION = isaacPositioner.getBoundingClientRect();
   const HALF_BODY_HEIGHT = 22.5;
-  const CENTER_BODY_X = 42 + isaacPosition.left;
-  const CENTER_BODY_Y = 82.5 + isaacPosition.top;
-  
+  const CENTER_BODY_X = 42 + ISAAC_POSITION.left;
+  const CENTER_BODY_Y = 82.5 + ISAAC_POSITION.top;
+
+  //grabbing pill
+  if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < HALF_BODY_HEIGHT**2) {
+    holding = true;
+    holdTime = 0;
+    isaacScaler.classList.add("grabbing");
+  }
+
+  //move + animate isaac
   //if mouse is within body diameter
   if((mousePos.x - CENTER_BODY_X)**2 + (mousePos.y - CENTER_BODY_Y)**2 < HALF_BODY_HEIGHT**2) {
     vX *= 0.9;
@@ -340,8 +352,8 @@ function loop() {
   }
 
   //reposition
-  isaacPositioner.style.left = isaacPosition.left + vX * ISAAC_SPEED * FRAMERATE + "px";
-  isaacPositioner.style.top = isaacPosition.top + vY * ISAAC_SPEED * FRAMERATE + "px";
+  isaacPositioner.style.left = ISAAC_POSITION.left + vX * ISAAC_SPEED * FRAMERATE + "px";
+  isaacPositioner.style.top = ISAAC_POSITION.top + vY * ISAAC_SPEED * FRAMERATE + "px";
 
   //update animations
   headAnimator.update();
@@ -354,31 +366,37 @@ function loop() {
 
   pillAnimator.animTime += FRAMERATE;
   pillAnimator.update();
-
-  //for now
-  if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < HALF_BODY_HEIGHT**2 + pill.clientHeight * 0.5) {
-    holding = true;
-    holdTime = 0;
-  }
-  if(holdTime < 1) holdTime += FRAMERATE;
 }
   
 
 //how does swallowing pills work?
 function swallow() {
-  //placeholder!
+  if(!holding) return;
   holding = false;
-  holdTime = 0.8;
 
-  pillX = Math.floor(Math.random() * window.innerWidth);
-  pillY = Math.floor(Math.random() * window.innerHeight);
-  pill.style.left = pillX - pill.clientHeight * 0.5 + "px";
-  pill.style.top = pillY - pill.clientHeight * 0.5 + "px";
-  
-  new Audio("/vurp/sfx/derp.wav").play();
-  head.firstElementChild.src = "/vurp/img/isaac-head-pills-sheet.png";
+  //animate accordingly
+  isaacScaler.classlist.remove("grabbing");
+  isaacScaler.classlist.remove("putting");
+  isaacScaler.classlist.add("swallowing");
+
+  //logic
+  new Audio("/vurp/sfx/vurp.x-wav").play();
 }
 
-document.querySelectorAll("div").forEach((v) => {v.addEventListener("click", swallow);});
+isaacScaler.addEventListener("animationend", (e) => {
+  switch(e.animationName){
+    case "grab":
+      isaacScaler.classList.remove("grabbing");
+      setTimeout(() => {isaacScaler.classList.add("putting");}, 600);
+      break;
+    case "put":
+      isaacScaler.classList.remove("putting");
+      break;
+    case "swallow":
+      isaacScaler.classList.remove("swallowing");
+      break;
+  }
+});
 
+isaacPositioner.addEventListener("click", swallow);
 setInterval(loop, FRAMERATE * 1000);
