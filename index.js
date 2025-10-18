@@ -210,6 +210,7 @@ function loop() {
     holdTime = 0;
     isaacScaler.className = "";
     isaacScaler.classList.add("grab-class");
+    new Audio("pickup.mp3").play();
   }
   if(holdTime < MAX_PILL_HOLD_TIME) {
     if(holding) {
@@ -392,6 +393,11 @@ function loop() {
 //how does swallowing pills work?
 function swallow() {
   if(!stashed) return;
+  if(!Math.floor(Math.random() * 20)) {
+    new Audio(["/sfx/derp.wav", "/sfx/derp-alt.wav"][Math.floor(Math.random() * 2)]).play();
+    head.src = "/img/isaac-head-pills-sheet.png";
+    return;
+  }
   holding = false;
   stashed = false;
 
