@@ -206,6 +206,7 @@ function loop() {
     holding = true;
     holdTime = 0;
     isaacScaler.classList.add("grabbing");
+    setTimeout(() => {isaacScaler.classList.add("putting");}, MAX_PILL_HOLD_TIME * 1000 - 100;);
   }
 
   //move + animate isaac
@@ -379,27 +380,15 @@ function swallow() {
   holdTime = MAX_PILL_HOLD_TIME - 0.2;
 
   //animate accordingly
-  isaacScaler.classList.remove("grabbing");
-  isaacScaler.classList.remove("putting");
-  isaacScaler.classList.add("swallowing");
+  isaacScaler.className = "";
+  isaacScaler.classList.add("grabbing");
 
   //logic
   new Audio("/vurp/sfx/vurp.x-wav").play();
 }
 
 isaacScaler.addEventListener("animationend", (e) => {
-  switch(e.animationName){
-    case "grab":
-      isaacScaler.classList.remove("grabbing");
-      setTimeout(() => {isaacScaler.classList.add("putting");}, 600);
-      break;
-    case "put":
-      isaacScaler.classList.remove("putting");
-      break;
-    case "swallow":
-      isaacScaler.classList.remove("swallowing");
-      break;
-  }
+  isaacScaler.className = "";
 });
 
 isaacPositioner.addEventListener("click", swallow);
