@@ -1,7 +1,9 @@
 //consts
 const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
-const MAX_PILL_HOLD_TIME = 1; //isaac holds pill up for this long
+
+const MAX_PILL_HOLD_TIME = 1; //isaac holds pill up for this long before it is stashed
+const PILL_SEED = Math.floor(Math.random() * 13); //pill sheet offset
 
 const ALL_PILLS_SPRITEMAP = [
 {
