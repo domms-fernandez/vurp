@@ -167,7 +167,8 @@ let headHold = document.getElementById("head-hold");
 let bodyHold = document.getElementById("body-hold");
 let bodyEastHold = document.getElementById("body-east-hold");
 
-let pill = document.getElementsByClassName("pill")[0];
+let pillPositioner = document.getElementsByClassName("pill-positioner")[0];
+let pill = pillPositioner.firstElementChild;
 
 //create animators
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
@@ -179,6 +180,10 @@ let bodyHoldAnimator = new spriteAnimator(ISAAC_WALK_HOLD_SPRITEMAP, bodyHold, f
 let bodyEastHoldAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEastHold, true);
 
 let pillAnimator = new spriteAnimator(ALL_PILLS_SPRITEMAP, pill, false);
+
+
+//pill class.. because i need this... okay???
+let pill
 
 //global vars
 let mousePos;
