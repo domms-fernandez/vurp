@@ -98,11 +98,11 @@ img {
 }
 
 .grabbing {
-  animation: 0.3s linear 0s 1 forwards grab;
+  animation: 0.1s linear 0s 1 forwards grab;
 }
 
 .putting {
-  animation: 0.1s linear 0s 2 alternate-reverse swallow;
+  animation: 0.1s linear 0s 1 forwards put;
 }
 
 .swallowing {
@@ -112,9 +112,28 @@ img {
 @keyframes swallow {
   from {
     transform: translateY(25%)
-               scale(200%, 50%);
+               scale(150%, 50%);
   }
   to {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
+}
+
+@keyframes put {
+  0% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
+  48% {
+    transform: translateY(25%)
+               scale(100%, 50%);
+  }
+  96% {
+    transform: translateY(-5%)
+               scale(100%, 110%);
+  }
+  100% {
     transform: translateY(0%)
                scale(100%, 100%);
   }
