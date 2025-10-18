@@ -98,14 +98,44 @@ img {
 }
 
 .grabbing {
-  animation: 0.2s linear 0s 1 forwards grab;
+  animation: 0.1s linear 0s 1 forwards grab;
 }
 
 .putting {
-  animation: 0.2s linear 0s 1 backwards grab;
+  animation: 0.23s linear 0s 1 forwards put;
 }
 
 @keyframes grab {
+  from {
+    transform: translateY(12.5%)
+               scale(125%, 75%);
+  }
+  to {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
+}
+
+@keyframes put {
+  0% {
+    transform: translateY(-12.5%)
+               scale(75%, 125%);
+  }
+  20% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
+  40% {
+    transform: translateY(5%)
+               scale(110%, 90%);
+  }
+  100% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
+}
+
+@keyframes jiggle {
   0% {
     transform: translateY(0%)
                scale(100%, 100%);
