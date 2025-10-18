@@ -24,10 +24,15 @@ img {
   height: auto;
 }
 
-.pill {
+.pill-positioner {
   cursor: help;
   width: 57px;
   height: 57px;
+}
+
+.pill {
+  width: 100%;
+  height: 100%;
 }
 
 #isaac-positioner {
