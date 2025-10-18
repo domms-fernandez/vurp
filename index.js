@@ -1,7 +1,7 @@
 //consts
 const ISAAC_SPEED = 5; //how many multiples of its own height the body box will move/sec
 const FRAMERATE = 0.017; //one divided by FPS
-const MAX_PILL_HOLD_TIME = 1; //isaac holds pill up for this long
+const MAX_PILL_HOLD_TIME = 0.36; //isaac holds pill up for this long
 
 const ALL_PILLS_SPRITEMAP = [
 {
@@ -186,9 +186,12 @@ let vX = 0; let vY = 0;
 
 let holding = false;
 let holdTime = MAX_PILL_HOLD_TIME;
+let stashed = false;
 
-let pillX = 0;
-let pillY = 0;
+let pillX = 300;
+let pillY = 300;
+pill.style.left = pillX - 9.5 + "px";
+pill.style.top = pillY - 9.5 + "px";
 
 
 //main loop
@@ -202,12 +205,12 @@ function loop() {
   const CENTER_BODY_Y = 82.5 + ISAAC_POSITION.top;
 
   //grabbing pill
-  if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < HALF_BODY_HEIGHT**2) {
+  if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 9.5)**2) {
     holding = true;
     holdTime = 0;
     isaacScaler.classList.add("grabbing");
-    setTimeout(() => {isaacScaler.classList.add("putting");}, MAX_PILL_HOLD_TIME * 1000 - 100);
   }
+  if(holdTime < MAX_PILL_HOLD_TIME) holdTime += FRAMERATE;
 
   //move + animate isaac
   //if mouse is within body diameter
@@ -368,27 +371,27 @@ function loop() {
 
   pillAnimator.animTime += FRAMERATE;
   pillAnimator.update();
-
-  if(holdTime < MAX_PILL_HOLD_TIME) holdTime += FRAMERATE;
 }
   
 
 //how does swallowing pills work?
 function swallow() {
-  if(!holding) return;
+  if(!stashed) return;
   holding = false;
-  holdTime = MAX_PILL_HOLD_TIME - 0.2;
+  stashed = false;
 
   //animate accordingly
   isaacScaler.className = "";
   isaacScaler.classList.add("grabbing");
 
   //logic
-  new Audio("/vurp/sfx/vurp.x-wav").play();
+  new Audio("/vurp/sfx/vurp.wav").play();
 }
 
 isaacScaler.addEventListener("animationend", (e) => {
   isaacScaler.className = "";
+  if(e.animationName == "grab") setTimeout(() => {isaacScaler.classList.add("putting")}, 100);
+  else if(holding) stashed = true;
 });
 
 isaacPositioner.addEventListener("click", swallow);
