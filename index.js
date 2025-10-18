@@ -393,10 +393,7 @@ function loop() {
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
     holdTime += FRAMERATE;
-    if(holdTime >= MAX_PILL_HOLD_TIME) {
-      isaacScaler.classList.add("putting");
-      fakePill.style.display = "none";
-    }
+    if(holdTime >= MAX_PILL_HOLD_TIME) isaacScaler.classList.add("putting");
   }
 }
   
@@ -406,10 +403,12 @@ function swallow() {
   if(!stashed) return;
   holding = false;
   stashed = false;
+  isaacPositioner.style.cursor = "auto";
 
   //animate accordingly
   isaacScaler.classList.add("grabbing");
   holdTime = 0.5 * MAX_PILL_HOLD_TIME;
+  fakePill.style.display = "block";
 
   //logic
   pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
@@ -423,7 +422,10 @@ function swallow() {
 
 isaacScaler.addEventListener("animationend", (e) => {
   isaacScaler.className = "";
-  if(holding && e.animationName == "put") stashed = true;
+  if(holding && e.animationName == "put") {
+    stashed = true;
+    fakePill.style.display = "none";
+  }
 });
 
 isaacPositioner.addEventListener("click", swallow);
