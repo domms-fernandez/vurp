@@ -9,10 +9,6 @@ body, div {
   overflow: hidden;
 }
 
-div {
-  cursor: pointer;
-}
-
 img {
   height: 100%;
   width: auto;
@@ -103,11 +99,11 @@ img {
   animation: 1s linear 0s 1 forwards spawn;
 }
 
-.grab-class {
+.grabbing {
   animation: 0.1s linear 0s 1 forwards grab;
 }
 
-.put-class {
+.putting {
   animation: 0.23s linear 0s 1 forwards put;
 }
 
