@@ -393,7 +393,7 @@ function loop() {
   fakePillPositioner.style.top = -57 + isaacPosition.top + "px";
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
-    pill.style.cursor = "auto";
+    pillPositioner.style.cursor = "auto";
     fakePill.style.display = "block";
     fakePillAnimator.update();
     holdTime += FRAMERATE;
@@ -423,7 +423,7 @@ function swallow() {
   pillPositioner.style.left = pillX - 28.5 + "px";
   pillPositioner.style.top = pillY - 28.5 + "px";
   pill.style.display = "block";
-  pill.style.cursor = "help";
+  pillPositioner.style.cursor = "help";
   pill.classList.add("spawning");
   
   new Audio("/vurp/sfx/vurp.wav").play();
