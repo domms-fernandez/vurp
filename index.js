@@ -391,7 +391,7 @@ function loop() {
   bodyEastHoldAnimator.update();
 
   fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
-  fakePillPositioner.style.top = -57 + isaacPosition.top + isaacScaler.getBoundingClientRect().top + "px";
+  fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
     fakePill.style.display = "block";
