@@ -224,12 +224,11 @@ function loop() {
     
     pillPositioner.style.cursor = "auto";
     pill.style.display = "none";
-    fakePill.style.display = "block";
 
     isaacPositioner.style.cursor = "pointer";
     isaacScaler.classList.add("grabbing");
 
-    new Audio("/sfx/pickup.mp3").play();
+    new Audio("/vurp/sfx/pickup.mp3").play();
   }
 
   //move + animate isaac
@@ -394,6 +393,7 @@ function loop() {
   fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
+    fakePillAnimator.animTime = pillAnimator.animTime;
     fakePill.style.display = "block";
     fakePillAnimator.update();
     holdTime += FRAMERATE;
