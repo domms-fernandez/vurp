@@ -222,6 +222,7 @@ function loop() {
     holding = true;
     holdTime = 0;
     
+    pillPositioner.style.cursor = "auto";
     pill.style.display = "none";
     fakePill.style.display = "block";
 
@@ -393,7 +394,6 @@ function loop() {
   fakePillPositioner.style.top = -57 + isaacPosition.top + isaacScaler.getBoundingClientRect().top + "px";
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
-    pillPositioner.style.cursor = "auto";
     fakePill.style.display = "block";
     fakePillAnimator.update();
     holdTime += FRAMERATE;
