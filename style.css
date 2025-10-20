@@ -26,6 +26,8 @@ img {
 
 .pill-positioner {
   overflow: visible;
+  cursor: help;
+  
   width: 57px;
   height: 57px;
 }
