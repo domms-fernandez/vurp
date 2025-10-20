@@ -393,6 +393,7 @@ function loop() {
   fakePillPositioner.style.top = -57 + isaacPosition.top + "px";
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
+    pill.style.cursor = "auto";
     fakePill.style.display = "block";
     fakePillAnimator.update();
     holdTime += FRAMERATE;
@@ -422,6 +423,8 @@ function swallow() {
   pillPositioner.style.left = pillX - 28.5 + "px";
   pillPositioner.style.top = pillY - 28.5 + "px";
   pill.style.display = "block";
+  pill.style.cursor = "help";
+  pill.classList.add("spawning");
   
   new Audio("/vurp/sfx/vurp.wav").play();
 }
@@ -432,6 +435,8 @@ isaacScaler.addEventListener("animationend", (e) => {
     stashed = true;
   }
 });
+
+pill.addEventListener("animationend", (e) => {pill.className = "";});
 
 isaacPositioner.addEventListener("click", swallow);
 setInterval(loop, FRAMERATE * 1000);
