@@ -390,7 +390,7 @@ function loop() {
   bodyEastHoldAnimator.update();
 
   fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
-  fakePillPositioner.style.top = -57 + isaacPosition.top + "px";
+  fakePillPositioner.style.top = -57 + isaacPosition.top + isaacScaler.getBoundingClientRect().top + "px";
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
     pillPositioner.style.cursor = "auto";
@@ -436,7 +436,7 @@ isaacScaler.addEventListener("animationend", (e) => {
   }
 });
 
-pill.addEventListener("animationend", (e) => {pill.className = "";});
+pill.addEventListener("animationend", (e) => {pill.classList.remove("spawning");});
 
 isaacPositioner.addEventListener("click", swallow);
 setInterval(loop, FRAMERATE * 1000);
