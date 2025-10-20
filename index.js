@@ -419,8 +419,8 @@ function swallow() {
   //logic
   pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
   pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
-  pill.style.left = pillX - 28.5 + "px";
-  pill.style.top = pillY - 28.5 + "px";
+  pillPositioner.style.left = pillX - 28.5 + "px";
+  pillPositioner.style.top = pillY - 28.5 + "px";
   pill.style.display = "block";
   
   new Audio("/vurp/sfx/vurp.wav").play();
