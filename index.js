@@ -189,7 +189,6 @@ pillAnimator.animTime = PILL_SEED;
 pillAnimator.update();
 
 fakePillAnimator.animTime = PILL_SEED;
-fakePillAnimator.update();
 
 
 //global vars
@@ -204,8 +203,8 @@ let stashed = false;
 
 let pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
 let pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
-pill.style.left = pillX - 28.5 + "px";
-pill.style.top = pillY - 28.5 + "px";
+pillPositioner.style.left = pillX - 28.5 + "px";
+pillPositioner.style.top = pillY - 28.5 + "px";
 
 
 //main loop
@@ -395,6 +394,7 @@ function loop() {
 
   if(holdTime < MAX_PILL_HOLD_TIME) {
     fakePill.style.display = "block";
+    fakePillAnimator.update();
     holdTime += FRAMERATE;
     
     if(holdTime >= MAX_PILL_HOLD_TIME) {
