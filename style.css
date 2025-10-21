@@ -39,11 +39,15 @@ img {
   cursor: auto;
 }
 
-#isaac-hurt-positioner {
+#isaac-hurt-positioner, #isaac-hurt-scaler {
   overflow: visible;
   
   width: 0px;
   height: 0px;
+}
+
+#isaac-hurt-positioner {
+  transform: rotate(90deg);
 }
 
 #isaac-hurt {
@@ -164,27 +168,27 @@ img {
 @keyframes die {
   0% {
     transform: scale(100%, 100%)
-               rotate(0deg);
+               rotate(-90deg);
   }
   28.57% {
     transform: scale(125%, 75%)
-               rotate(0deg);
+               rotate(-90deg);
   }
   57.14% {
     transform: scale(75%, 125%)
-               rotate(0deg);
+               rotate(-90deg);
   }
   85.71% {
     transform: scale(100%, 100%)
-               rotate(90deg);
+               rotate(0deg);
   }
   89.29% {
     transform: scale(110%, 90%)
-               rotate(90deg);
+               rotate(0deg);
   }
   100% {
     transform: scale(100%, 100%)
-               rotate(90deg);
+               rotate(0deg);
   }
 }
 
