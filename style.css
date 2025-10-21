@@ -146,6 +146,39 @@ img {
   }
 }
 
+@keyframes die {
+  0% {
+    transform: translateY(0%)
+               scale(100%, 100%)
+               rotate(0deg);
+  }
+  28.57% {
+    transform: translateY(12.5%)
+               scale(125%, 75%)
+               rotate(0deg);
+  }
+  57.14% {
+    transform: translateY(-12.5%)
+               scale(75%, 125%)
+               rotate(0deg);
+  }
+  85.71% {
+    transform: translateY(0%)
+               scale(100%, 100%)
+               rotate(90deg);
+  }
+  89.29% {
+    transform: translateY(0%)
+               scale(110%, 90%)
+               rotate(90deg);
+  }
+  100% {
+    transform: translateY(0%)
+               scale(100%, 100%)
+               rotate(90deg);
+  }
+}
+
 @keyframes spawn {
   /*frame 0*/ 0% {
     transform: scale(200%, 50%)
