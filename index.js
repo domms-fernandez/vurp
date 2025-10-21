@@ -190,6 +190,9 @@ pillAnimator.update();
 
 fakePillAnimator.animTime = PILL_SEED;
 
+//SFX
+let pickupSFX = new Audio("/vurp/sfx/pickup.mp3");
+let vurpSFX = new Audio("/vurp/sfx/vurp.wav");
 
 //global vars
 let mousePos;
@@ -228,7 +231,7 @@ function loop() {
     isaacPositioner.style.cursor = "pointer";
     isaacScaler.classList.add("grabbing");
 
-    new Audio("/vurp/sfx/pickup.mp3").play();
+    pickupSFX.play();
   }
 
   //move + animate isaac
@@ -426,7 +429,7 @@ function swallow() {
   pillPositioner.style.cursor = "help";
   pill.classList.add("spawning");
   
-  new Audio("/vurp/sfx/vurp.wav").play();
+  vurpSFX.play();
 }
 
 isaacScaler.addEventListener("animationend", (e) => {
