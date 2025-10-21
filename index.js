@@ -218,6 +218,10 @@ pillAnimator.update();
 //SFX
 let pickupSFX = new Audio("/vurp/sfx/pickup.mp3");
 let vurpSFX = new Audio("/vurp/sfx/vurp.wav");
+let derpSFX = [
+  new Audio("/vurp/sfx/derp.wav"),
+  new Audio("/vurp/sfx/derp-alt.wav")
+];
 
 //characters!!!
 let character = "isaac"
