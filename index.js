@@ -24,7 +24,13 @@ const ISAAC_HURT_SPRITEMAP = [
 {
   frames: 4,
   duration: 0.53,
-  start: -1
+  start: 0
+},
+//dead
+{
+  frames: 1,
+  duration: 1,
+  start: 3
 }
 ];
 
@@ -171,6 +177,10 @@ spriteAnimator.prototype.update = function() {
 
 
 //get elements
+let isaacHurtPositioner = document.getElementById("isaac-hurt-positioner");
+let isaacHurtScaler = document.getElementById("isaac-hurt-scaler");
+let isaacHurt = document.getElementById("isaac-hurt");
+
 let isaacPositioner = document.getElementById("isaac-positioner");
 let isaacScaler = document.getElementById("isaac-scaler");
 
@@ -189,6 +199,8 @@ let fakePillPositioner = document.getElementsByClassName("pill-positioner")[1];
 let fakePill = fakePillPositioner.firstElementChild;
 
 //create animators
+let isaacHurtAnimator = new spriteAnimator(ISAAC_HURT_SPRITEMAP, isaacHurt, false);
+
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
@@ -240,6 +252,10 @@ function loop() {
     
     pillPositioner.style.cursor = "auto";
     pill.style.display = "none";
+
+    fakePill.style.display = "block";
+    fakePillAnimator.animTime = pillAnimator.animTime; //match the real pill apperance
+    fakePillAnimator.update();
 
     isaacPositioner.style.cursor = "pointer";
     isaacScaler.classList.add("grabbing");
@@ -396,6 +412,12 @@ function loop() {
   isaacPositioner.style.top = isaacPosition.top + vY * ISAAC_SPEED * FRAMERATE + "px";
   isaacPosition = isaacPositioner.getBoundingClientRect();
 
+  isaacHurtPositioner.style.left = isaacPosition.left + 54 + "px";
+  isaacHurtPositioner.style.top = isaacPosition.bottom + "px";
+
+  fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
+  fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
+
   //update animations
   headAnimator.update();
   bodyAnimator.update();
@@ -405,16 +427,11 @@ function loop() {
   bodyHoldAnimator.update();
   bodyEastHoldAnimator.update();
 
-  fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
-  fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
-
   //if we're holding the pill up
   if(holdTime < MAX_PILL_HOLD_TIME) {
     holdTime += FRAMERATE;
     
     fakePill.style.display = "block";
-    fakePillAnimator.animTime = pillAnimator.animTime; //match the real pill apperance
-    fakePillAnimator.update();
     
     if(holdTime >= MAX_PILL_HOLD_TIME) {
       isaacScaler.classList.add("putting");
