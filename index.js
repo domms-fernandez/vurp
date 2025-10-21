@@ -13,6 +13,27 @@ const ALL_PILLS_SPRITEMAP = [
 }
 ];
 
+const ISAAC_HURT_SPRITEMAP = [
+//hidden
+{
+  frames: 1,
+  duration: 1,
+  start: -1
+},
+//dying
+{
+  frames: 4,
+  duration: 0.53,
+  start: 0
+},
+//dead
+{
+  frames: 1,
+  duration: 1,
+  start: 3
+}
+];
+
 const ISAAC_HEAD_SPRITEMAP = [
 {
   frames: 1,
@@ -156,6 +177,10 @@ spriteAnimator.prototype.update = function() {
 
 
 //get elements
+let isaacHurtPositioner = document.getElementById("isaac-hurt-positioner");
+let isaacHurtScaler = document.getElementById("isaac-hurt-scaler");
+let isaacHurt = document.getElementById("isaac-hurt");
+
 let isaacPositioner = document.getElementById("isaac-positioner");
 let isaacScaler = document.getElementById("isaac-scaler");
 
@@ -174,6 +199,8 @@ let fakePillPositioner = document.getElementsByClassName("pill-positioner")[1];
 let fakePill = fakePillPositioner.firstElementChild;
 
 //create animators
+let isaacHurtAnimator = new spriteAnimator(ISAAC_HURT_SPRITEMAP, isaacHurt, false);
+
 let headAnimator = new spriteAnimator(ISAAC_HEAD_SPRITEMAP, head, false);
 let bodyAnimator = new spriteAnimator(ISAAC_WALK_SPRITEMAP, body, false);
 let bodyEastAnimator = new spriteAnimator(ISAAC_WALK_EAST_SPRITEMAP, bodyEast, true);
@@ -191,6 +218,29 @@ pillAnimator.update();
 //SFX
 let pickupSFX = new Audio("/vurp/sfx/pickup.mp3");
 let vurpSFX = new Audio("/vurp/sfx/vurp.wav");
+let derpSFX = [
+  new Audio("/vurp/sfx/derp.wav"),
+  new Audio("/vurp/sfx/derp-alt.wav")
+];
+
+//characters!!!
+let character = "isaac"
+
+function changeCharacter(selection) {
+  character = selection;
+
+  isaacHurt.firstElementChild.src = `/vurp/img/${character}/hurt-sheet.png`;
+
+  head.firstElementChild.src = `/vurp/img/${character}/head-sheet.png`;
+  body.firstElementChild.src = `/vurp/img/${character}/body-sheet.png`;
+  bodyEast.firstElementChild.src = `/vurp/img/${character}/body-east-sheet.png`;
+
+  headHold.firstElementChild.src = `/vurp/img/${character}/head-hold.png`;
+  bodyHold.firstElementChild.src = `/vurp/img/${character}/body-hold-sheet.png`;
+  bodyEastHold.firstElementChild.src = `/vurp/img/${character}/body-east-hold-sheet.png`;
+}
+
+if(!Math.floor(Math.random() * 10)) changeCharacter("bb");
 
 //global vars
 let mousePos;
@@ -225,6 +275,10 @@ function loop() {
     
     pillPositioner.style.cursor = "auto";
     pill.style.display = "none";
+
+    fakePill.style.display = "block";
+    fakePillAnimator.animTime = pillAnimator.animTime; //match the real pill apperance
+    fakePillAnimator.update();
 
     isaacPositioner.style.cursor = "pointer";
     isaacScaler.classList.add("grabbing");
@@ -381,6 +435,12 @@ function loop() {
   isaacPositioner.style.top = isaacPosition.top + vY * ISAAC_SPEED * FRAMERATE + "px";
   isaacPosition = isaacPositioner.getBoundingClientRect();
 
+  isaacHurtPositioner.style.left = isaacPosition.left + 54 + "px";
+  isaacHurtPositioner.style.top = isaacPosition.bottom + "px";
+
+  fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
+  fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
+
   //update animations
   headAnimator.update();
   bodyAnimator.update();
@@ -390,16 +450,11 @@ function loop() {
   bodyHoldAnimator.update();
   bodyEastHoldAnimator.update();
 
-  fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
-  fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
-
   //if we're holding the pill up
   if(holdTime < MAX_PILL_HOLD_TIME) {
     holdTime += FRAMERATE;
     
     fakePill.style.display = "block";
-    fakePillAnimator.animTime = pillAnimator.animTime; //match the real pill apperance
-    fakePillAnimator.update();
     
     if(holdTime >= MAX_PILL_HOLD_TIME) {
       isaacScaler.classList.add("putting");
@@ -436,6 +491,11 @@ function swallow() {
 isaacScaler.addEventListener("animationend", (e) => {
   isaacScaler.className = ""; //clear all animation
   if(holding && e.animationName == "put") stashed = true; //we want to stash the pill at the end of the css animation
+});
+
+isaacHurtScaler.addEventListener("animationend", (e) => {
+  isaacHurtScaler.className = ""; //clear all animation
+  if(e.animationName == "die") isaacHurtScaler.classList.add("shaking");
 });
 
 pill.addEventListener("animationend", (e) => {pill.classList.remove("spawning");});
