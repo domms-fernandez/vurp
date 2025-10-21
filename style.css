@@ -109,7 +109,7 @@ img {
 }
 
 .shaking {
-  animation: 1.43s linear 0s 1 forwards shake;
+  animation: 5s linear 0s 1 forwards shake;
 }
 
 .spawning {
@@ -148,34 +148,70 @@ img {
 
 @keyframes die {
   0% {
-    transform: translateY(0%)
-               scale(100%, 100%)
+    transform: scale(100%, 100%)
                rotate(0deg);
   }
   28.57% {
-    transform: translateY(12.5%)
-               scale(125%, 75%)
+    transform: scale(125%, 75%)
                rotate(0deg);
   }
   57.14% {
-    transform: translateY(-12.5%)
-               scale(75%, 125%)
+    transform: scale(75%, 125%)
                rotate(0deg);
   }
   85.71% {
-    transform: translateY(0%)
-               scale(100%, 100%)
+    transform: scale(100%, 100%)
                rotate(90deg);
   }
   89.29% {
-    transform: translateY(0%)
-               scale(110%, 90%)
+    transform: scale(110%, 90%)
                rotate(90deg);
   }
   100% {
-    transform: translateY(0%)
-               scale(100%, 100%)
+    transform: scale(100%, 100%)
                rotate(90deg);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0px);
+  }
+  0.2% {
+    transform: translateX(-6px);
+  }
+  0.4% {
+    transform: translateX(6px);
+  }
+  0.6% {
+    transform: translateX(-6px);
+  }
+  0.8% {
+    transform: translateX(6px);
+  }
+  1% {
+    transform: translateX(-6px);
+  }
+  1.2% {
+    transform: translateX(3px);
+  }
+  1.4% {
+    transform: translateX(-3px);
+  }
+  1.6% {
+    transform: translateX(3px);
+  }
+  1.8% {
+    transform: translateX(-3px);
+  }
+  2% {
+    transform: translateX(3px);
+  }
+  2.2% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(0px);
   }
 }
 
