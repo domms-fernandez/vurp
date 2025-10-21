@@ -219,6 +219,22 @@ pillAnimator.update();
 let pickupSFX = new Audio("/vurp/sfx/pickup.mp3");
 let vurpSFX = new Audio("/vurp/sfx/vurp.wav");
 
+//characters!!!
+let character = "isaac"
+if(!Math.floor(Math.random() * 10)) character = "bb";
+
+function changeCharacter(selection) {
+  character = selection;
+
+  head.firstElementChild.src = `/vurp/img/${character}/head-sheet`;
+  body.firstElementChild.src = `/vurp/img/${character}/body-sheet`;
+  bodyEast.firstElementChild.src = `/vurp/img/${character}/body-east-sheet`;
+
+  headHold.firstElementChild.src = `/vurp/img/${character}/
+  bodyHold.firstElementChild.src = `/vurp/img/${character}/
+  bodyEastHold.firstElementChild.src = `/vurp/img/${character}/
+}
+
 //global vars
 let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
