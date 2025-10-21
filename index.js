@@ -470,6 +470,11 @@ isaacScaler.addEventListener("animationend", (e) => {
   if(holding && e.animationName == "put") stashed = true; //we want to stash the pill at the end of the css animation
 });
 
+isaacHurtScaler.addEventListener("animationend", (e) => {
+  isaacHurtScaler.className = ""; //clear all animation
+  if(e.animationName == "die") isaacHurtScaler.classList.add("shaking");
+});
+
 pill.addEventListener("animationend", (e) => {pill.classList.remove("spawning");});
 
 isaacPositioner.addEventListener("click", swallow);
