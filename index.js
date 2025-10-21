@@ -188,8 +188,6 @@ let fakePillAnimator = new spriteAnimator(ALL_PILLS_SPRITEMAP, fakePill, false);
 pillAnimator.animTime = PILL_SEED;
 pillAnimator.update();
 
-fakePillAnimator.animTime = PILL_SEED;
-
 //SFX
 let pickupSFX = new Audio("/vurp/sfx/pickup.mp3");
 let vurpSFX = new Audio("/vurp/sfx/vurp.wav");
@@ -198,16 +196,16 @@ let vurpSFX = new Audio("/vurp/sfx/vurp.wav");
 let mousePos;
 document.addEventListener("mousemove", (e) => {mousePos = e;});
 
-let vX = 0; let vY = 0;
+let pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
+let pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
+pillPositioner.style.left = pillX - 28.5 + "px";
+pillPositioner.style.top = pillY - 28.5 + "px";
 
 let holding = false;
 let holdTime = MAX_PILL_HOLD_TIME;
 let stashed = false;
 
-let pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
-let pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
-pillPositioner.style.left = pillX - 28.5 + "px";
-pillPositioner.style.top = pillY - 28.5 + "px";
+let vX = 0; let vY = 0;
 
 
 //main loop
@@ -395,11 +393,13 @@ function loop() {
   fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
   fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
 
+  //if we're holding the pill up
   if(holdTime < MAX_PILL_HOLD_TIME) {
-    fakePillAnimator.animTime = pillAnimator.animTime;
-    fakePill.style.display = "block";
-    fakePillAnimator.update();
     holdTime += FRAMERATE;
+    
+    fakePill.style.display = "block";
+    fakePillAnimator.animTime = pillAnimator.animTime; //match the real pill apperance
+    fakePillAnimator.update();
     
     if(holdTime >= MAX_PILL_HOLD_TIME) {
       isaacScaler.classList.add("putting");
@@ -414,29 +414,28 @@ function swallow() {
   if(!stashed) return;
   holding = false;
   stashed = false;
+
+  //isaac holds the pill he used
+  holdTime = 0.5 * MAX_PILL_HOLD_TIME;
+  isaacScaler.classList.add("grabbing");
   isaacPositioner.style.cursor = "auto";
 
-  //animate accordingly
-  isaacScaler.classList.add("grabbing");
-  holdTime = 0.5 * MAX_PILL_HOLD_TIME;
-
-  //logic
+  //randomise the pill location
   pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
   pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
   pillPositioner.style.left = pillX - 28.5 + "px";
   pillPositioner.style.top = pillY - 28.5 + "px";
+  
   pill.style.display = "block";
   pillPositioner.style.cursor = "help";
   pill.classList.add("spawning");
   
-  vurpSFX.play();
+  vurpSFX.play(); //vurp!
 }
 
 isaacScaler.addEventListener("animationend", (e) => {
-  isaacScaler.className = "";
-  if(holding && e.animationName == "put") {
-    stashed = true;
-  }
+  isaacScaler.className = ""; //clear all animation
+  if(holding && e.animationName == "put") stashed = true; //we want to stash the pill at the end of the css animation
 });
 
 pill.addEventListener("animationend", (e) => {pill.classList.remove("spawning");});
