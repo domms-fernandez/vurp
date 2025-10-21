@@ -13,6 +13,21 @@ const ALL_PILLS_SPRITEMAP = [
 }
 ];
 
+const ISAAC_HURT_SPRITEMAP = [
+//hidden
+{
+  frames: 1,
+  duration: 1,
+  start: -1
+},
+//dying
+{
+  frames: 4,
+  duration: 0.53,
+  start: -1
+}
+];
+
 const ISAAC_HEAD_SPRITEMAP = [
 {
   frames: 1,
