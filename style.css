@@ -92,7 +92,7 @@ img {
 }
 
 .spawning {
-  animation: 0.2s linear 0s 1 forwards spawn;
+  animation: 1s linear 0s 1 forwards spawn;
 }
 
 .grabbing {
@@ -135,23 +135,54 @@ img {
 
 @keyframes spawn {
   0% {
-    transform: translateY(0%)
-               scale(100%, 100%);
+    transform: scale(50%, 200%);
   }
-  25% {
-    transform: translateY(37.5%)
-               scale(250%, 25%);
+  6.66% {
+    transform: scale(100%, 100%);
   }
-  50% {
-    transform: translateY(-50%)
-               scale(50%, 200%);
+  10% {
+    transform: scale(200%, 50%);
   }
-  75% {
-    transform: translateY(12.5%)
-               scale(125%, 75%);
+  13.33% {
+    transform: scale(100%, 100%);
   }
-  100% {
-    transform: translateY(0%)
-               scale(100%, 100%);
+  /*frame 5*/ 16.66% {
+    transform: scale(75%, 125%);
+  }
+  /*frame 7*/ 23.33% {
+    transform: scale(100%, 100%);
+  }
+  /*frame 11*/ 36.66% {
+    transform: scale(100%, 100%);
+  }
+  /*frame 12*/ 40% {
+    transform: scale(100%, 100%);
+  }
+  /*frame 15*/ 50% {
+    transform: scale(85%, 115%);
+  }
+  /*frame 17*/ 56.66% {
+    transform: scale(50%, 150%);
+  }
+  /*frame 18*/ 60% {
+    transform: scale(100%, 100%);
+  }
+  /*frame 19*/ 63.33% {
+    transform: scale(150%, 50%);
+  }
+  /*frame 20*/ 66.66% {
+    transform: scale(125%, 75%);
+  }
+  /*frame 21*/ 70% {
+    transform: scale(85%, 115%);
+  }
+  /*frame 23*/ 76.66% {
+    transform: scale(110%, 90%);
+  }
+  /*frame 25*/ 83.33% {
+    transform: scale(100%, 100%);
+  }
+  /*frame 30*/ 100% {
+    transform: scale(100%, 100%);
   }
 }
