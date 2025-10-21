@@ -221,19 +221,22 @@ let vurpSFX = new Audio("/vurp/sfx/vurp.wav");
 
 //characters!!!
 let character = "isaac"
-if(!Math.floor(Math.random() * 10)) character = "bb";
 
 function changeCharacter(selection) {
   character = selection;
 
-  head.firstElementChild.src = `/vurp/img/${character}/head-sheet`;
-  body.firstElementChild.src = `/vurp/img/${character}/body-sheet`;
-  bodyEast.firstElementChild.src = `/vurp/img/${character}/body-east-sheet`;
+  isaacHurt.firstElementChild.src = `/vurp/img/${character}/hurt-sheet.png`;
 
-  headHold.firstElementChild.src = `/vurp/img/${character}/
-  bodyHold.firstElementChild.src = `/vurp/img/${character}/
-  bodyEastHold.firstElementChild.src = `/vurp/img/${character}/
+  head.firstElementChild.src = `/vurp/img/${character}/head-sheet.png`;
+  body.firstElementChild.src = `/vurp/img/${character}/body-sheet.png`;
+  bodyEast.firstElementChild.src = `/vurp/img/${character}/body-east-sheet.png`;
+
+  headHold.firstElementChild.src = `/vurp/img/${character}/head-hold.png`;
+  bodyHold.firstElementChild.src = `/vurp/img/${character}/body-hold-sheet.png`;
+  bodyEastHold.firstElementChild.src = `/vurp/img/${character}/body-east-hold-sheet.png`;
 }
+
+if(!Math.floor(Math.random() * 10)) changeCharacter("bb");
 
 //global vars
 let mousePos;
