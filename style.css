@@ -39,6 +39,21 @@ img {
   cursor: auto;
 }
 
+#isaac-hurt-positioner {
+  overflow: visible;
+  
+  width: 0px;
+  height: 0px;
+}
+
+#isaac-hurt {
+  top: -108px;
+  left: -54px;
+  
+  width: 108px;
+  height: 108px;
+}
+
 #isaac-positioner, #isaac-scaler {
   overflow: visible;
   
