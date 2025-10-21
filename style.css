@@ -152,16 +152,16 @@ img {
                translateY(-100%);
   }
   /*frame 5*/ 16.66% {
-    transform: scale(200%, 50%)
-               translateY(-125%);
+    transform: scale(150%, 75%)
+               translateY(-112.5%);
   }
   /*frame 6*/ 20% {
     transform: scale(100%, 100%)
                translateY(-100%);
   }
   /*frame 7*/ 23.33% {
-    transform: scale(75%, 125%)
-               translateY(-87.5%);
+    transform: scale(87.5%, 112.5%)
+               translateY(-92.25%);
   }
   /*frame 8*/ 26.66% {
     transform: scale(100%, 100%)
