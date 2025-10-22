@@ -8,7 +8,7 @@ const PILL_SEED = Math.floor(Math.random() * 13); //pill sheet offset
 const ALL_PILLS_SPRITEMAP = [
 {
   frames: 13,
-  duration: 6.7,
+  duration: 13,
   start: 0
 }
 ];
@@ -251,9 +251,13 @@ let pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
 pillPositioner.style.left = pillX - 28.5 + "px";
 pillPositioner.style.top = pillY - 28.5 + "px";
 
+let pillOffset = 0;
+
 let holding = false;
 let holdTime = MAX_PILL_HOLD_TIME;
 let pillCanBeHeld = true;
+
+let dead = false;
 
 let vX = 0; let vY = 0;
 
@@ -261,6 +265,16 @@ let vX = 0; let vY = 0;
 //main loop
 function loop() {
   if (!mousePos) return;
+
+  //if we're dead
+  if(dead) {
+    let deathAnimProgress = isaacHurtAnimator.animTime + FRAMERATE;
+    if(deathAnimProgress < ISAAC_HURT_SPRITESHEET[1].duration) isaacHurtAnimator.animTime = deathAnimProgress;
+    else isaacHurtAnimator.selection = 2;
+    isaacHurtAnimator.update();
+    
+    return;
+  }
   
   //define some more consts to make our lives easier
   let isaacPosition = isaacPositioner.getBoundingClientRect();
@@ -462,6 +476,26 @@ function loop() {
     }
   }
 }
+
+
+//pill handlers
+let pillHandlers = [
+  //vurp
+  function() {
+    pill.classList.add("spawning");
+    vurpSFX.play(); //vurp!
+  },
+  //die
+  function() {
+    pill.style.display = "none";
+    
+    isaacPositioner.style.display = "none";
+    isaacHurtAnimator.selection = 1;
+    isaacHurtScaler.classList.add("dying");
+
+    dead = true;
+  }
+];
   
 
 //how does swallowing pills work?
@@ -470,24 +504,30 @@ function swallow() {
   holding = false;
   pillCanBeHeld = false;
 
-  //isaac holds the pill he used
-  holdTime = 0.5 * MAX_PILL_HOLD_TIME;
-  isaacScaler.className = "";
-  isaacScaler.classList.add("grabbing");
-  isaacPositioner.style.cursor = "auto";
-
-  //randomise the pill location
+  //randomize the pill location
   pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
   pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
   pillPositioner.style.left = pillX - 28.5 + "px";
   pillPositioner.style.top = pillY - 28.5 + "px";
-
-  //new pill pops up
+  
+  //pill is displayed
   pill.style.display = "block";
   pillPositioner.style.cursor = "help";
-  pill.classList.add("spawning");
-  
-  vurpSFX.play(); //vurp!
+
+  //handle pill based on offset
+  pillHandlers[pillOffset]();
+
+  //new offset
+  if(Math.floor(Math.random() * 7)) pillOffset = 0; //6 in 7 chance of just being a vurp!
+  else pillOffset = 1 + Math.floor(Math.random() * (pillHandlers.length - 1)); //1 in 7 of being any other pill in pillHandlers
+  pillAnimator.animTime = PILL_SEED + pillOffset;
+  pillAnimator.update();
+
+  //isaac holds the pill he used. this won't always happen in the future
+  holdTime = 0.5 * MAX_PILL_HOLD_TIME;
+  isaacScaler.className = "";
+  isaacScaler.classList.add("grabbing");
+  isaacPositioner.style.cursor = "auto";
 }
 
 
@@ -498,10 +538,19 @@ isaacScaler.addEventListener("animationend", (e) => {
 isaacHurtScaler.addEventListener("animationend", (e) => {
   isaacHurtScaler.className = ""; //clear all animation
   if(e.animationName == "die") isaacHurtScaler.classList.add("shaking");
+  else {
+    isaacHurtAnimator.selection = 0;
+    isaacHurtAnimator.animTime = 0;
+    isaacHurtAnimator.update();
+    
+    changeCharacter("bb");
+    isaacPositioner.style.display = "block";
+    dead = false;
+  }
 });
 
 pill.addEventListener("animationend", (e) => {
-  pill.classList.remove("spawning");
+  pill.className = "pill";
   pillCanBeHeld = true;
 });
 
