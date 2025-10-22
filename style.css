@@ -194,43 +194,43 @@ img {
 
 @keyframes shake {
   0% {
-    transform: translateX(0px);
+    transform: translateY(0px);
   }
   0.2% {
-    transform: translateX(-6px);
+    transform: translateY(-6px);
   }
   0.4% {
-    transform: translateX(6px);
+    transform: translateY(6px);
   }
   0.6% {
-    transform: translateX(-6px);
+    transform: translateY(-6px);
   }
   0.8% {
-    transform: translateX(6px);
+    transform: translateY(6px);
   }
   1% {
-    transform: translateX(-6px);
+    transform: translateY(-6px);
   }
   1.2% {
-    transform: translateX(3px);
+    transform: translateY(3px);
   }
   1.4% {
-    transform: translateX(-3px);
+    transform: translateY(-3px);
   }
   1.6% {
-    transform: translateX(3px);
+    transform: translateY(3px);
   }
   1.8% {
-    transform: translateX(-3px);
+    transform: translateY(-3px);
   }
   2% {
-    transform: translateX(3px);
+    transform: translateY(3px);
   }
   2.2% {
-    transform: translateX(0px);
+    transform: translateY(0px);
   }
   100% {
-    transform: translateX(0px);
+    transform: translateY(0px);
   }
 }
 
