@@ -182,6 +182,9 @@ let isaacHurtScaler = document.getElementById("isaac-hurt-scaler");
 let isaacHurt = document.getElementById("isaac-hurt");
 
 let isaacPositioner = document.getElementById("isaac-positioner");
+isaacPositioner.style.left = Math.floor(Math.random() * (window.innerWidth - 84));
+isaacPositioner.style.top = Math.floor(Math.random() * (window.innerHeight - 105));
+
 let isaacScaler = document.getElementById("isaac-scaler");
 
 let head = document.getElementById("head");
@@ -269,7 +272,7 @@ function loop() {
   //if we're dead
   if(dead) {
     let deathAnimProgress = isaacHurtAnimator.animTime + FRAMERATE;
-    if(deathAnimProgress < ISAAC_HURT_SPRITESHEET[1].duration) isaacHurtAnimator.animTime = deathAnimProgress;
+    if(deathAnimProgress < ISAAC_HURT_SPRITEMAP[1].duration) isaacHurtAnimator.animTime = deathAnimProgress;
     else isaacHurtAnimator.selection = 2;
     isaacHurtAnimator.update();
     
@@ -476,26 +479,6 @@ function loop() {
     }
   }
 }
-
-
-//pill handlers
-let pillHandlers = [
-  //vurp
-  function() {
-    pill.classList.add("spawning");
-    vurpSFX.play(); //vurp!
-  },
-  //die
-  function() {
-    pill.style.display = "none";
-    
-    isaacPositioner.style.display = "none";
-    isaacHurtAnimator.selection = 1;
-    isaacHurtScaler.classList.add("dying");
-
-    dead = true;
-  }
-];
   
 
 //how does swallowing pills work?
@@ -529,6 +512,25 @@ function swallow() {
   isaacScaler.classList.add("grabbing");
   isaacPositioner.style.cursor = "auto";
 }
+
+//pill handlers
+let pillHandlers = [
+  //vurp
+  function() {
+    pill.classList.add("spawning");
+    vurpSFX.play(); //vurp!
+  },
+  //die
+  function() {
+    pill.style.display = "none";
+    
+    isaacPositioner.style.display = "none";
+    isaacHurtAnimator.selection = 1;
+    isaacHurtScaler.classList.add("dying");
+
+    dead = true;
+  }
+];
 
 
 isaacScaler.addEventListener("animationend", (e) => {
