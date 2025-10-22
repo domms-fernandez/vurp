@@ -253,7 +253,7 @@ pillPositioner.style.top = pillY - 28.5 + "px";
 
 let holding = false;
 let holdTime = MAX_PILL_HOLD_TIME;
-let stashed = false;
+let pillCanBeHeld = true;
 
 let vX = 0; let vY = 0;
 
@@ -269,7 +269,7 @@ function loop() {
   const CENTER_BODY_Y = 82.5 + isaacPosition.top;
 
   //grabbing pill
-  if(!holding && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 28.5)**2) {
+  if(!holding && pillCanBeHeld && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 28.5)**2) {
     holding = true;
     holdTime = 0;
     
@@ -466,12 +466,13 @@ function loop() {
 
 //how does swallowing pills work?
 function swallow() {
-  if(!stashed) return;
+  if(!holding) return;
   holding = false;
-  stashed = false;
+  pillCanBeHeld = false;
 
   //isaac holds the pill he used
   holdTime = 0.5 * MAX_PILL_HOLD_TIME;
+  isaacScaler.className = "";
   isaacScaler.classList.add("grabbing");
   isaacPositioner.style.cursor = "auto";
 
@@ -480,7 +481,8 @@ function swallow() {
   pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
   pillPositioner.style.left = pillX - 28.5 + "px";
   pillPositioner.style.top = pillY - 28.5 + "px";
-  
+
+  //new pill pops up
   pill.style.display = "block";
   pillPositioner.style.cursor = "help";
   pill.classList.add("spawning");
@@ -488,9 +490,9 @@ function swallow() {
   vurpSFX.play(); //vurp!
 }
 
+
 isaacScaler.addEventListener("animationend", (e) => {
   isaacScaler.className = ""; //clear all animation
-  if(holding && e.animationName == "put") stashed = true; //we want to stash the pill at the end of the css animation
 });
 
 isaacHurtScaler.addEventListener("animationend", (e) => {
@@ -498,7 +500,10 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
   if(e.animationName == "die") isaacHurtScaler.classList.add("shaking");
 });
 
-pill.addEventListener("animationend", (e) => {pill.classList.remove("spawning");});
+pill.addEventListener("animationend", (e) => {
+  pill.classList.remove("spawning");
+  pillCanBeHeld = true;
+});
 
 isaacPositioner.addEventListener("click", swallow);
 setInterval(loop, FRAMERATE * 1000);
