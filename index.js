@@ -5,6 +5,8 @@ const FRAMERATE = 0.017; //one divided by FPS
 const MAX_PILL_HOLD_TIME = 1; //isaac holds pill up for this long before it is stashed
 const PILL_SEED = Math.floor(Math.random() * 13); //pill sheet offset
 
+const IDLE_TIMEOUT = 10; //when idle for _ seconds, isaac grabs pills on his own
+
 const ALL_PILLS_SPRITEMAP = [
 {
   frames: 13,
@@ -268,9 +270,14 @@ let vX = 0; let vY = 0;
 
 //main loop
 function loop() {
-  if (idleTime < 10) {
+  if (idleTime < IDLE_TIMEOUT) {
     idleTime += FRAMERATE;
-    if (idleTime > 10) mousePos = {x: pillX, y: pillY};
+  }
+  
+  if (idleTime > IDLE_TIMEOUT) {
+    idleTime = IDLE_TIMEOUT;
+    if(!holding) mousePos = {x: pillX, y: pillY};
+    else swallow();
   }
 
   let delayedPillX = pillX;
@@ -544,6 +551,7 @@ let pillHandlers = [
 
 isaacScaler.addEventListener("animationend", (e) => {
   isaacScaler.className = ""; //clear all animation
+  if(e.animationName == "put") setTimeout(() => { if(idleTime >= IDLE_TIMEOUT) swallow(); }, 500);
 });
 
 isaacHurtScaler.addEventListener("animationend", (e) => {
