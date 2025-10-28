@@ -20,6 +20,12 @@ img {
   height: 100%;
   width: auto;
   image-rendering: pixelated;
+
+  user-drag: none; /* For Safari */
+  -webkit-user-drag: none; /* For WebKit browsers */
+  -moz-user-select: none; /* For Firefox */
+  -webkit-user-select: none; /* For WebKit browsers */
+  -ms-user-select: none; /* For Internet Explorer/Edge */
 }
 
 .vertically-animated {
