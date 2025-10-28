@@ -294,7 +294,7 @@ function loop() {
 
   let delayedPillX = pillX;
   let delayedPillY = pillY;
-  setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 1500);
+  setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 1000);
   
   if (!mousePos) return;
   
