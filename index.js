@@ -182,8 +182,8 @@ let isaacHurtScaler = document.getElementById("isaac-hurt-scaler");
 let isaacHurt = document.getElementById("isaac-hurt");
 
 let isaacPositioner = document.getElementById("isaac-positioner");
-isaacPositioner.style.left = Math.floor(Math.random() * (window.innerWidth - 84));
-isaacPositioner.style.top = Math.floor(Math.random() * (window.innerHeight - 105));
+isaacPositioner.style.left = Math.floor(Math.random() * (window.innerWidth - 84)) + "px";
+isaacPositioner.style.top = Math.floor(Math.random() * (window.innerHeight - 105)) + "px";
 
 let isaacScaler = document.getElementById("isaac-scaler");
 
