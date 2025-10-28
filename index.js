@@ -556,5 +556,21 @@ pill.addEventListener("animationend", (e) => {
   pillCanBeHeld = true;
 });
 
+//pill dragging
+function pillDrag() {
+  if(holding) return;
+  pillX = mouseX;
+  pillY = mouseY;
+  pillPositioner.style.left = mouseX - 28.5 + "px";
+  pillPositioner.style.top = mouseY - 28.5 + "px";
+}
+
+pillPositioner.addEventListener("mousedown", () => {
+  document.addEventListener("mousemove", pillDrag);
+    document.addEventListener("mouseup", () => {
+      document.removeEventListener("mousemove", pillDrag);
+    }, { once: true });
+});
+
 isaacPositioner.addEventListener("click", swallow);
 setInterval(loop, FRAMERATE * 1000);
