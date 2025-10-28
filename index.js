@@ -268,8 +268,14 @@ let vX = 0; let vY = 0;
 
 //main loop
 function loop() {
-  idleTime += FRAMERATE;
-  setTimeout(() => {if(idleTime > 10000) mousePos = {x: pillX, y: pillY};}, 1000);
+  if (idleTime < 10) {
+    idleTime += FRAMERATE;
+    if (idleTime > 10) mousePos = {x: pillX, y: pillY};
+  }
+
+  let delayedPillX = pillX;
+  let delayedPillY = pillY;
+  setTimeout(() => {if(idleTime > 10) mousePos = {x: delayedPillX, y: delayedPillY};}, 3000);
   if (!mousePos) return;
 
   //if we're dead
