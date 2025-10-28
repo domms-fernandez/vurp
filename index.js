@@ -246,8 +246,9 @@ function changeCharacter(selection) {
 if(!Math.floor(Math.random() * 10)) changeCharacter("bb");
 
 //global vars
+let idleTime = 0;
 let mousePos;
-document.addEventListener("mousemove", (e) => {mousePos = e;});
+document.addEventListener("mousemove", (e) => {idleTime = 0; mousePos = e;});
 
 let pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
 let pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
@@ -267,6 +268,8 @@ let vX = 0; let vY = 0;
 
 //main loop
 function loop() {
+  idleTime += FRAMERATE;
+  setTimeout(() => {if(idleTime > 10000) mousePos = {x: pillX, y: pillY};}, 1000);
   if (!mousePos) return;
 
   //if we're dead
