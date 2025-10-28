@@ -559,10 +559,10 @@ pill.addEventListener("animationend", (e) => {
 //pill dragging
 function pillDrag() {
   if(holding) return;
-  pillX = mouseX;
-  pillY = mouseY;
-  pillPositioner.style.left = mouseX - 28.5 + "px";
-  pillPositioner.style.top = mouseY - 28.5 + "px";
+  pillX = mousePos.x;
+  pillY = mousePos.y;
+  pillPositioner.style.left = pillX - 28.5 + "px";
+  pillPositioner.style.top = pillY - 28.5 + "px";
 }
 
 pillPositioner.addEventListener("mousedown", () => {
