@@ -270,6 +270,18 @@ let vX = 0; let vY = 0;
 
 //main loop
 function loop() {
+  
+  //if we're dead
+  if(dead) {
+    let deathAnimProgress = isaacHurtAnimator.animTime + FRAMERATE;
+    if(deathAnimProgress < ISAAC_HURT_SPRITEMAP[1].duration) isaacHurtAnimator.animTime = deathAnimProgress;
+    else isaacHurtAnimator.selection = 2;
+    isaacHurtAnimator.update();
+    
+    return;
+  }
+
+  //handle idling
   if (idleTime < IDLE_TIMEOUT) {
     idleTime += FRAMERATE;
   }
@@ -282,19 +294,9 @@ function loop() {
 
   let delayedPillX = pillX;
   let delayedPillY = pillY;
-  setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 3000);
+  setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 1500);
   
   if (!mousePos) return;
-
-  //if we're dead
-  if(dead) {
-    let deathAnimProgress = isaacHurtAnimator.animTime + FRAMERATE;
-    if(deathAnimProgress < ISAAC_HURT_SPRITEMAP[1].duration) isaacHurtAnimator.animTime = deathAnimProgress;
-    else isaacHurtAnimator.selection = 2;
-    isaacHurtAnimator.update();
-    
-    return;
-  }
   
   //define some more consts to make our lives easier
   let isaacPosition = isaacPositioner.getBoundingClientRect();
