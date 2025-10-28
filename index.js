@@ -276,13 +276,14 @@ function loop() {
   
   if (idleTime > IDLE_TIMEOUT) {
     idleTime = IDLE_TIMEOUT;
-    if(!holding) mousePos = {x: pillX, y: pillY};
-    else swallow();
+    if(holding) swallow();
+    mousePos = {x: pillX, y: pillY};
   }
 
   let delayedPillX = pillX;
   let delayedPillY = pillY;
-  setTimeout(() => {if(idleTime > 10) mousePos = {x: delayedPillX, y: delayedPillY};}, 3000);
+  setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 3000);
+  
   if (!mousePos) return;
 
   //if we're dead
