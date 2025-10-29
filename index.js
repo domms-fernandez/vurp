@@ -521,6 +521,7 @@ function swallow() {
   if(!holding) return;
   holding = false;
   pillCanBeHeld = false;
+  isaacPositioner.style.cursor = "auto";
   favicon.href = "/vurp/img/icon/cricket.ico";
 
   //randomize the pill location
@@ -529,9 +530,15 @@ function swallow() {
   pillPositioner.style.left = pillX - 28.5 + "px";
   pillPositioner.style.top = pillY - 28.5 + "px";
   
-  //pill is displayed
+  //pill is displayed, plays drop anim.
   pill.style.display = "block";
+  pill.classList.add("dropping");
   pillPositioner.style.cursor = "help";
+  
+  //isaac holds the pill he used. this won't always happen in the future
+  holdTime = 0.5 * MAX_PILL_HOLD_TIME;
+  isaacScaler.className = "";
+  isaacScaler.classList.add("grabbing");
 
   //handle pill based on offset
   pillHandlers[pillOffset]();
@@ -541,25 +548,18 @@ function swallow() {
   else pillOffset = 1 + Math.floor(Math.random() * (pillHandlers.length - 1)); //1 in 7 of being any other pill in pillHandlers
   pillAnimator.animTime = PILL_SEED + pillOffset;
   pillAnimator.update();
-
-  //isaac holds the pill he used. this won't always happen in the future
-  holdTime = 0.5 * MAX_PILL_HOLD_TIME;
-  isaacScaler.className = "";
-  isaacScaler.classList.add("grabbing");
-  isaacPositioner.style.cursor = "auto";
 }
 
 //pill handlers
 let pillHandlers = [
   //vurp
   function() {
+    pill.className = "";
     pill.classList.add("spawning");
     vurpSFX.play(); //vurp!
   },
   //die
   function() {
-    pill.style.display = "none";
-    
     isaacPositioner.style.display = "none";
     isaacHurtAnimator.selection = 1;
     isaacHurtScaler.classList.add("dying");
