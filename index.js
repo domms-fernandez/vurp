@@ -577,6 +577,7 @@ isaacScaler.addEventListener("animationend", (e) => {
 isaacHurtScaler.addEventListener("animationend", (e) => {
   isaacHurtScaler.className = ""; //clear all animation
   if(e.animationName == "die") isaacHurtScaler.classList.add("shaking");
+  else if(e.animationName == "shake") isaacHurtScaler.classList.add("dead");
   else {
     isaacHurtAnimator.selection = 0;
     isaacHurtAnimator.animTime = 0;
