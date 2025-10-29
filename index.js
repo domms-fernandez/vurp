@@ -295,6 +295,7 @@ function loop() {
     return;
   }
 
+  /*
   //handle idling
   if (idleTime < IDLE_TIMEOUT) {
     idleTime += FRAMERATE;
@@ -309,6 +310,7 @@ function loop() {
   let delayedPillX = pillX;
   let delayedPillY = pillY;
   setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 1000);
+  */
   
   if (!mousePos) return;
   
@@ -487,7 +489,7 @@ function loop() {
   isaacPositioner.style.top = isaacPosition.top + vY * ISAAC_SPEED * FRAMERATE + "px";
   isaacPosition = isaacPositioner.getBoundingClientRect();
 
-  isaacHurtPositioner.style.left = isaacPosition.left + 54 + "px";
+  isaacHurtPositioner.style.left = isaacPosition.left + isaacPositioner.clientWidth * 0.5 + "px";
   isaacHurtPositioner.style.top = isaacPosition.bottom + "px";
 
   fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
