@@ -45,6 +45,18 @@ img {
   cursor: auto;
 }
 
+#ex-life-positioner {
+  overflow: visible;
+}
+
+#ex-life {
+  left: -30px;
+  top: -31.5px;
+
+  width: 60px;
+  height: 63px;
+}
+
 #isaac-hurt-positioner, #isaac-hurt-scaler {
   overflow: visible;
   
@@ -58,9 +70,9 @@ img {
 
 #isaac-hurt {
   top: -108px;
-  left: -54px;
+  left: -42px;
   
-  width: 108px;
+  width: 84px;
   height: 108px;
 }
 

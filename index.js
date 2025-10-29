@@ -179,6 +179,8 @@ spriteAnimator.prototype.update = function() {
 
 
 //get elements
+let favicon = document.querySelectorAll("link")[1];
+
 let isaacHurtPositioner = document.getElementById("isaac-hurt-positioner");
 let isaacHurtScaler = document.getElementById("isaac-hurt-scaler");
 let isaacHurt = document.getElementById("isaac-hurt");
@@ -222,14 +224,26 @@ pillAnimator.update();
 
 //SFX
 let pickupSFX = new Audio("/vurp/sfx/pickup.mp3");
-let vurpSFX = new Audio("/vurp/sfx/vurp.wav");
+let vurpSFX = new Audio("/vurp/sfx/vc/vurp.wav");
+let badTripSFX = new Audio("/vurp/sfx/vc/bad-trip.wav");
 let derpSFX = [
   new Audio("/vurp/sfx/derp.wav"),
   new Audio("/vurp/sfx/derp-alt.wav")
 ];
+let hurtSFX = [
+  new Audio("/vurp/sfx/isaac/hurt0.wav"),
+  new Audio("/vurp/sfx/isaac/hurt1.wav"),
+  new Audio("/vurp/sfx/isaac/hurt2.wav")
+];
+let dieSFX = [
+  new Audio("/vurp/sfx/isaac/die0.wav"),
+  new Audio("/vurp/sfx/isaac/die1.wav"),
+  new Audio("/vurp/sfx/isaac/die2.wav")
+];
+
 
 //characters!!!
-let character = "isaac"
+let character = "isaac";
 
 function changeCharacter(selection) {
   character = selection;
@@ -308,6 +322,8 @@ function loop() {
   if(!holding && pillCanBeHeld && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 28.5)**2) {
     holding = true;
     holdTime = 0;
+
+    favicon.href = "/vurp/img/icon/" + (PILL_SEED + pillOffset) + ".ico";
     
     pillPositioner.style.cursor = "auto";
     pill.style.display = "none";
@@ -505,6 +521,7 @@ function swallow() {
   if(!holding) return;
   holding = false;
   pillCanBeHeld = false;
+  favicon.href = "/vurp/img/icon/cricket.ico";
 
   //randomize the pill location
   pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
