@@ -148,7 +148,11 @@ img {
 }
 
 .shaking {
-  animation: 5s linear 0s 1 forwards shake;
+  animation: 0.1s linear 0s 1 forwards shake;
+}
+
+.dead {
+  animation: 3s linear 0s 1 forwards nothing;
 }
 
 .spawning {
@@ -216,41 +220,35 @@ img {
   0% {
     transform: translateY(0px);
   }
-  0.2% {
+  10% {
     transform: translateY(-6px);
   }
-  0.4% {
+  20% {
     transform: translateY(6px);
   }
-  0.6% {
+  30% {
     transform: translateY(-6px);
   }
-  0.8% {
+  40% {
     transform: translateY(6px);
   }
-  1% {
+  50% {
     transform: translateY(-6px);
   }
-  1.2% {
+  60% {
     transform: translateY(3px);
   }
-  1.4% {
+  70% {
     transform: translateY(-3px);
   }
-  1.6% {
+  80% {
     transform: translateY(3px);
   }
-  1.8% {
+  90% {
     transform: translateY(-3px);
-  }
-  2% {
-    transform: translateY(3px);
-  }
-  2.2% {
-    transform: translateY(0px);
   }
   100% {
-    transform: translateY(0px);
+    transform: translateY(3px);
   }
 }
 
@@ -323,4 +321,9 @@ img {
     transform: scale(100%, 100%)
                translateY(0%);
   }
+}
+
+@keyframes nothing {
+  from {}
+  to {}
 }
