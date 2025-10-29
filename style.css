@@ -47,6 +47,8 @@ img {
 
 #ex-life-positioner {
   overflow: visible;
+  width: 0px;
+  height: 0px;
 }
 
 #ex-life {
