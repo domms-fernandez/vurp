@@ -5,7 +5,7 @@ const FRAMERATE = 0.017; //one divided by FPS
 const MAX_PILL_HOLD_TIME = 1; //isaac holds pill up for this long before it is stashed
 const PILL_SEED = Math.floor(Math.random() * 13); //pill sheet offset
 
-const IDLE_TIMEOUT = 10; //when idle for _ seconds, isaac grabs pills on his own
+const IDLE_TIMEOUT = 60; //when idle for _ seconds, isaac grabs pills on his own
 
 const ALL_PILLS_SPRITEMAP = [
 {
@@ -295,7 +295,6 @@ function loop() {
     return;
   }
 
-  /*
   //handle idling
   if (idleTime < IDLE_TIMEOUT) {
     idleTime += FRAMERATE;
@@ -310,7 +309,6 @@ function loop() {
   let delayedPillX = pillX;
   let delayedPillY = pillY;
   setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 1000);
-  */
   
   if (!mousePos) return;
   
