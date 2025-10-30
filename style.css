@@ -159,6 +159,10 @@ img {
   animation: 1.1s linear 0s 1 forwards spawn;
 }
 
+.falling {
+  animation: 1s linear 0s 1 forwards invisible;
+}
+
 .dropping {
   animation: 0.5s linear 0s 1 forwards drop;
 }
@@ -361,4 +365,13 @@ img {
 @keyframes nothing {
   from {}
   to {}
+}
+
+@keyframes invisible {
+  from {
+    opacity: 0.0;
+  }
+  to {
+    opacity: 0.0;
+  }
 }
