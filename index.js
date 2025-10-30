@@ -532,7 +532,7 @@ function swallow() {
   
   //pill is displayed, plays drop anim.
   pill.style.display = "block";
-  pill.classList.add("dropping");
+  pill.classList.add("falling");
   pillPositioner.style.cursor = "help";
   
   //isaac holds the pill he used. this won't always happen in the future
@@ -566,7 +566,7 @@ let pillHandlers = [
 
     //eh! eugh!
     let hurtSFXSelection = Math.floor(Math.random() * 3);
-    hurtSFX[hurtSFXSelection].addEventListener(() => {
+    hurtSFX[hurtSFXSelection].addEventListener("ended", () => {
       let dieSFXSelection = Math.floor(Math.random() * 3);
       dieSFX[dieSFXSelection].play();
     }, { once: true });
@@ -600,6 +600,10 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
 
 pill.addEventListener("animationend", (e) => {
   pill.className = "pill";
+  if(e.animationName != "drop") {
+    pill.classList.add("dropping");
+    return;
+  }
   pillCanBeHeld = true;
 });
 
