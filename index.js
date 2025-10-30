@@ -564,16 +564,16 @@ let pillHandlers = [
     isaacHurtAnimator.selection = 1;
     isaacHurtScaler.classList.add("dying");
 
+    dead = true;
+
     //eh! eugh!
     let hurtSFXSelection = Math.floor(Math.random() * 3);
-    hurtSFX[hurtSFXSelection].addEventListener("ended", () => {
+    hurtSFX[hurtSFXSelection].play();
+    setTimeout(() => {
       let dieSFXSelection = Math.floor(Math.random() * 3);
       dieSFX[dieSFXSelection].play();
-    }, { once: true });
-    hurtSFX[hurtSFXSelection].play();
-    setTimeout(() => {badTripSFX.play()}, 1400);
-
-    dead = true;
+    }, 300);
+    setTimeout(() => {badTripSFX.play();}, 1400);
   }
 ];
 
@@ -600,7 +600,7 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
 
 pill.addEventListener("animationend", (e) => {
   pill.className = "pill";
-  if(e.animationName != "drop") {
+  if(e.animationName == "invisible") {
     pill.classList.add("dropping");
     return;
   }
