@@ -572,7 +572,7 @@ let pillHandlers = [
     setTimeout(() => {
       let dieSFXSelection = Math.floor(Math.random() * 3);
       dieSFX[dieSFXSelection].play();
-    }, 300);
+    }, 250);
     setTimeout(() => {badTripSFX.play();}, 1400);
   }
 ];
