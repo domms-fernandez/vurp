@@ -159,6 +159,41 @@ img {
   animation: 1.1s linear 0s 1 forwards spawn;
 }
 
+.dropping {
+  animation: 0.5s linear 0s 1 forwards drop;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-450%)
+               scale(10%, 1000%);
+  }
+  10% {
+    transform: translateY(34%)
+               scale(300%, 33%);
+  }
+  25% {
+    transform: translateY(-100%)
+               scale(33%, 300%);
+  }
+  40% {
+    transform: translateY(25%)
+               scale(200%, 50%);
+  }
+  55% {
+    transform: translateY(-50%)
+               scale(50%, 200%);
+  }
+  70% {
+    transform: translateY(12.5%)
+               scale(125%, 75%);
+  }
+  100% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
+}
+
 @keyframes grab {
   from {
     transform: translateY(12.5%)
