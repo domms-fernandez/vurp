@@ -560,6 +560,9 @@ let pillHandlers = [
   },
   //bad trip
   function() {
+    holdTime = MAX_PILL_HOLD_TIME;
+    fakePill.style.display = "none";
+    
     isaacPositioner.style.display = "none";
     isaacHurtAnimator.selection = 1;
     isaacHurtScaler.classList.add("dying");
