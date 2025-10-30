@@ -172,25 +172,53 @@ img {
     transform: translateY(-450%)
                scale(10%, 1000%);
   }
+  5% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
   10% {
     transform: translateY(34%)
                scale(300%, 33%);
+  }
+  17.5% {
+    transform: translateY(0%)
+               scale(100%, 100%);
   }
   25% {
     transform: translateY(-100%)
                scale(33%, 300%);
   }
+  32.5% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
   40% {
     transform: translateY(25%)
                scale(200%, 50%);
+  }
+  47.5% {
+    transform: translateY(0%)
+               scale(100%, 100%);
   }
   55% {
     transform: translateY(-50%)
                scale(50%, 200%);
   }
+  62.5% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
   70% {
     transform: translateY(12.5%)
                scale(125%, 75%);
+  }
+  77.5% {
+    transform: translateY(0%)
+               scale(100%, 100%);
+  }
+  85% {
+    transform: translateY(-12.5%)
+               scale(75%, 125%);
   }
   100% {
     transform: translateY(0%)
