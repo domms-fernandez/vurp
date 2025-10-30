@@ -164,7 +164,7 @@ img {
 }
 
 .falling {
-  animation: 1s linear 0s 1 forwards invisible;
+  animation: 3s linear 0s 1 forwards invisible;
 }
 
 .dropping {
