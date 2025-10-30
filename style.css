@@ -156,7 +156,7 @@ img {
 }
 
 .respawning {
-  animation: 2s steps(10, start) 0s 1 forwards flash;
+  animation: 1s steps(1) 0s 1 forwards flash;
 }
 
 .spawning {
