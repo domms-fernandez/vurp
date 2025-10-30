@@ -586,6 +586,10 @@ isaacScaler.addEventListener("animationend", (e) => {
   if(e.animationName == "put") setTimeout(() => { if(idleTime >= IDLE_TIMEOUT) swallow(); }, 500);
 });
 
+isaacPositioner.addEventListener("animationend", (e) => {
+  isaacPositioner.className = ""; //clear all animation
+});
+
 isaacHurtScaler.addEventListener("animationend", (e) => {
   isaacHurtScaler.className = ""; //clear all animation
   if(e.animationName == "die") isaacHurtScaler.classList.add("shaking");
@@ -594,6 +598,8 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
     isaacHurtAnimator.selection = 0;
     isaacHurtAnimator.animTime = 0;
     isaacHurtAnimator.update();
+
+    isaacPositioner.classList.add("respawning");
     
     changeCharacter("bb");
     isaacPositioner.style.display = "block";
