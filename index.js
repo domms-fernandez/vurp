@@ -625,3 +625,5 @@ pillPositioner.addEventListener("mousedown", () => {
 
 isaacPositioner.addEventListener("click", swallow);
 setInterval(loop, FRAMERATE * 1000);
+
+document.getElementById("loading-barrier").remove();
