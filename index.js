@@ -558,11 +558,20 @@ let pillHandlers = [
     pill.classList.add("spawning");
     vurpSFX.play(); //vurp!
   },
-  //die
+  //bad trip
   function() {
     isaacPositioner.style.display = "none";
     isaacHurtAnimator.selection = 1;
     isaacHurtScaler.classList.add("dying");
+
+    //eh! eugh!
+    let hurtSFXSelection = Math.floor(Math.random() * 3);
+    hurtSFX[hurtSFXSelection].addEventListener(() => {
+      let dieSFXSelection = Math.floor(Math.random() * 3);
+      dieSFX[dieSFXSelection].play();
+    }, { once: true });
+    hurtSFX[hurtSFXSelection].play();
+    setTimeout(() => {badTripSFX.play()}, 1400);
 
     dead = true;
   }
