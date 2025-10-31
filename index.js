@@ -608,6 +608,7 @@ let pillHandlers = [
   function() {
     holdTime = MAX_PILL_HOLD_TIME;
     fakePill.style.display = "none";
+    exLife.style.display = "none";
     
     isaacPositioner.style.display = "none";
     changeCharacter(Math.floor(Math.random() * CHAR_LIST.length));
