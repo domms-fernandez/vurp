@@ -662,6 +662,8 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
     isaacHurt.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/hurt-sheet.png`;
 
     isaacPositioner.style.display = "block";
+    isaacPositioner.style.left = Math.floor(Math.random() * (window.innerWidth - 84)) + "px";
+    isaacPositioner.style.top = Math.floor(Math.random() * (window.innerHeight - 105)) + "px";
 
     holdingExLife = true;
     holdTime = 0;
