@@ -7,6 +7,8 @@ const PILL_SEED = Math.floor(Math.random() * 13); //pill sheet offset
 
 const IDLE_TIMEOUT = 60; //when idle for _ seconds, isaac grabs pills on his own
 
+const CHAR_LIST = ["isaac", "bb"];
+
 const ALL_PILLS_SPRITEMAP = [
 {
   frames: 13,
@@ -243,23 +245,23 @@ let dieSFX = [
 
 
 //characters!!!
-let character = "isaac";
+let characterSelection = 0;
 
 function changeCharacter(selection) {
-  character = selection;
+  characterSelection = selection;
 
-  isaacHurt.firstElementChild.src = `/vurp/img/${character}/hurt-sheet.png`;
+  isaacHurt.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/hurt-sheet.png`;
 
-  head.firstElementChild.src = `/vurp/img/${character}/head-sheet.png`;
-  body.firstElementChild.src = `/vurp/img/${character}/body-sheet.png`;
-  bodyEast.firstElementChild.src = `/vurp/img/${character}/body-east-sheet.png`;
+  head.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/head-sheet.png`;
+  body.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/body-sheet.png`;
+  bodyEast.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/body-east-sheet.png`;
 
-  headHold.firstElementChild.src = `/vurp/img/${character}/head-hold.png`;
-  bodyHold.firstElementChild.src = `/vurp/img/${character}/body-hold-sheet.png`;
-  bodyEastHold.firstElementChild.src = `/vurp/img/${character}/body-east-hold-sheet.png`;
+  headHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/head-hold.png`;
+  bodyHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/body-hold-sheet.png`;
+  bodyEastHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/body-east-hold-sheet.png`;
 }
 
-if(!Math.floor(Math.random() * 10)) changeCharacter("bb");
+if(!Math.floor(Math.random() * 4)) changeCharacter(CHAR_LIST[Math.floor(Math.random() * (CHAR_LIST.length - 1)) + 1]);
 
 //global vars
 let idleTime = 0;
@@ -601,7 +603,7 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
 
     isaacPositioner.classList.add("respawning");
     
-    changeCharacter("bb");
+    changeCharacter(1);
     isaacPositioner.style.display = "block";
     dead = false;
   }
