@@ -551,7 +551,12 @@ function loop() {
       isaacScaler.classList.add("putting");
       fakePill.style.display = "none";
       exLife.style.display = "none";
-      holdingExLife = false;
+
+      if(holdingExLife) {
+        holdingExLife = false;
+        isaacPositioner.className = "";
+        isaacPositioner.classList.add("respawning");
+      }
     }
   }
 }
@@ -643,8 +648,6 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
     isaacHurt.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/hurt-sheet.png`;
 
     isaacPositioner.style.display = "block";
-    isaacPositioner.className = "";
-    isaacPositioner.classList.add("respawning");
 
     holdingExLife = true;
     holdTime = 0;
