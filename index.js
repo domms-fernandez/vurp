@@ -334,7 +334,7 @@ function loop() {
 
   let delayedPillX = pillX;
   let delayedPillY = pillY;
-  setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 1000);
+  if(idleTime >= IDLE_TIMEOUT) setTimeout(() => {if(idleTime >= IDLE_TIMEOUT) mousePos = {x: delayedPillX, y: delayedPillY};}, 1000);
   
   if (!mousePos) return;
   
@@ -595,6 +595,8 @@ let pillHandlers = [
     isaacHurtAnimator.selection = 1;
     isaacHurtScaler.classList.add("dying");
 
+    vX = 0;
+    vY = 0;
     dead = true;
 
     //eh! eugh!
