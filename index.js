@@ -302,6 +302,7 @@ let pillOffset = 0;
 let holding = false;
 let holdTime = MAX_PILL_HOLD_TIME;
 let pillCanBeHeld = true;
+let holdingExLife = false;
 
 let dead = false;
 
@@ -519,6 +520,9 @@ function loop() {
   fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
   fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
 
+  exLifePositioner.style.left = isaacPosition.left + 13.5 + "px";
+  exLifePositioner.style.top = isaacScaler.getBoundingClientRect().top + CHAR_LIST[characterSelection].exLifeScale.top + "px";
+
   //update animations
   headAnimator.update();
   bodyAnimator.update();
@@ -528,15 +532,24 @@ function loop() {
   bodyHoldAnimator.update();
   bodyEastHoldAnimator.update();
 
-  //if we're holding the pill up
+  //if we're holding the 1up or the pill up
   if(holdTime < MAX_PILL_HOLD_TIME) {
     holdTime += FRAMERATE;
     
-    fakePill.style.display = "block";
+    if(!holdingExLife) {
+      exLife.style.display = "none";
+      fakePill.style.display = "block";
+    }
+    else {
+      fakePill.style.display = "none";
+      exLife.style.display = "block";
+    }
     
     if(holdTime >= MAX_PILL_HOLD_TIME) {
       isaacScaler.classList.add("putting");
       fakePill.style.display = "none";
+      exLife.style.display = "none";
+      holdingExLife = false;
     }
   }
 }
@@ -630,6 +643,10 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
     isaacPositioner.style.display = "block";
     isaacPositioner.className = "";
     isaacPositioner.classList.add("respawning");
+
+    holdingExLife = true;
+    holdTime = 0;
+    
     dead = false;
   }
 });
