@@ -7,7 +7,24 @@ const PILL_SEED = Math.floor(Math.random() * 13); //pill sheet offset
 
 const IDLE_TIMEOUT = 60; //when idle for _ seconds, isaac grabs pills on his own
 
-const CHAR_LIST = ["isaac", "bb"];
+const CHAR_LIST = [
+  {
+    str: "isaac", exLifeScale: {
+      width: 60,
+      height: 63,
+      left: -30,
+      top: -31.5
+    }
+  },
+  {
+    str: "bb", exLifeScale: {
+      width: 69,
+      height: 78,
+      left: -34.5,
+      top: -39
+    }
+  }
+];
 
 const ALL_PILLS_SPRITEMAP = [
 {
@@ -207,6 +224,9 @@ let pill = pillPositioner.firstElementChild;
 let fakePillPositioner = document.getElementsByClassName("pill-positioner")[1];
 let fakePill = fakePillPositioner.firstElementChild;
 
+let exLifePositioner = document.getElementById("ex-life-positioner");
+let exLife = document.getElementById("ex-life");
+
 //create animators
 let isaacHurtAnimator = new spriteAnimator(ISAAC_HURT_SPRITEMAP, isaacHurt, false);
 
@@ -250,15 +270,19 @@ let characterSelection = 0;
 function changeCharacter(selection) {
   characterSelection = selection;
 
-  isaacHurt.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/hurt-sheet.png`;
+  exLife.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/1up.png`;
+  exLife.width = CHAR_LIST[characterSelection].exLifeScale.width;
+  exLife.height = CHAR_LIST[characterSelection].exLifeScale.height;
+  exLife.top = CHAR_LIST[characterSelection].exLifeScale.top;
+  exLife.left = CHAR_LIST[characterSelection].exLifeScale.left;
 
-  head.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/head-sheet.png`;
-  body.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/body-sheet.png`;
-  bodyEast.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/body-east-sheet.png`;
+  head.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/head-sheet.png`;
+  body.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/body-sheet.png`;
+  bodyEast.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/body-east-sheet.png`;
 
-  headHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/head-hold.png`;
-  bodyHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/body-hold-sheet.png`;
-  bodyEastHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection]}/body-east-hold-sheet.png`;
+  headHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/head-hold.png`;
+  bodyHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/body-hold-sheet.png`;
+  bodyEastHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/body-east-hold-sheet.png`;
 }
 
 if(!Math.floor(Math.random() * 4)) changeCharacter(CHAR_LIST[Math.floor(Math.random() * (CHAR_LIST.length - 1)) + 1]);
@@ -566,6 +590,8 @@ let pillHandlers = [
     fakePill.style.display = "none";
     
     isaacPositioner.style.display = "none";
+    changeCharacter(1);
+    
     isaacHurtAnimator.selection = 1;
     isaacHurtScaler.classList.add("dying");
 
@@ -600,10 +626,9 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
     isaacHurtAnimator.selection = 0;
     isaacHurtAnimator.animTime = 0;
     isaacHurtAnimator.update();
+    isaacHurt.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/hurt-sheet.png`;
 
     isaacPositioner.classList.add("respawning");
-    
-    changeCharacter(1);
     isaacPositioner.style.display = "block";
     dead = false;
   }
