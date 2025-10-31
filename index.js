@@ -631,6 +631,19 @@ let pillHandlers = [
 ];
 
 
+window.addEventListener("resize", () => {
+  let pillPositionerRect = pillPositioner.getBoundingClientRect();
+  pillPositioner.style.left = Math.min(pillPositionerRect.left, window.innerWidth - 57) + "px";
+  pillPositioner.style.top = Math.min(pillPositionerRect.top, window.innerHeight - 57) + "px";
+  pillPositionerRect = pillPositioner.getBoundingClientRect();
+  pillX = pillPositionerRect.left + 28.5;
+  pillY = pillPositionerRect.top + 28.5;
+
+  let isaacPosition = isaacPositioner.getBoundingClientRect();
+  isaacPositioner.style.left = Math.min(isaacPosition.left, window.innerWidth - 84) + "px";
+  isaacPositioner.style.top = Math.min(isaacPosition.top, window.innerHeight - 105) + "px";
+});
+
 isaacScaler.addEventListener("animationend", (e) => {
   isaacScaler.className = ""; //clear all animation
   if(e.animationName == "put") setTimeout(() => { if(idleTime >= IDLE_TIMEOUT) swallow(); }, 500);
