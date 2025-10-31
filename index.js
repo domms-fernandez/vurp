@@ -285,7 +285,9 @@ function changeCharacter(selection) {
   bodyEastHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/body-east-hold-sheet.png`;
 }
 
-if(!Math.floor(Math.random() * 4)) changeCharacter(Math.floor(Math.random() * (CHAR_LIST.length - 1)) + 1);
+if(!Math.floor(Math.random() * 4)) changeCharacter(Math.floor(Math.random() * (CHAR_LIST.length - 1)) + 1); //i in 4 chance to not be the 'saac
+isaacHurt.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/hurt-sheet.png`; //1 of 2 time we have to manually do this
+
 
 //global vars
 let idleTime = 0;
@@ -520,7 +522,7 @@ function loop() {
   fakePillPositioner.style.left = isaacPosition.left + 13.5 + "px";
   fakePillPositioner.style.top = -57 + isaacScaler.getBoundingClientRect().top + "px";
 
-  exLifePositioner.style.left = isaacPosition.left + 13.5 + "px";
+  exLifePositioner.style.left = isaacPosition.left + 42 + "px";
   exLifePositioner.style.top = isaacScaler.getBoundingClientRect().top + CHAR_LIST[characterSelection].exLifeScale.top + "px";
 
   //update animations
@@ -603,7 +605,7 @@ let pillHandlers = [
     fakePill.style.display = "none";
     
     isaacPositioner.style.display = "none";
-    changeCharacter(1);
+    changeCharacter(changeCharacter(Math.floor(Math.random() * (CHAR_LIST.length - 1)) + 1));
     
     isaacHurtAnimator.selection = 1;
     isaacHurtScaler.classList.add("dying");
