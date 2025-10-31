@@ -585,8 +585,8 @@ function swallow() {
   pillHandlers[pillOffset]();
 
   //new offset
-  if(Math.floor(Math.random() * 7)) pillOffset = 0; //6 in 7 chance of just being a vurp!
-  else pillOffset = 1 + Math.floor(Math.random() * (pillHandlers.length - 1)); //1 in 7 of being any other pill in pillHandlers
+  if(Math.floor(Math.random() * 4)) pillOffset = 0; //3 in 4 chance of just being a vurp!
+  else pillOffset = 1 + Math.floor(Math.random() * (pillHandlers.length - 1)); //1 in 4 of being any other pill in pillHandlers
   pillAnimator.animTime = PILL_SEED + pillOffset;
   pillAnimator.update();
 }
