@@ -605,7 +605,7 @@ let pillHandlers = [
     fakePill.style.display = "none";
     
     isaacPositioner.style.display = "none";
-    changeCharacter(changeCharacter(Math.floor(Math.random() * (CHAR_LIST.length - 1)) + 1));
+    changeCharacter(Math.floor(Math.random() * CHAR_LIST.length));
     
     isaacHurtAnimator.selection = 1;
     isaacHurtScaler.classList.add("dying");
