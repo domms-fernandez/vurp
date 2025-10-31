@@ -285,7 +285,7 @@ function changeCharacter(selection) {
   bodyEastHold.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/body-east-hold-sheet.png`;
 }
 
-if(!Math.floor(Math.random() * 4)) changeCharacter(CHAR_LIST[Math.floor(Math.random() * (CHAR_LIST.length - 1)) + 1]);
+if(!Math.floor(Math.random() * 4)) changeCharacter(Math.floor(Math.random() * (CHAR_LIST.length - 1)) + 1);
 
 //global vars
 let idleTime = 0;
@@ -616,10 +616,7 @@ isaacScaler.addEventListener("animationend", (e) => {
   if(e.animationName == "put") setTimeout(() => { if(idleTime >= IDLE_TIMEOUT) swallow(); }, 500);
 });
 
-isaacPositioner.addEventListener("animationend", (e) => {
-  isaacPositioner.className = ""; //clear all animation
-});
-
+//when we're done being dead
 isaacHurtScaler.addEventListener("animationend", (e) => {
   isaacHurtScaler.className = ""; //clear all animation
   if(e.animationName == "die") isaacHurtScaler.classList.add("shaking");
@@ -630,8 +627,9 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
     isaacHurtAnimator.update();
     isaacHurt.firstElementChild.src = `/vurp/img/${CHAR_LIST[characterSelection].str}/hurt-sheet.png`;
 
-    isaacPositioner.classList.add("respawning");
     isaacPositioner.style.display = "block";
+    isaacPositioner.className = "";
+    isaacPositioner.classList.add("respawning");
     dead = false;
   }
 });
