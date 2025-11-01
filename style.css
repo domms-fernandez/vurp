@@ -41,6 +41,11 @@ img {
   height: 57px;
 }
 
+#dice {
+  width: auto;
+  height: auto;
+}
+
 #fake-pill-positioner {
   cursor: auto;
 }
