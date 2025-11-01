@@ -683,11 +683,15 @@ pill.addEventListener("animationend", (e) => {
   if(pill.classList.contains("rerolling")) {
     pillOffset++;
     if(pillOffset == pillHandlers.length) pillOffset = 0;
+
+    pill.className = "pill rerolled";
+    
     pillAnimator.animTime = PILL_SEED + pillOffset;
     pillAnimator.update();
   }
   
   pill.className = "pill";
+  
   if(e.animationName == "invisible") {
     pill.classList.add("dropping");
     return;
