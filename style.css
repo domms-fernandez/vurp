@@ -42,8 +42,8 @@ img {
 }
 
 #dice {
-  width: auto;
-  height: auto;
+  width: 75;
+  height: 75;
   cursor: pointer;
   opacity: 0.5;
 }
