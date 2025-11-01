@@ -171,6 +171,25 @@ img {
   animation: 0.5s linear 0s 1 forwards drop;
 }
 
+.rerolling {
+  animation: 0.3s linear 0s 1 forwards flat;
+}
+
+.rerolled {
+  animation: 0.3s linear 0s 1 backwards flat;
+}
+
+@keyframes flat {
+  from {
+    transform: translateY(0px)
+               scale(100%, 100%);
+  }
+  to {
+    transform: translateY(-50%)
+               scale(200%, 0%);
+  }
+}
+
 @keyframes drop {
   0% {
     transform: translateY(-450%)
