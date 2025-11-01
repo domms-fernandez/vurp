@@ -649,8 +649,9 @@ window.addEventListener("resize", () => {
 
 dice.addEventListener("click", () => {
   if(holding || !pillCanBeHeld) return;
+  
   pill.className = "pill";
-  pill.classList.add("rerolling");
+  pill.classList.add("spawning");
   
   pillOffset++;
   if(pillOffset == pillHandlers.length) pillOffset = 0;
