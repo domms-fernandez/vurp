@@ -45,6 +45,7 @@ img {
   width: auto;
   height: auto;
   cursor: pointer;
+  opacity: 0.5;
 }
 
 #fake-pill-positioner {
