@@ -649,7 +649,14 @@ window.addEventListener("resize", () => {
 
 dice.addEventListener("click", () => {
   if(holding || !pillCanBeHeld) return;
+  pill.className = "pill";
   pill.classList.add("rerolling");
+  
+  pillOffset++;
+  if(pillOffset == pillHandlers.length) pillOffset = 0;
+    
+  pillAnimator.animTime = PILL_SEED + pillOffset;
+  pillAnimator.update();
 });
 
 isaacScaler.addEventListener("animationend", (e) => {
@@ -680,18 +687,7 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
 });
 
 pill.addEventListener("animationend", (e) => {
-  if(pill.classList.contains("rerolling")) {
-    pillOffset++;
-    if(pillOffset == pillHandlers.length) pillOffset = 0;
-
-    pill.className = "pill rerolled";
-    
-    pillAnimator.animTime = PILL_SEED + pillOffset;
-    pillAnimator.update();
-  }
-  
   pill.className = "pill";
-  
   if(e.animationName == "invisible") {
     pill.classList.add("dropping");
     return;
