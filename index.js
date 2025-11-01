@@ -200,6 +200,8 @@ spriteAnimator.prototype.update = function() {
 //get elements
 let favicon = document.querySelectorAll("link")[1];
 
+let dice = document.getElementById("dice");
+
 let isaacHurtPositioner = document.getElementById("isaac-hurt-positioner");
 let isaacHurtScaler = document.getElementById("isaac-hurt-scaler");
 let isaacHurt = document.getElementById("isaac-hurt");
@@ -645,6 +647,11 @@ window.addEventListener("resize", () => {
   isaacPositioner.style.top = Math.min(isaacPosition.top, window.innerHeight - 105) + "px";
 });
 
+dice.addEventListener("click", () => {
+  if(holding || !pillCanBeHeld) return;
+  pill.classList.add("rerolling");
+});
+
 isaacScaler.addEventListener("animationend", (e) => {
   isaacScaler.className = ""; //clear all animation
   if(e.animationName == "put") setTimeout(() => { if(idleTime >= IDLE_TIMEOUT) swallow(); }, 500);
@@ -673,6 +680,13 @@ isaacHurtScaler.addEventListener("animationend", (e) => {
 });
 
 pill.addEventListener("animationend", (e) => {
+  if(pill.classList.contains("rerolling")) {
+    pillOffset++;
+    if(pillOffset == pillHandlers.length) pillOffset = 0;
+    pillAnimator.animTime = PILL_SEED + pillOffset;
+    pillAnimator.update();
+  }
+  
   pill.className = "pill";
   if(e.animationName == "invisible") {
     pill.classList.add("dropping");
