@@ -296,6 +296,8 @@ let idleTime = 0;
 let mousePos;
 document.addEventListener("mousemove", (e) => {idleTime = 0; mousePos = e;});
 
+let mouseGone = false;
+
 let pillX = 28.5 + Math.floor(Math.random() * (window.innerWidth - 57));
 let pillY = 28.5 + Math.floor(Math.random() * (window.innerHeight - 57));
 pillPositioner.style.left = pillX - 28.5 + "px";
@@ -370,8 +372,8 @@ function loop() {
   }
 
   //move + animate isaac
-  //if mouse is within body diameter
-  if((mousePos.x - CENTER_BODY_X)**2 + (mousePos.y - CENTER_BODY_Y)**2 < HALF_BODY_HEIGHT**2) {
+  //if mouse is within body diameter, or mouse is gone
+  if((mousePos.x - CENTER_BODY_X)**2 + (mousePos.y - CENTER_BODY_Y)**2 < HALF_BODY_HEIGHT**2 || mouseGone) {
     vX *= 0.9;
     vY *= 0.9;
 
@@ -646,6 +648,12 @@ window.addEventListener("resize", () => {
   isaacPositioner.style.left = Math.min(isaacPosition.left, window.innerWidth - 84) + "px";
   isaacPositioner.style.top = Math.min(isaacPosition.top, window.innerHeight - 105) + "px";
 });
+
+document.addEventListener("mouseleave", () => {mouseGone = true;});
+document.addEventListener("mouseenter", () => {mouseGone = false;});
+
+dice.addEventListener("mouseleave", () => {mouseGone = false;});
+dice.addEventListener("mouseenter", () => {mouseGone = true;});
 
 dice.addEventListener("click", () => {
   if(holding || !pillCanBeHeld) return;
