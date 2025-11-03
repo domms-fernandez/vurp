@@ -186,6 +186,10 @@ img {
   animation: 0.3s linear 0s 1 backwards flat;
 }
 
+.perced {
+  animation: 1s linear 0s 1 backwards percs;
+}
+
 @keyframes flat {
   from {
     transform: translateY(0px)
@@ -194,6 +198,15 @@ img {
   to {
     transform: translateY(-50%)
                scale(200%, 0%);
+  }
+}
+
+@keyframes percs {
+  from {
+    filter: contrast(2);
+  }
+  to {
+    filter: contrast(1);
   }
 }
 
