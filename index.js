@@ -357,7 +357,9 @@ function loop() {
     holding = true;
     holdTime = 0;
 
-    favicon.href = "/vurp/img/icon/" + (PILL_SEED + pillOffset) + ".ico";
+    let grabbedPill = PILL_SEED + pillOffset;
+    if (grabbedPill >= 13) grabbedPill -= 13;
+    favicon.href = "/vurp/img/icon/" + (grabbedPill) + ".ico";
     
     pillPositioner.style.cursor = "auto";
     pill.style.display = "none";
