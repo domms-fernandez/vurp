@@ -659,13 +659,14 @@ dice.addEventListener("click", () => {
   if(holding || !pillCanBeHeld) return;
   
   pill.className = "pill";
-  pill.classList.add("spawning");
   
   pillOffset++;
   if(pillOffset == pillHandlers.length) pillOffset = 0;
     
   pillAnimator.animTime = PILL_SEED + pillOffset;
   pillAnimator.update();
+  
+  pill.classList.add("spawning");
 });
 
 isaacScaler.addEventListener("animationend", (e) => {
