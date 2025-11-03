@@ -353,6 +353,7 @@ function loop() {
 
   //grabbing pill
   if(!holding && pillCanBeHeld && (pillX - CENTER_BODY_X)**2 + (pillY - CENTER_BODY_Y)**2 < (HALF_BODY_HEIGHT + 28.5)**2) {
+    holdingExLife = false;
     holding = true;
     holdTime = 0;
 
