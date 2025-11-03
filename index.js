@@ -250,6 +250,7 @@ pillAnimator.update();
 let pickupSFX = new Audio("/vurp/sfx/pickup.mp3");
 let vurpSFX = new Audio("/vurp/sfx/vc/vurp.wav");
 let badTripSFX = new Audio("/vurp/sfx/vc/bad-trip.wav");
+let percsSFX = new Audio("/vurp/sfx/vc/percs.wav");
 let derpSFX = [
   new Audio("/vurp/sfx/derp.wav"),
   new Audio("/vurp/sfx/derp-alt.wav")
@@ -635,6 +636,12 @@ let pillHandlers = [
       dieSFX[dieSFXSelection].play();
     }, 250);
     setTimeout(() => {badTripSFX.play();}, 1400);
+  },
+  //percs!
+  function() {
+    document.body.className = "";
+    document.body.classList.add("perced");
+    percsSFX.play(); //percs!
   }
 ];
 
@@ -706,6 +713,10 @@ pill.addEventListener("animationend", (e) => {
     return;
   }
   pillCanBeHeld = true;
+});
+
+document.body.addEventListener("animationend", (e) => {
+  document.body.className = "";
 });
 
 //pill dragging
