@@ -171,7 +171,7 @@ img {
 }
 
 .falling {
-  animation: 0.5s linear 0s 1 forwards invisible;
+  animation: 1s linear 0s 1 forwards invisible;
 }
 
 .slow-falling {
