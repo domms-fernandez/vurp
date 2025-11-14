@@ -620,6 +620,7 @@ let pillHandlers = [
     fakePill.style.display = "none";
     exLife.style.display = "none";
     
+    isaacPositioner.className = "";
     isaacPositioner.style.display = "none";
     changeCharacter(Math.floor(Math.random() * CHAR_LIST.length));
     
