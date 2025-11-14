@@ -561,8 +561,8 @@ function loop() {
       exLife.style.display = "none";
 
       if(holdingExLife) {
-        holdingExLife = false;
         isaacPositioner.className = "";
+        holdingExLife = false;
         isaacPositioner.classList.add("respawning");
       }
     }
@@ -614,6 +614,8 @@ let pillHandlers = [
   },
   //bad trip
   function() {
+    pill.className = "";
+    pill.classList.add("slow-falling");
     holdTime = MAX_PILL_HOLD_TIME;
     fakePill.style.display = "none";
     exLife.style.display = "none";
@@ -640,8 +642,8 @@ let pillHandlers = [
   //percs!
   function() {
     document.body.className = "";
-    document.body.classList.add("perced");
     percsSFX.play(); //percs!
+    document.body.classList.add("perced");
   }
 ];
 
@@ -715,9 +717,9 @@ pill.addEventListener("animationend", (e) => {
   pillCanBeHeld = true;
 });
 
-document.body.addEventListener("animationend", (e) => {
+/*document.body.addEventListener("animationend", (e) => {
   document.body.className = "";
-});
+});*/
 
 //pill dragging
 function pillDrag() {
